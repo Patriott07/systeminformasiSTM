@@ -9,6 +9,7 @@ import fileUpload from 'express-fileupload';
 import authroute from './routes/auth.route.js';
 import eventroute from './routes/event.route.js';
 import blogroute from './routes/blog.route.js';
+import jurusanroute from './routes/jurusan.route.js';
 import mediaroute from './routes/media.route.js';
 import aktivitasroute from './routes/aktivitas.route.js';
 
@@ -75,6 +76,7 @@ app.use('/auth', authroute);
 app.use('/event', eventroute);
 app.use('/blog', blogroute);
 app.use('/aktivitas', aktivitasroute);
+app.use('/jurusan', jurusanroute);
 app.use('/file', mediaroute)
 
 app.listen(process.env.PORT, () => {
