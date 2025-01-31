@@ -3,17 +3,31 @@ import jwt from 'jsonwebtoken';
 import { auth } from 'express-oauth2-jwt-bearer';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import fileUpload from 'express-fileupload';
 
 
 import authroute from './routes/auth.route.js';
 import eventroute from './routes/event.route.js';
 import blogroute from './routes/blog.route.js';
+import mediaroute from './routes/media.route.js';
 import aktivitasroute from './routes/aktivitas.route.js';
 
 
 dotenv.config({ path: '.env' });
 const app = express();
 app.use(express.json());
+app.use(express.static('public'));
+app.use(fileUpload());
+
+// daftarin routes
+// app.get('/file/course', async (req, res) => {
+//     let path = `./public/videos/`;
+//     let file = req.header('file');
+//     console.log(path,file);
+//     // await res.download(path, file);
+//     res.setHeader('Content-Disposition', `attachment; filename="${file}"`);
+//     res.download(`${path}${file}`);
+// });
 
 // const SECRET_KEY = process.env.JWT_SECRET;
 
@@ -61,6 +75,7 @@ app.use('/auth', authroute);
 app.use('/event', eventroute);
 app.use('/blog', blogroute);
 app.use('/aktivitas', aktivitasroute);
+app.use('/file', mediaroute)
 
 app.listen(process.env.PORT, () => {
     console.log({ Message: `Server was running on ${process.env.PORT}` });
