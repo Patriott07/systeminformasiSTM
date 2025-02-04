@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { Tags } from "../models/tags.model.js";
+import { Mapels } from "../models/mapel_curiculum.model.js";
+import { Curiculums } from "../models/curiculums.model.js";
 
 export const Get = async (req, res) => {
 
@@ -10,13 +11,13 @@ export const Get = async (req, res) => {
 
         // Buat query pencarian (jika ada parameter search)
         const searchQuery = s
-            ? { $or: [{ name: { $regex: s, $options: 'i' } }] }
+            ? { $or: [{ nama_mapel: { $regex: s, $options: 'i' } }] }
             : {}; // Jika tidak ada parameter search, gunakan query kosong
 
-        const totalItems = await Tags.countDocuments(searchQuery);
+        const totalItems = await Mapels.countDocuments(searchQuery);
 
         // Ambil data berdasarkan query pencarian, sorting, dan pagination
-        const tags = await Tags.find(searchQuery)
+        const mapels = await Mapels.find(searchQuery)
             .sort({ createdAt: -1 }) // Sortir berdasarkan tanggal terbaru
             .skip(p * maxItems) // Lewati data berdasarkan halaman
             .limit(maxItems); // Batasi jumlah data per halaman
@@ -24,7 +25,7 @@ export const Get = async (req, res) => {
         // Kirimkan hasil ke client
         res.status(200).json({
             success: true,
-            data: tags,
+            data: mapels,
             pagination: {
                 currentPage: parseInt(p, 10),
                 totalPages: Math.ceil(totalItems / maxItems),
@@ -33,10 +34,10 @@ export const Get = async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Error fetching tags:', error);
+        console.error('Error fetching Mapels:', error);
         res.status(500).json({
             success: false,
-            message: 'Failed to fetch tags',
+            message: 'Failed to fetch Mapels',
             error: error.message,
         });
     }
@@ -44,10 +45,10 @@ export const Get = async (req, res) => {
 
 export const Detail = async(req, res) => {
     try {
-        const tag = await Tags.findById(req.params.id)
-        res.json({ tag });
+        const mapel = await Mapels.findById(req.params.id)
+        res.json({ mapel });
     } catch (error) {
-        console.error('Error see detail tag', { error })
+        console.error('Error see detail mapel', { error })
         res.status(500)
             .json({
                 message: "Something problem in server",
@@ -58,12 +59,13 @@ export const Detail = async(req, res) => {
 
 export const Create = async (req, res) => {
     try {
-        const tag = await Tags.create({ ...req.body });
+        const curiculum = await Curiculums.findById(req.body.curiculum);
+        const mapel = await Mapels.create({ ...req.body, curiculum : curiculum._id });
 
-        res.json({ message: "Succesfully create tag", tag });
+        res.json({ message: "Succesfully create mapel", mapel });
 
     } catch (error) {
-        console.error('Error create tag', { error })
+        console.error('Error create mapel', { error })
         res.status(500)
             .json({
                 message: "Something problem in server",
@@ -74,19 +76,22 @@ export const Create = async (req, res) => {
 
 export const Update = async (req, res) => {
     try {
-        const { name } = req.body;
+        const { curiculum, nama_mapel, jam_per_minggu } = req.body;
 
-        const tag = await Tags.findById(req.params.id);
+        const mapel = await Mapels.findById(req.params.id);
 
-        if (!tag) res.status(403).json({ message: "Invalid request, there no document" })
+        if (!mapel) res.status(403).json({ message: "Invalid request, there no document" })
 
-        tag.name = name;
-        await tag.save();
+        mapel.curiculum = curiculum;
+        mapel.nama_mapel = nama_mapel;
+        mapel.jam_per_minggu = jam_per_minggu;
 
-        res.json({ message: "Succesfully update tag", tag });
+        await mapel.save();
+
+        res.json({ message: "Succesfully update mapel", mapel });
 
     } catch (error) {
-        console.error('Error update tag', { error })
+        console.error('Error update mapel', { error })
         res.status(500)
             .json({
                 message: "Something problem in server",
@@ -97,15 +102,15 @@ export const Update = async (req, res) => {
 
 export const Delete = async (req, res) => {
     try {
-        const tag = await Tags.findById(req.params.id);
-        await tag.deleteOne();
+        const mapel = await Mapels.findById(req.params.id);
+        await mapel.deleteOne();
 
-        res.json({ message: "Succesfully delete tag"});
+        res.json({ message: "Succesfully delete mapel"});
 
     } catch (error) {
-        console.error('Error while delete tag', { error });
+        console.error('Error while delete mapel', { error });
         res.json(502)
-            .res({ message: "Error while delete tag", error : error.message})
+            .res({ message: "Error while delete mapel", error : error.message})
     }
 }
 

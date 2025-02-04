@@ -43,6 +43,20 @@ export const Get = async (req, res) => {
     }
 }
 
+export const Detail = async(req, res) => {
+    try {
+        const event = await Events.findById(req.params.id)
+        res.json({ event });
+    } catch (error) {
+        console.error('Error see detail event', { error })
+        res.status(500)
+            .json({
+                message: "Something problem in server",
+                error: error.message
+            })
+    }
+}
+
 export const Create = async (req, res) => {
     try {
         const event = await Events.create({ ...req.body });

@@ -42,6 +42,20 @@ export const Get = async (req, res) => {
     }
 }
 
+export const Detail = async(req, res) => {
+    try {
+        const jurusan = await Jurusans.findById(req.params.id)
+        res.json({ jurusan });
+    } catch (error) {
+        console.error('Error see detail jurusan', { error })
+        res.status(500)
+            .json({
+                message: "Something problem in server",
+                error: error.message
+            })
+    }
+}
+
 export const Create = async (req, res) => {
     try {
         const jurusan = await Jurusans.create({ ...req.body });
@@ -119,6 +133,7 @@ export const GetTeachers = async (req, res) => {
 }
 
 export const CreateTeacher = async (req, res) => {
+    console.log('tes')
     const jurusan = await Jurusans.findById(req.params.jurusan_id);
     const arrayOfTeacher = jurusan.teachers;
 
@@ -127,20 +142,30 @@ export const CreateTeacher = async (req, res) => {
     jurusan.teachers = arrayOfTeacher;
     jurusan.save();
 
-    res.json({ message: "Succesfully Create teacher", guru : req.body });
+    res.json({ message: "Succesfully Create teacher", guru: req.body });
 
 }
 
 export const UpdateTeacher = async (req, res) => {
     const jurusan = await Jurusans.findById(req.params.jurusan_id);
-    const arrayOfTeacher = jurusan.teachers;
+    let arrayOfTeacher = jurusan.teachers;
 
-    arrayOfTeacher = req.body.teachers;
+    // arrayOfTeacher = req.body.teachers;
+    let resultChanges = [];
+    arrayOfTeacher.map((val, _id) => {
+        console.log(req.params.id === val._id.toString(), {val});
+        if (req.params.id === val._id.toString()) {
+            resultChanges.push(req.body);
+            // return res.json({ message: "OK", val })
+        } else {
+            resultChanges.push(val);
+        }
+    })
+    console.log({resultChanges})
+    jurusan.teachers = resultChanges;
+    await jurusan.save();
 
-    jurusan.teachers = arrayOfTeacher;
-    jurusan.save();
-
-    res.json({ message: "Succesfully Update teacher", teachers : arrayOfTeacher });
+    res.json({ message: "Succesfully Update teacher", teachers: arrayOfTeacher });
 }
 
 export const DeleteTeacher = async (req, res) => {
@@ -151,15 +176,16 @@ export const DeleteTeacher = async (req, res) => {
     let teachers = [];
 
     arrayOfTeacher.map((val, i) => {
-        if(arrayOfTeacher[i]['_id'] != id){
-            teachers.push(arrayOfTeacher[i]);
-        }
-    })
+        if (id === val._id.toString()) {
 
-    jurusan.teachers = arrayOfTeacher;
+        }else{
+            teachers.push(val);
+        }
+    });
+
+    jurusan.teachers = teachers;
     await jurusan.save();
 
-    
-    res.json({ message: "Succesfully Delete teacher", teachers : arrayOfTeacher });
+    res.json({ message: "Succesfully Delete teacher", teachers: teachers });
 }
 
