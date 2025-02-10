@@ -42,6 +42,20 @@ export const Get = async (req, res) => {
     }
 }
 
+export const Detail = async(req, res) => {
+    try {
+        const tag = await Tags.findById(req.params.id)
+        res.json({ tag });
+    } catch (error) {
+        console.error('Error see detail tag', { error })
+        res.status(500)
+            .json({
+                message: "Something problem in server",
+                error: error.message
+            })
+    }
+}
+
 export const Create = async (req, res) => {
     try {
         const tag = await Tags.create({ ...req.body });
