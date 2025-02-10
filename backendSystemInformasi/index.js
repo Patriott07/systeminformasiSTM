@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { auth } from 'express-oauth2-jwt-bearer';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 
 import authroute from './routes/auth.route.js';
@@ -13,12 +14,14 @@ import aktivitasroute from './routes/aktivitas.route.js';
 
 dotenv.config({ path: '.env' });
 const app = express();
+
+app.use(cors())
 app.use(express.json());
 
 // const SECRET_KEY = process.env.JWT_SECRET;
 
 mongoose.connect(process.env.MONGO, {
-    // Note that mongoose will **not** pull `bufferCommands` from the query string
+    // Note that mongoose will *not* pull bufferCommands from the query string
 });
 
 mongoose.connection.on('connected', () => console.log('connected mongo'));
@@ -61,6 +64,9 @@ app.use('/auth', authroute);
 app.use('/event', eventroute);
 app.use('/blog', blogroute);
 app.use('/aktivitas', aktivitasroute);
+
+
+
 
 app.listen(process.env.PORT, () => {
     console.log({ Message: `Server was running on ${process.env.PORT}` });
