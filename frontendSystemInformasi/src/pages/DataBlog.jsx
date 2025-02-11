@@ -23,12 +23,14 @@ const DataBlog = () => {
         <Side />
 
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-9/12 m-10">
-          <div className="absolute h-[30vh] bg-red-500 w-full z-[-2] p-12">
+          <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
             <div className="font-semibold text-3xl text-white">
               Data Blog
             </div>
+            <p className=" text-white uppercase mt-2 font-semibold">Mulai Kelola Blog (15 items)</p>
+          
           </div>
-          <div className="flex items-center justify-between bg-white mt-[15vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
+          <div className="flex items-center justify-between bg-white mt-[20vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
             <div className="pb-4 bg-white dark:bg-gray-900 p-4">
               <label htmlFor="table-search" className="sr-only">
                 Search
@@ -54,14 +56,14 @@ const DataBlog = () => {
                 <input
                   type="text"
                   id="table-search"
-                  className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block py-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Search for items"
                 />
               </div>
             </div>
             <Link
               to="/add_blog"
-              className="w-fit text-white bg-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              className="w-fit text-white bg-purple-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
               Tambah Data
             </Link>
@@ -117,7 +119,7 @@ const DataBlog = () => {
                 </td>
                 <td className="px-6 py-4">One 2 One</td>
                 <td className="px-6 py-4">2024-08-21</td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 flex flex-col gap-2">
                   <button
                     onClick={() =>
                       openEditModal({
@@ -147,7 +149,7 @@ const DataBlog = () => {
                   </button>
                   <a
                     href="#"
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-purple-500 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
                   >
                     <svg
                       className="w-5 h-5 text-white"
@@ -175,14 +177,7 @@ const DataBlog = () => {
             className="ms-11 mt-4 flex items-between justify-between"
           >
             <ul className="inline-flex -space-x-px text-sm">
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  Previous
-                </a>
-              </li>
+            
               <li>
                 <a
                   href="#"
@@ -224,14 +219,7 @@ const DataBlog = () => {
                   5
                 </a>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  Next
-                </a>
-              </li>
+             
             </ul>
           </nav>
         </div>

@@ -33,7 +33,7 @@ export const Register = async (req, res) => {
     if (!name || !email || !password) return res.status(402).json({ message: "Please fill form correctly" });
 
     const hashedPassword = bcryptjs.hashSync(password || '', 10);
-    await Users.create({ name, email, password: hashedPassword });
+    await Users.create({ name, email, password: hashedPassword, role : "user" });
     res.status(201).json({ message: 'User created successfully!' });
 
 }

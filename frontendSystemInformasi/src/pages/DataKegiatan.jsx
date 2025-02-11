@@ -22,13 +22,14 @@ const DataKegiatan = () => {
       <div className="flex flex-grow">
         <Side />
 
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-9/12 m-10">
+        <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-9/12 m-12">
           <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
             <div className="font-semibold text-3xl text-white">
               Data Kegiatan
             </div>
+            <p className=" text-white uppercase mt-2 font-semibold">Mulai Kelola Kegiatan (15 items)</p>
           </div>
-          <div className="flex items-center justify-between bg-white mt-[15vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
+          <div className="flex items-center justify-between bg-white mt-[20vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
             <div className="pb-4 bg-white dark:bg-gray-900 p-4">
               <label htmlFor="table-search" className="sr-only">
                 Search
@@ -54,7 +55,7 @@ const DataKegiatan = () => {
                 <input
                   type="text"
                   id="table-search"
-                  className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block py-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Search for items"
                 />
               </div>
@@ -89,7 +90,7 @@ const DataKegiatan = () => {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-sm">
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td className="px-6 py-4">1</td>
                 <th
@@ -109,7 +110,7 @@ const DataKegiatan = () => {
                   />
                 </td>
                 <td className="px-6 py-4">2024-08-21</td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 flex flex-col gap-2">
                   <button
                     onClick={() =>
                       openEditModal({
