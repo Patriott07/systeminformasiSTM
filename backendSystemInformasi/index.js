@@ -4,6 +4,7 @@ import { auth } from 'express-oauth2-jwt-bearer';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import fileUpload from 'express-fileupload';
+import cors from 'cors';
 
 
 import authroute from './routes/auth.route.js';
@@ -19,12 +20,14 @@ import tagroute from './routes/tags.route.js';
 
 dotenv.config({ path: '.env' });
 const app = express();
+
+app.use(cors())
 app.use(express.json());
 app.use(express.static('public'));
 app.use(fileUpload());
 
 mongoose.connect(process.env.MONGO, {
-    // Note that mongoose will **not** pull `bufferCommands` from the query string
+    // Note that mongoose will *not* pull bufferCommands from the query string
 });
 
 mongoose.connection.on('connected', () => console.log('connected mongo'));

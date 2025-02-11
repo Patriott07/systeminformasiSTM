@@ -1,34 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+// Import
+import DataBlog from './pages/DataBlog';
+import AddBlog from './pages/AddBlog';
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+import DataKegiatan from './pages/DataKegiatan';
+import AddKegiatan from './pages/AddKegiatan';
+
+import DataJurusan from './pages/DataJurusan';
+import AddJurusan from './pages/AddJurusan';
+
+import DataKurikulum from './pages/DataKurikulum';
+import AddKurikulum from './pages/AddKurikulum';
+
+
+function App() {
+ 
+  return(
+    <BrowserRouter>
+      <Routes>
+      {/* Blog   */}
+      <Route path='/data_blog' element={<DataBlog />} />
+      <Route path='/add_blog' element={<AddBlog />} />
+
+      {/* Kegiatan   */}
+      <Route path='/data_kegiatan' element={<DataKegiatan />} />
+      <Route path='/add_kegiatan' element={<AddKegiatan />} />
+      
+      {/* Jurusan */}
+      <Route path='/data_jurusan' element={<DataJurusan />} />
+      <Route path='/add_jurusan' element={<AddJurusan />} />
+      
+      {/* Kurikulum */}
+      <Route path='/data_kurikulum' element={<DataKurikulum />} />
+      <Route path='/add_kurikulum' element={<AddKurikulum />} />
+    
+      </Routes>
+    </BrowserRouter>
   )
 }
 
