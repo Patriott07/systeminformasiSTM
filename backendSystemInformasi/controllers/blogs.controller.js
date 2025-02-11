@@ -43,6 +43,20 @@ export const Get = async (req, res) => {
     }
 }
 
+export const Detail = async(req, res) => {
+    try {
+        const blog = await Blogs.findById(req.params.id)
+        res.json({ blog });
+    } catch (error) {
+        console.error('Error see detail blog', { error })
+        res.status(500)
+            .json({
+                message: "Something problem in server",
+                error: error.message
+            })
+    }
+}
+
 export const Create = async (req, res) => {
     try {
         const blog = await Blogs.create({ ...req.body, created_by: req.user._id, comments: [], like: 0 });

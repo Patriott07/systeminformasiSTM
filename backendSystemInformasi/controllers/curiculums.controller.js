@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { Tags } from "../models/tags.model.js";
+import { Curiculums } from "../models/curiculums.model.js";
+import { Jurusans } from "../models/jurusan.model.js";
 
 export const Get = async (req, res) => {
 
@@ -10,13 +11,13 @@ export const Get = async (req, res) => {
 
         // Buat query pencarian (jika ada parameter search)
         const searchQuery = s
-            ? { $or: [{ name: { $regex: s, $options: 'i' } }] }
+            ? { $or: [{ nama_jurusan: { $regex: s, $options: 'i' } }] }
             : {}; // Jika tidak ada parameter search, gunakan query kosong
 
-        const totalItems = await Tags.countDocuments(searchQuery);
+        const totalItems = await Curiculums.countDocuments(searchQuery);
 
         // Ambil data berdasarkan query pencarian, sorting, dan pagination
-        const tags = await Tags.find(searchQuery)
+        const curiculums = await Curiculums.find(searchQuery)
             .sort({ createdAt: -1 }) // Sortir berdasarkan tanggal terbaru
             .skip(p * maxItems) // Lewati data berdasarkan halaman
             .limit(maxItems); // Batasi jumlah data per halaman
@@ -24,7 +25,7 @@ export const Get = async (req, res) => {
         // Kirimkan hasil ke client
         res.status(200).json({
             success: true,
-            data: tags,
+            data: curiculums,
             pagination: {
                 currentPage: parseInt(p, 10),
                 totalPages: Math.ceil(totalItems / maxItems),
@@ -33,10 +34,10 @@ export const Get = async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Error fetching tags:', error);
+        console.error('Error fetching curiculums:', error);
         res.status(500).json({
             success: false,
-            message: 'Failed to fetch tags',
+            message: 'Failed to fetch curiculums',
             error: error.message,
         });
     }
@@ -44,10 +45,10 @@ export const Get = async (req, res) => {
 
 export const Detail = async(req, res) => {
     try {
-        const tag = await Tags.findById(req.params.id)
-        res.json({ tag });
+        const curiculum = await Curiculums.findById(req.params.id)
+        res.json({ curiculum });
     } catch (error) {
-        console.error('Error see detail tag', { error })
+        console.error('Error see detail curiculum', { error })
         res.status(500)
             .json({
                 message: "Something problem in server",
@@ -58,12 +59,13 @@ export const Detail = async(req, res) => {
 
 export const Create = async (req, res) => {
     try {
-        const tag = await Tags.create({ ...req.body });
+        const jurusan = await Jurusans.findById(req.body.jurusan);
+        const curiculum = await Curiculums.create({ ...req.body, jurusan : jurusan._id });
 
-        res.json({ message: "Succesfully create tag", tag });
+        res.json({ message: "Succesfully create curiculum", curiculum });
 
     } catch (error) {
-        console.error('Error create tag', { error })
+        console.error('Error create curiculum', { error })
         res.status(500)
             .json({
                 message: "Something problem in server",
@@ -74,19 +76,23 @@ export const Create = async (req, res) => {
 
 export const Update = async (req, res) => {
     try {
-        const { name } = req.body;
+        const { year, kelas, semester, nama_jurusan } = req.body;
 
-        const tag = await Tags.findById(req.params.id);
+        const curiculum = await Curiculums.findById(req.params.id);
 
-        if (!tag) res.status(403).json({ message: "Invalid request, there no document" })
+        if (!curiculum) res.status(403).json({ message: "Invalid request, there no document" })
 
-        tag.name = name;
-        await tag.save();
+        curiculum.year = year;
+        curiculum.kelas = kelas;
+        curiculum.semester = semester;
+        curiculum.nama_jurusan = nama_jurusan;
 
-        res.json({ message: "Succesfully update tag", tag });
+        await curiculum.save();
+
+        res.json({ message: "Succesfully update curiculum", curiculum });
 
     } catch (error) {
-        console.error('Error update tag', { error })
+        console.error('Error update curiculum', { error })
         res.status(500)
             .json({
                 message: "Something problem in server",
@@ -97,15 +103,15 @@ export const Update = async (req, res) => {
 
 export const Delete = async (req, res) => {
     try {
-        const tag = await Tags.findById(req.params.id);
-        await tag.deleteOne();
+        const curiculum = await Curiculums.findById(req.params.id);
+        await curiculum.deleteOne();
 
-        res.json({ message: "Succesfully delete tag"});
+        res.json({ message: "Succesfully delete curiculum"});
 
     } catch (error) {
-        console.error('Error while delete tag', { error });
+        console.error('Error while delete curiculum', { error });
         res.json(502)
-            .res({ message: "Error while delete tag", error : error.message})
+            .res({ message: "Error while delete curiculum", error : error.message})
     }
 }
 

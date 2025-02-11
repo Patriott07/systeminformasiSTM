@@ -46,6 +46,7 @@
     cursor: pointer;
     transition: border-color 0.25s;
   }
+<<<<<<< HEAD
   button:hover {
     border-color: #646cff;
   }

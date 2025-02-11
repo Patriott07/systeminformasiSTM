@@ -42,6 +42,21 @@ export const Get = async (req, res) => {
     }
 }
 
+
+export const Detail = async(req, res) => {
+    try {
+        const aktivitas = await Aktivitas.findById(req.params.id)
+        res.json({ aktivitas });
+    } catch (error) {
+        console.error('Error see detail aktivitas', { error })
+        res.status(500)
+            .json({
+                message: "Something problem in server",
+                error: error.message
+            })
+    }
+}
+
 export const Create = async (req, res) => {
     try {
         const aktv = await Aktivitas.create({ ...req.body });
