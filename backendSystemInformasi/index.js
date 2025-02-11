@@ -14,6 +14,7 @@ import mediaroute from './routes/media.route.js';
 import aktivitasroute from './routes/aktivitas.route.js';
 import curiculumroute from './routes/curiculums.route.js';
 import mapelroute from './routes/mapel.route.js';
+import tagroute from './routes/tags.route.js';
 
 
 dotenv.config({ path: '.env' });
@@ -36,6 +37,7 @@ app.use('/aktivitas', aktivitasroute);
 app.use('/jurusan', jurusanroute);
 app.use('/file', mediaroute)
 app.use('/mapel', mapelroute)
+app.use('/tags', tagroute)
 app.use('/curiculum', curiculumroute)
 
 app.listen(process.env.PORT, () => {

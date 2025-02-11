@@ -9,4 +9,4 @@ const TagSchema = new mongoose.Schema(
     }
 );
 
-export const Tag = mongoose.model("tags", TagSchema);
+export const Tags = mongoose.model("tags", TagSchema);
