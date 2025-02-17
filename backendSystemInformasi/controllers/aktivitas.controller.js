@@ -83,7 +83,10 @@ export const Update = async (req, res) => {
 
         aktv.title = title;
         aktv.description = description;
-        aktv.details_media = details_media;
+       
+        if(req.body.hasOwnProperty("details_media")){
+            aktv.details_media = details_media;
+        }
 
         await aktv.save();
 

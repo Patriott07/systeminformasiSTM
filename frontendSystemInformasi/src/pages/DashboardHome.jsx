@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 const DashboardHome = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectShowData, setSelectShowData] = useState('blog');
     const [editData, setEditData] = useState(null);
 
     const openEditModal = (data) => {
@@ -16,6 +17,17 @@ const DashboardHome = () => {
         setIsEditModalOpen(false);
         setEditData(null);
     };
+
+    const TextChange = ({ type }) => {
+        if (type == "blog") return "Blogs";
+        if (type == "user") return "Users";
+        if (type == "kegiatan") return "Kegiatans";
+        if (type == "jurusan") return "Jurusans";
+        if (type == "kurikulum") return "Kurikulums";
+        if (type == "guru") return "Teachers";
+        if (type == "tag") return "Tags";
+    }
+
 
     return (
         <div className="flex flex-col min-h-screen ">
@@ -30,20 +42,24 @@ const DashboardHome = () => {
                         <p className=" text-white uppercase mt-2 font-semibold">Data Blog Terbaru</p>
                     </div>
                     <div className="flex items-center justify-between py-3 bg-white mt-[20vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
-                        <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Pilih Ringkasan Data</option>
-                            <option value="US">Users</option>
-                            <option value="CA">Blog</option>
-                            <option value="FR">Kegiatan</option>
-                            <option value="FR">Jurusan</option>
-                            <option value="DE">Kurikulum</option>
-                            <option value="DE">Guru</option>
+                        <select
+                            onChange={(e) => setSelectShowData(e.target.value)}
+                            id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                            <option value="user">Users</option>
+                            <option value="blog" selected>Blogs</option>
+                            <option value="kegiatan">Kegiatans</option>
+                            <option value="jurusan">Jurusans</option>
+                            <option value="kurikulum">Kurikulums</option>
+                            <option value="guru">Gurus</option>
+                            <option value="tag">Tags</option>
                         </select>
+                  
                         <Link
                             to="/add_kegiatan"
                             className="w-fit text-white bg-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                         >
-                            Mulai Kelola
+                            Mulai Kelola <TextChange type={selectShowData} />
                         </Link>
                     </div>
                     <table className="text-sm text-left m-0 rounded-none rtl:text-right text-gray-500 dark:text-gray-400 border-t w-11/12 mx-auto">
@@ -64,9 +80,7 @@ const DashboardHome = () => {
                                 <th scope="col" className="px-6 py-3">
                                     Date
                                 </th>
-                                <th scope="col" className="px-9 py-3">
-                                    Action
-                                </th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -89,7 +103,7 @@ const DashboardHome = () => {
                                     />
                                 </td>
                                 <td className="px-6 py-4">2024-08-21</td>
-                                <td className="px-6 py-4">
+                                {/* <td className="px-6 py-4">
                                     <button
                                         onClick={() =>
                                             openEditModal({
@@ -137,288 +151,13 @@ const DashboardHome = () => {
                                         </svg>
                                         <span>Delete</span>
                                     </a>
-                                </td>
+                                </td> */}
                             </tr>
-                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td className="px-6 py-4">1</td>
-                                <th
-                                    scope="row"
-                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    Smartren Ramadhan
-                                </th>
-                                <td className="px-6 py-4">
-                                    Kegiatan Memperkuat Agama dan Menambah Pahala Bagi Para Siswa
-                                </td>
-                                <td>
-                                    <img
-                                        src="https://awsimages.detik.net.id/community/media/visual/2023/03/16/ilustrasi-bulan-ramadan_169.jpeg?w=600&q=90"
-                                        className="w-20 h-20 rounded-full object-cover"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="px-6 py-4">2024-08-21</td>
-                                <td className="px-6 py-4">
-                                    <button
-                                        onClick={() =>
-                                            openEditModal({
-                                                name: "Apple MacBook Pro 17",
-                                                color: "Silver",
-                                                category: "Laptop",
-                                                price: "$2999",
-                                            })
-                                        }
-                                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                                    >
-                                        <svg
-                                            className="w-5 h-5 text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M12 4v16m8-8H4"
-                                            />
-                                        </svg>
-                                        <span>Edit</span>
-                                    </button>
-                                    <a
-                                        href="#"
-                                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                                    >
-                                        <svg
-                                            className="w-5 h-5 text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                        <span>Delete</span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td className="px-6 py-4">1</td>
-                                <th
-                                    scope="row"
-                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    Smartren Ramadhan
-                                </th>
-                                <td className="px-6 py-4">
-                                    Kegiatan Memperkuat Agama dan Menambah Pahala Bagi Para Siswa
-                                </td>
-                                <td>
-                                    <img
-                                        src="https://awsimages.detik.net.id/community/media/visual/2023/03/16/ilustrasi-bulan-ramadan_169.jpeg?w=600&q=90"
-                                        className="w-20 h-20 rounded-full object-cover"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="px-6 py-4">2024-08-21</td>
-                                <td className="px-6 py-4">
-                                    <button
-                                        onClick={() =>
-                                            openEditModal({
-                                                name: "Apple MacBook Pro 17",
-                                                color: "Silver",
-                                                category: "Laptop",
-                                                price: "$2999",
-                                            })
-                                        }
-                                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                                    >
-                                        <svg
-                                            className="w-5 h-5 text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M12 4v16m8-8H4"
-                                            />
-                                        </svg>
-                                        <span>Edit</span>
-                                    </button>
-                                    <a
-                                        href="#"
-                                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                                    >
-                                        <svg
-                                            className="w-5 h-5 text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                        <span>Delete</span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td className="px-6 py-4">1</td>
-                                <th
-                                    scope="row"
-                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    Smartren Ramadhan
-                                </th>
-                                <td className="px-6 py-4">
-                                    Kegiatan Memperkuat Agama dan Menambah Pahala Bagi Para Siswa
-                                </td>
-                                <td>
-                                    <img
-                                        src="https://awsimages.detik.net.id/community/media/visual/2023/03/16/ilustrasi-bulan-ramadan_169.jpeg?w=600&q=90"
-                                        className="w-20 h-20 rounded-full object-cover"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="px-6 py-4">2024-08-21</td>
-                                <td className="px-6 py-4">
-                                    <button
-                                        onClick={() =>
-                                            openEditModal({
-                                                name: "Apple MacBook Pro 17",
-                                                color: "Silver",
-                                                category: "Laptop",
-                                                price: "$2999",
-                                            })
-                                        }
-                                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                                    >
-                                        <svg
-                                            className="w-5 h-5 text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M12 4v16m8-8H4"
-                                            />
-                                        </svg>
-                                        <span>Edit</span>
-                                    </button>
-                                    <a
-                                        href="#"
-                                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                                    >
-                                        <svg
-                                            className="w-5 h-5 text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                        <span>Delete</span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td className="px-6 py-4">1</td>
-                                <th
-                                    scope="row"
-                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    Smartren Ramadhan
-                                </th>
-                                <td className="px-6 py-4">
-                                    Kegiatan Memperkuat Agama dan Menambah Pahala Bagi Para Siswa
-                                </td>
-                                <td>
-                                    <img
-                                        src="https://awsimages.detik.net.id/community/media/visual/2023/03/16/ilustrasi-bulan-ramadan_169.jpeg?w=600&q=90"
-                                        className="w-20 h-20 rounded-full object-cover"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="px-6 py-4">2024-08-21</td>
-                                <td className="px-6 py-4">
-                                    <button
-                                        onClick={() =>
-                                            openEditModal({
-                                                name: "Apple MacBook Pro 17",
-                                                color: "Silver",
-                                                category: "Laptop",
-                                                price: "$2999",
-                                            })
-                                        }
-                                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                                    >
-                                        <svg
-                                            className="w-5 h-5 text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M12 4v16m8-8H4"
-                                            />
-                                        </svg>
-                                        <span>Edit</span>
-                                    </button>
-                                    <a
-                                        href="#"
-                                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                                    >
-                                        <svg
-                                            className="w-5 h-5 text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                        <span>Delete</span>
-                                    </a>
-                                </td>
-                            </tr>
+
                         </tbody>
                     </table>
 
-                   
+
                 </div>
             </div>
 

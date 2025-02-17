@@ -30,6 +30,9 @@ import Targetjurusan from './view/Targetjurusan.jsx';
 // IMPORT
 import DashboardHome from './pages/DashboardHome.jsx';
 import DataUsers from './pages/DataUsers.jsx';
+import DataTags from './pages/DataTags.jsx';
+import DataTeachers from './pages/DataTeachers.jsx';
+import AddTeachers from './pages/AddTeachers.jsx';
 
 
 function App() {
@@ -71,6 +74,13 @@ function App() {
 
         <Route path='/dashboard/users' element={<DataUsers />} />
         <Route path='/dashboard/home' element={<DashboardHome />} />
+
+
+        <Route path='/data_tags' element={<DataTags />} />
+        <Route path='/edit/kegiatan/:id' element={<AddKegiatan />} />
+
+        <Route path='/data_jurusan/teachers/:id/:name' element={<DataTeachers />} />
+        <Route path='/add_teacher/:id' element={<AddTeachers />} />
       </Routes>
     </BrowserRouter>
   )

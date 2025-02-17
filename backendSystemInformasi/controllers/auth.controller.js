@@ -24,7 +24,7 @@ export const login = async (req, res) => {
     }
 
     const token = jwt.sign(payload, process.env.JWT_SECRET);
-    res.json({ message: "berhasil login", token });
+    res.json({ message: "berhasil login", token, role : user.role });
 
 }
 export const Register = async (req, res) => {

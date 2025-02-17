@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 
-const AddKegiatan = () => {
+const EditKegiatan = () => {
 
   const navigate = useNavigate();
   const handleSubmitKegiatan = async (e) => {
@@ -121,4 +121,4 @@ const AddKegiatan = () => {
   );
 };
 
-export default AddKegiatan;
+export default EditKegiatan;

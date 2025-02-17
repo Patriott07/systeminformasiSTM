@@ -29,11 +29,20 @@ const Loginpage = () => {
 
       // Pastikan token ada sebelum menyimpannya
       if (data.token) {
+
         console.log("Token received:", data.token); // Log token to console
         localStorage.setItem("token", data.token);
         setMessage("Login berhasil");
         setError(null);
-        navigate("/blog"); // Redirect to homepage or any other page
+        
+        if(data.role == "admin")
+        {
+          navigate("/dashboard/home"); // RedireFct to homepage or any other page
+
+        }else{
+
+          navigate("/blog"); // RedireFct to homepage or any other page
+        }
       }
     } catch (err) {
       setError("Terjadi kesalahan. Silakan coba lagi.");

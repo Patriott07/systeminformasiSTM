@@ -3,7 +3,7 @@ import fs from 'fs';
 import { Medias } from '../models/media.model.js';
 
 export const SaveFileImage = async (req, res) => {
-    // console.log(req.files, req.file);
+    console.log("req files", req.files, 'req file' ,req.file);
 
     const { type } = req.body; // (string)image, video
     const file = req.files.file; // file

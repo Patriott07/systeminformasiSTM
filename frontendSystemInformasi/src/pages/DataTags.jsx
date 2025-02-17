@@ -2,24 +2,11 @@ import { useState } from "react";
 import Side from "../components/Side";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { serverPort } from "../utls/global_variable";
 
-import { headers, serverPort } from '../utls/global_variable.js';
-
-import Swal from 'sweetalert2';
-import PhotoSwipeLightbox from 'photoswipe/lightbox';
-import 'photoswipe/style.css';
-
-const DataKurikulum = () => {
+const DataTags = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
-
-
-  const [countData, setCountData] = useState(0);
-  const [pagination, setPagination] = useState(0);
-  const [currentPagination, setCurrentPagination] = useState(1);
-
-  const [images, setImages] = useState([]);
-  const [kurikulums, setKurikulums] = useState([]);
 
   const openEditModal = (data) => {
     setEditData(data);
@@ -31,36 +18,6 @@ const DataKurikulum = () => {
     setEditData(null);
   };
 
-  
-  const handleSubmitSearch = async (e) => {
-    e.preventDefault();
-    handleFetchKegiatan(e.target[0].value);
-  }
-
-  // FUngsi ketika ada perubahan pada currentPagination
-  const handleChangePagination = (num) => {
-    if (num > 0 && num < pagination + 1) {
-      setCurrentPagination(num);
-    }
-  }
-
-  useEffect(() => {
-    handleFetchKegiatan();
-  }, [currentPagination])
-
-  useEffect(() => {
-    handleFetchKegiatan();
-
-    const lightbox = new PhotoSwipeLightbox({
-      gallery: '#gallery',
-      children: 'a',
-      pswpModule: () => import('photoswipe')
-    });
-    lightbox.init();
-  }, []);
-
-  
-
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
@@ -69,9 +26,9 @@ const DataKurikulum = () => {
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-9/12 m-10">
           <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
             <div className="font-semibold text-3xl text-white">
-              Data Kurikulum
+              Data Tags
             </div>
-            <p className=" text-white uppercase mt-2 font-semibold">Mulai Kelola Kurikulum Semester SMKN 1 Cirebon (15 items)</p>
+            <p className=" text-white uppercase mt-2 font-semibold">Mulai Kelola Tag untuk kebutuhan blog SMKN 1 Cirebon (15 items)</p>
           
           </div>
           <div className="flex items-center justify-between bg-white mt-[20vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
@@ -166,12 +123,7 @@ const DataKurikulum = () => {
                 <td className="px-6 py-4 flex flex-col gap-2">
                   <button
                     onClick={() =>
-                      openEditModal({
-                        name: "Apple MacBook Pro 17",
-                        color: "Silver",
-                        category: "Laptop",
-                        price: "$2999",
-                      })
+                      openEditModal({})
                     }
                     className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
                   >
@@ -291,14 +243,24 @@ const EditModal = ({ data, onClose }) => {
     onClose();
   };
 
+  const handleEditData = async(e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${serverPort}/aktivitas/update/${id}`)
+    } catch (error) {
+      console.log({error});
+      Swal.fire("Something wrong!", error.message, 'error');
+    }
+  }
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <form onSubmit={handleEditData} className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <div className="bg-white p-6 rounded-lg shadow-lg w-[650px] animate-fade-in">
         <h2 className="text-xl font-bold mb-4 text-center text-blue-600">
           Edit Data
         </h2>
 
-        <label className="block text-sm font-medium text-gray-700">Nama</label>
+        <label className="block text-sm font-medium text-gray-700">Title</label>
         <input
           type="text"
           value={title}
@@ -403,8 +365,8 @@ const EditModal = ({ data, onClose }) => {
           </button>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
-export default DataKurikulum;
+export default DataTags;
