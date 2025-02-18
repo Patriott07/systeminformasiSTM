@@ -14,6 +14,9 @@ import AddJurusan from './pages/AddJurusan';
 import DataKurikulum from './pages/DataKurikulum';
 import AddKurikulum from './pages/AddKurikulum';
 
+import DataMapels from './pages/DataMapels';
+import AddMapels from './pages/AddMapels';
+
 
 
 // IMPORT 
@@ -67,6 +70,9 @@ function App() {
         {/* Kurikulum */}
         <Route path='/data_kurikulum' element={<DataKurikulum />} />
         <Route path='/add_kurikulum' element={<AddKurikulum />} />
+
+        <Route path='/data_mapels' element={<DataMapels />} />
+        <Route path='/add_mapels' element={<AddMapels />} />
 
 
         {/* PATRIOT */}
