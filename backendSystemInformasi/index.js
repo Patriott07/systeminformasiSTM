@@ -15,6 +15,8 @@ import mediaroute from './routes/media.route.js';
 import aktivitasroute from './routes/aktivitas.route.js';
 import curiculumroute from './routes/curiculums.route.js';
 import mapelroute from './routes/mapel.route.js';
+import tagroute from './routes/tags.route.js';
+import userroute from './routes/user.route.js';
 
 
 dotenv.config({ path: '.env' });
@@ -33,12 +35,14 @@ mongoose.connection.on('connected', () => console.log('connected mongo'));
 mongoose.connection.on('disconnected', () => console.log('disconnected mongo'));
 
 app.use('/auth', authroute);
+app.use('/user', userroute);
 app.use('/event', eventroute);
 app.use('/blog', blogroute);
 app.use('/aktivitas', aktivitasroute);
 app.use('/jurusan', jurusanroute);
 app.use('/file', mediaroute)
 app.use('/mapel', mapelroute)
+app.use('/tags', tagroute)
 app.use('/curiculum', curiculumroute)
 
 app.listen(process.env.PORT, () => {

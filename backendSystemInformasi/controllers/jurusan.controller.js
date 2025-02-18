@@ -42,7 +42,7 @@ export const Get = async (req, res) => {
     }
 }
 
-export const Detail = async(req, res) => {
+export const Detail = async (req, res) => {
     try {
         const jurusan = await Jurusans.findById(req.params.id)
         res.json({ jurusan });
@@ -82,8 +82,11 @@ export const Update = async (req, res) => {
 
         jurusan.name = name;
         jurusan.deskripsi = deskripsi;
-        jurusan.images = images;
-        jurusan.teachers = teachers;
+
+        if (req.body.hasOwnProperty('images')) {
+            jurusan.images = images;
+        }
+        // jurusan.teachers = teachers;
 
         await jurusan.save();
 
@@ -125,10 +128,11 @@ export const GetTeachers = async (req, res) => {
 
     res.status(200).json({
         success: true,
-        data: guru
+        data: guru,
+        totalPages : 0,
+        totalItems : guru.length
     });
 
-    res.json({ message: "Succesfully", guru });
 
 }
 
@@ -150,18 +154,30 @@ export const UpdateTeacher = async (req, res) => {
     const jurusan = await Jurusans.findById(req.params.jurusan_id);
     let arrayOfTeacher = jurusan.teachers;
 
+    let body = {
+        name : req.body.name,
+        mengajar : req.body.mengajar,
+    }
+
     // arrayOfTeacher = req.body.teachers;
     let resultChanges = [];
     arrayOfTeacher.map((val, _id) => {
-        console.log(req.params.id === val._id.toString(), {val});
+        console.log(req.params.id === val._id.toString(), { val });
         if (req.params.id === val._id.toString()) {
-            resultChanges.push(req.body);
+
+            body.photo = val.photo
+            console.log({test : req.body.hasOwnProperty("photo")})
+            if(req.body.hasOwnProperty("photo")){
+                body.photo = req.body.photo;
+            }
+
+            resultChanges.push(body);
             // return res.json({ message: "OK", val })
         } else {
             resultChanges.push(val);
         }
     })
-    console.log({resultChanges})
+    console.log({ resultChanges })
     jurusan.teachers = resultChanges;
     await jurusan.save();
 
@@ -178,7 +194,7 @@ export const DeleteTeacher = async (req, res) => {
     arrayOfTeacher.map((val, i) => {
         if (id === val._id.toString()) {
 
-        }else{
+        } else {
             teachers.push(val);
         }
     });

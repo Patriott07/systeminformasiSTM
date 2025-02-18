@@ -1,101 +1,112 @@
 import Side from "../components/Side";
+import { useState, useEffect } from "react";
+import { headers, serverPort } from '../utls/global_variable.js'
+import Swal from 'sweetalert2';
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 const AddJurusan = () => {
+
+  const navigate = useNavigate();
+  const handleSubmitKegiatan = async (e) => {
+
+    e.preventDefault();
+    let gallery = [];
+
+    try {
+      const files = Array.from(e.target[2].files);
+      await Promise.all(
+
+        files.map(async (file) => {
+          try {
+            let formData = new FormData();
+            formData.append('file', file);
+            formData.append('type', "image");
+
+            const resfile = await fetch(`${serverPort}/file/save`, {
+              method: "POST",
+              body: formData,
+              headers: {
+                token: localStorage.getItem('token')
+              }
+            });
+
+            const dataFile = await resfile.json();
+
+            gallery.push(dataFile.url);
+
+            console.log({ dataFile })
+
+          } catch (error) {
+            console.log({ error })
+          }
+        })
+        
+      )
+
+      const res = await fetch(`${serverPort}/jurusan/create`,
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            name: e.target[0].value,
+            deskripsi: e.target[1].value,
+            images: gallery
+          }),
+        }
+      );
+
+      const data = await res.json();
+      console.log({ data });
+
+      Swal.fire("Succesfully", data.message, 'success').then(() => navigate('/data_jurusan'))
+
+    } catch (error) {
+      console.log({ error });
+      Swal.fire('Something Wrong', error.message, 'error');
+    }
+  }
+
   return (
     <div className="flex justify-between">
       <Side />
       <div
         class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
-        style={{
-          "--radio-dot-svg": `url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='rgb(17,20,24)' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e")`,
-          fontFamily: `"Newsreader", "Noto Sans", sans-serif`,
-        }}
+
       >
-        <div class=" flex h-full grow flex-col bg-gray-100">
-          <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#111418] px-10 py-3">
-            <h1 className="text-2xl font-bold px-3">Add Jurusan</h1>
-            <div class="flex flex-1 justify-end gap-8">
-              <div class="flex gap-2">
-                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#1980e6] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-                  <a href="data_jurusan" class="truncate">
-                    Cancel
-                  </a>
+        <div class="flex h-full grow flex-col bg-white">
+          <div class="px-40 flex flex-1 justify-start py-5">
+            <form onSubmit={handleSubmitKegiatan} class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5  flex-1">
+              <div class="flex max-w-[480px] flex-wrap items-end gap-4 text-2xl font-semibold py-3">
+                Buat Jurusan Baru
+              </div>
+              <div>
+                <label for="first_name" class="block mb-2  text-gray-900 dark:text-white text-sm">Nama Jurusan</label>
+                <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul kegiatan" required />
+              </div>
+              
+              <div>
+
+                <label for="message" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white ">Deskripsi Jurusan</label>
+                <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Deskripsi tentang kegiatan ini..."></textarea>
+
+              </div>
+
+              <div>
+                <label for="first_name" class="block mb-2  text-gray-900 dark:text-white text-sm">Gallery Jurusan</label>
+                <input type="file" multiple id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                <div className="text-sm text-gray-400 pb-5">(*you can choose multiple photo)</div>
+              </div>
+
+              <div class="flex py-3 gap-2">
+
+                <button type="submit" class="w-fit cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4  bg-[#1980e6] text-white text-sm  leading-normal tracking-[0.015em]">
+                  <span class="truncate">Save Jurusan Baru</span>
                 </button>
+                <Link to={'/data_jurusan'} type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Cancel</Link>
               </div>
-            </div>
-          </header>
-          <div class="px-40 flex flex-1 justify-center py-5">
-            <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
-              <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-                <label class="flex flex-col min-w-40 flex-1">
-                  <p class="text-[#111418] text-base font-medium leading-normal pb-2">
-                    Title
-                  </p>
-                  <input
-                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-14 placeholder:text-[#637588] p-4 text-base font-normal leading-normal"
-                    placeholder="Enter title here"
-                  />
-                </label>
-              </div>
-              <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
-                Write
-              </h3>
-              <div class="flex items-center px-4 py-3 gap-3 @container h-full max-h-[520px]">
-                <label class="flex flex-col min-w-40 h-full flex-1">
-                  <div class="flex w-full flex-1 rounded-xl flex-col">
-                    <div class="flex flex-1 flex-col">
-                      <textarea
-                        placeholder="Start writing your article here..."
-                        class="form-input flex w-full min-w-0 flex-1 resize-none rounded-xl border bg-white focus:border-[#dce0e5] min-h-36 placeholder:text-[#bbc4ce] p-[15px] rounded text-base font-normal pt-4 pb-0"
-                      ></textarea>
-                    </div>
-                  </div>
-                </label>
-              </div>
-              <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
-                Cover photo
-              </h3>
-              <div class="flex px-4 py-3 justify-start">
-                <input type="file" class="flex" />
-              </div>
-              <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
-                Tags
-              </h3>
-              <div class="flex gap-3 p-3 flex-wrap pr-4">
-                <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4">
-                  <p class="text-[#111418] text-sm font-medium leading-normal">
-                    Metaverse
-                  </p>
-                </div>
-                <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4">
-                  <p class="text-[#111418] text-sm font-medium leading-normal">
-                    NFT
-                  </p>
-                </div>
-                <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f0f2f4] pl-4 pr-4">
-                  <p class="text-[#111418] text-sm font-medium leading-normal">
-                    Virtual Reality
-                  </p>
-                </div>
-              </div>
-              <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
-                Post URL
-              </h3>
-              <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-                <label class="flex flex-col min-w-40 flex-1">
-                  <input
-                    placeholder="bloggr.com/"
-                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-14 placeholder:text-[#637588] p-[15px] text-base font-normal leading-normal"
-                    value=""
-                  />
-                </label>
-              </div>
-              <div class="flex px-4 py-3">
-                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#1980e6] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-                  <span class="truncate">Save</span>
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

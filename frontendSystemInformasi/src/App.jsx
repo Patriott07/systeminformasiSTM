@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
 
 // Import
@@ -16,7 +16,7 @@ import AddKurikulum from './pages/AddKurikulum';
 
 
 
-//Import
+// IMPORT 
 import Homepage from "./view/Homepage";
 import Jurusan from './view/Jurusan.jsx';
 import Blogpage from './view/Blogpage.jsx';
@@ -27,39 +27,60 @@ import Targetjurusan from './view/Targetjurusan.jsx';
 
 
 
+// IMPORT
+import DashboardHome from './pages/DashboardHome.jsx';
+import DataUsers from './pages/DataUsers.jsx';
+import DataTags from './pages/DataTags.jsx';
+import DataTeachers from './pages/DataTeachers.jsx';
+import AddTeachers from './pages/AddTeachers.jsx';
+
+
 function App() {
- 
-  return(
+
+  return (
     <BrowserRouter>
       <Routes>
-      {/* Blog   */}
-      <Route path='/data_blog' element={<DataBlog />} />
-      <Route path='/add_blog' element={<AddBlog />} />
-
-      {/* Kegiatan   */}
-      <Route path='/data_kegiatan' element={<DataKegiatan />} />
-      <Route path='/add_kegiatan' element={<AddKegiatan />} />
-      
-      {/* Jurusan */}
-      <Route path='/detail_jurusan' element={<DataJurusan />} />
-      <Route path='/add_jurusan' element={<AddJurusan />} />
-      
-      {/* Kurikulum */}
-      <Route path='/data_kurikulum' element={<DataKurikulum />} />
-      <Route path='/add_kurikulum' element={<AddKurikulum />} />
-    
+        {/* GIBRAN */}
+        <Route path="/" element={<Homepage />} />
+        {/* <Route path="Crud" element={<Crud />} /> */}
+        <Route path="/Blog" element={<Blogpage />} />
+        <Route path="/Jurusan" element={<Jurusan />} />
+        <Route path="/Login" element={<Loginpage />} />
+        <Route path="/Register" element={<Registerpage />} />
+        <Route path="/Kegiatan" element={<Kegiatan />} />
+        <Route path="/Targetjurusan" element={<Targetjurusan />} />
 
 
-      {/* Gibran */}
+        {/* DAPA */}
+        {/* Blog   */}
+        <Route path='/data_blog' element={<DataBlog />} />
+        <Route path='/add_blog' element={<AddBlog />} />
 
-      <Route path="/" element={<Homepage />} />
-    {/* <Route path="Crud" element={<Crud />} /> */}
-    <Route path="Blog" element={<Blogpage />} />
-    <Route path="Jurusan" element={<Jurusan />} />
-    <Route path="Login" element={<Loginpage />} />
-    <Route path="Register" element={<Registerpage />} />
-    <Route path="Kegiatan" element={<Kegiatan />} />
-    <Route path="Targetjurusan" element={<Targetjurusan />} />
+        {/* Kegiatan   */}
+        <Route path='/data_kegiatan' element={<DataKegiatan />} />
+        <Route path='/add_kegiatan' element={<AddKegiatan />} />
+
+        {/* Jurusan */}
+        <Route path='/data_jurusan' element={<DataJurusan />} />
+        <Route path='/add_jurusan' element={<AddJurusan />} />
+
+        {/* Kurikulum */}
+        <Route path='/data_kurikulum' element={<DataKurikulum />} />
+        <Route path='/add_kurikulum' element={<AddKurikulum />} />
+
+
+        {/* PATRIOT */}
+        {/* Users */}
+
+        <Route path='/dashboard/users' element={<DataUsers />} />
+        <Route path='/dashboard/home' element={<DashboardHome />} />
+
+
+        <Route path='/data_tags' element={<DataTags />} />
+        <Route path='/edit/kegiatan/:id' element={<AddKegiatan />} />
+
+        <Route path='/data_jurusan/teachers/:id/:name' element={<DataTeachers />} />
+        <Route path='/add_teacher/:id' element={<AddTeachers />} />
       </Routes>
     </BrowserRouter>
   )
