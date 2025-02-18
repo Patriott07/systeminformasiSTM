@@ -12,5 +12,4 @@ const SchemaCuriculum = mongoose.Schema({
     }
 })
 
-
 export const Curiculums = mongoose.model("Curiculums", SchemaCuriculum)

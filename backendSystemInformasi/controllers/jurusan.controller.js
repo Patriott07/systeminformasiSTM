@@ -6,7 +6,7 @@ export const Get = async (req, res) => {
     try {
         // butuh pagination sama fitur search mungkin
         const { p = 0, s } = req.query;
-        let maxItems = 20;
+        let maxItems = 100;
 
         // Buat query pencarian (jika ada parameter search)
         const searchQuery = s

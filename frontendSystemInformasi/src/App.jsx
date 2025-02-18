@@ -33,6 +33,7 @@ import DataUsers from './pages/DataUsers.jsx';
 import DataTags from './pages/DataTags.jsx';
 import DataTeachers from './pages/DataTeachers.jsx';
 import AddTeachers from './pages/AddTeachers.jsx';
+import AddTag from './pages/AddTag.jsx';
 
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
 
 
         <Route path='/data_tags' element={<DataTags />} />
+        <Route path='/add_tag' element={<AddTag />} />
         <Route path='/edit/kegiatan/:id' element={<AddKegiatan />} />
 
         <Route path='/data_jurusan/teachers/:id/:name' element={<DataTeachers />} />
