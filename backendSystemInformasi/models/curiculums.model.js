@@ -10,6 +10,8 @@ const SchemaCuriculum = mongoose.Schema({
         ref : "Jurusans",
         required: true
     }
+},{
+    timestamps : true
 })
 
 export const Curiculums = mongoose.model("Curiculums", SchemaCuriculum)

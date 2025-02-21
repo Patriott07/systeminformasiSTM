@@ -9,6 +9,8 @@ const mapelSchema = mongoose.Schema({
     nama_mapel: String,
     jam_per_minggu: Number
     
+},{
+    timestamps : true
 });
 
 export const Mapels = mongoose.model('mapels', mapelSchema);

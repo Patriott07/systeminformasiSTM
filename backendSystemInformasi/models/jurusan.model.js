@@ -15,6 +15,8 @@ const JurusanSchema = mongoose.Schema({
             })
         ]
     }
+},{
+    timestamps : true
 });
 
 export const Jurusans = mongoose.model('Jurusans', JurusanSchema);

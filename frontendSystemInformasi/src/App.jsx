@@ -73,7 +73,7 @@ function App() {
         <Route path='/add_kurikulum' element={<AddKurikulum />} />
 
         <Route path='/data_mapels' element={<DataMapels />} />
-        <Route path='/add_mapels' element={<AddMapels />} />
+        <Route path='/add_mapel' element={<AddMapels />} />
 
 
         {/* PATRIOT */}

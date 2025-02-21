@@ -6,12 +6,12 @@ export const Get = async (req, res) => {
 
     try {
         // butuh pagination sama fitur search mungkin
-        const { p = 0, s } = req.query;
+        const { p = 0, select } = req.query;
         let maxItems = 10000;
 
         // Buat query pencarian (jika ada parameter search)
-        const searchQuery = s
-            ? { $or: [{ nama_mapel: { $regex: s, $options: 'i' } }] }
+        const searchQuery = select
+            ? {curiculum : new mongoose.Types.ObjectId(select)}
             : {}; // Jika tidak ada parameter search, gunakan query kosong
 
         const totalItems = await Mapels.countDocuments(searchQuery);
@@ -20,6 +20,7 @@ export const Get = async (req, res) => {
         const mapels = await Mapels.find(searchQuery)
             .sort({ createdAt: -1 }) // Sortir berdasarkan tanggal terbaru
             .skip(p * maxItems) // Lewati data berdasarkan halaman
+            .populate('curiculum')
             .limit(maxItems); // Batasi jumlah data per halaman
 
         // Kirimkan hasil ke client

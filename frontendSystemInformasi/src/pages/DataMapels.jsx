@@ -12,8 +12,6 @@ import 'photoswipe/style.css';
 
 const DataMapels = () => {
 
-
-
     const navigate = useNavigate();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editData, setEditData] = useState(null);
@@ -23,9 +21,11 @@ const DataMapels = () => {
     const [currentPagination, setCurrentPagination] = useState(1);
 
     const [images, setImages] = useState([]);
-    const [teachers, setTeachers] = useState([]);
+    const [mapels, setMapels] = useState([]);
 
     const { id, name } = useParams();
+
+    const [curiculums, setCuriculums] = useState([]);
 
 
     const openEditModal = (data) => {
@@ -65,10 +65,11 @@ const DataMapels = () => {
         lightbox.init();
 
         // handleGetMapels();
+        handleGetCuriculum();
     }, []);
 
     const handleFetchTeachers = async (SQ) => {
-        let url = `${serverPort}/jurusan/guru/get/${id}/?p=${currentPagination - 1}`;
+        let url = `${serverPort}/mapel/get/?p=${currentPagination - 1}`;
 
         if (SQ) {
             url += `&s=${SQ}`;
@@ -82,39 +83,33 @@ const DataMapels = () => {
             const data = await res.json();
             console.log({ data })
 
-            setTeachers(data.data);
-            setPagination(data.totalPages);
-            setCountData(data.totalItems);
-
             if (data.data.length == 0) {
                 return;
             }
 
-            let image = [];
-
-            data.data.forEach((val, _i) => {
-                const img = document.createElement('img');
-                img.src = val.photo;
-
-
-                image.push({
-                    src: val.photo,
-                    w: img.naturalWidth,
-                    h: img.naturalHeight
-                });
-
-
-            })
-
-            setImages(image);
-            console.log({ image })
+            setMapels(data.data);
+            setPagination(data.pagination.totalPages);
+            setCountData(data.pagination.totalItems);
 
         } catch (error) {
-            console.log({ message: "Something wrong while fetch Jurusan", error })
+            console.log({ message: "Something wrong while fetch Mapel", error })
         }
     }
 
-    const handleDelete = async (_id) => {
+    const handleGetCuriculum = async () => {
+        try {
+            const res = await fetch(`${serverPort}/curiculum/get`, { headers });
+            const data = await res.json();
+            console.log({ data })
+            setCuriculums(data.data);
+
+        } catch (error) {
+            console.log({ error })
+            Swal.fire('Something Wrong', error.message, 'error')
+        }
+    }
+
+    const handleDelete = async (id) => {
         try {
             Swal.fire({
                 title: "Are you sure?",
@@ -127,7 +122,7 @@ const DataMapels = () => {
             }).then(async (result) => {
 
                 if (result.isConfirmed) {
-                    const res = await fetch(`${serverPort}/jurusan/guru/delete/${id}/${_id}`, {
+                    const res = await fetch(`${serverPort}/mapel/delete/${id}`, {
                         method: "DELETE",
                         headers
                     });
@@ -151,6 +146,32 @@ const DataMapels = () => {
         }
     }
 
+    const handleChangeSelect = async (e) => {
+        try {
+            let url = `${serverPort}/mapel/get/?p=${currentPagination - 1}&select=${e.target.value}`;
+
+            const res = await fetch(url, {
+                headers
+            })
+
+            const data = await res.json();
+            console.log({ data })
+
+            if (data.data.length == 0) {
+                setMapels([]);
+                setPagination(0);
+                setCountData(0);
+                return;
+            }
+
+            setMapels(data.data);
+            setPagination(data.pagination.totalPages);
+            setCountData(data.pagination.totalItems);
+        } catch (error) {
+            console.log({ error })
+        }
+    }
+
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -162,19 +183,28 @@ const DataMapels = () => {
                         <div className="font-semibold text-xl text-white">
                             Data Mapel {name}
                         </div>
-                        <p className=" text-white uppercase mt-2 font-semibold text-sm">Mulai Kelola Mapel di Jurusan {name} ({countData} items)</p>
+                        <p className=" text-white uppercase mt-2 font-semibold text-sm">Mulai Kelola Mapel di SMKN 1 CIREBON ({countData} items)</p>
 
                     </div>
                     <div className="flex items-center justify-between bg-white mt-[20vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
-                        <div className="py-4 bg-white dark:bg-gray-900 p-4">
-                            <label htmlFor="table-search" className="sr-only">
-                                Search
-                            </label>
-                           
-                        </div>
+
+                        <form class="max-w-sm my-3">
+
+                            <select
+                                onChange={handleChangeSelect}
+                                id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[300px]">
+                                <option selected>Pilih Jurusan Dan Semester</option>
+                                {curiculums.length > 0 ? curiculums.map((val, _i) => {
+                                    return (
+                                        <option value={val._id}>{val.nama_jurusan} || Kelas {val.kelas} || Semester {val.semester}</option>
+                                    )
+                                }) : null}
+                            </select>
+                        </form>
+
                         <Link
-                            to={`/add_teacher/${id}`}
-                            className="w-fit mt-3 mb-4 text-white bg-purple-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                            to={`/add_mapel`}
+                            className="w-fit mt-3 mb-4 text-white bg-purple-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 "
                         >
                             Tambah Data
                         </Link>
@@ -191,6 +221,12 @@ const DataMapels = () => {
                                 <th scope="col" className="px-6 py-3">
                                     Jam Mengajar
                                 </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Jurusan
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Semester
+                                </th>
                                 {/* <th scope="col" className="px-6 py-3">
                                     Photo
                                 </th> */}
@@ -200,7 +236,7 @@ const DataMapels = () => {
                             </tr>
                         </thead>
                         <tbody id="gallery">
-                            {teachers.length > 0 ? teachers.map((val, _i) => {
+                            {mapels.length > 0 ? mapels.map((val, _i) => {
                                 return (
                                     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <td className="px-6 py-4">{_i + 1}</td>
@@ -208,19 +244,16 @@ const DataMapels = () => {
                                             scope="row"
                                             className="px-6 py-4 font-medium text-gray-900  dark:text-white"
                                         >
-                                            {val.name}
+                                            {val.nama_mapel}
                                         </th>
                                         <td className="px-6 py-4">
-                                            {val.mengajar}
+                                            {val.jam_per_minggu} Jam
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {val.curiculum.nama_jurusan}
                                         </td>
                                         <td>
-                                            {<a
-                                                //  onClick={(e) => e.preventDefault()}
-                                                href={images[_i]['src']} data-pswp-width={images[_i]['w']} data-pswp-height={images[_i]['h']}>
-
-                                                <img src={val.photo} alt={`Thumbnail ${_i}`} width="100" style={{ cursor: "pointer" }} />
-                                            </a>
-                                            }
+                                            Semester {val.curiculum.semester}
                                         </td>
 
                                         <td className="px-6 py-4 flex flex-col gap-2">
@@ -228,12 +261,12 @@ const DataMapels = () => {
                                                 onClick={() =>
                                                     openEditModal({
                                                         ...val,
-                                                        photo: images[_i]
+                                                        curiculums
                                                     })
                                                 }
                                                 className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
                                             >
-                                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" /></g></svg>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" /></g></svg>
                                                 <span>Edit</span>
                                             </button>
                                             <button
@@ -304,74 +337,20 @@ const DataMapels = () => {
 };
 
 const EditModal = ({ data, onClose }) => {
-    const { _id, name, mengajar, photo } = data;
-    const {id} = useParams();
-    // const [_id, setId] = useState(data._id);
-    // const [name, setName] = useState(data.name);
-    // const [deskripsi, setDeskripsi] = useState(data.deskripsi);
-    // const [images, setDetailImages] = useState(data.images);
-    const [mapels, setMapels] = useState([]);
-    const [mapelGuru, setMapelGuru] = useState(mengajar);
-    const [toggleMedia, setToggleMedia] = useState(true);
+    const { _id, nama_mapel, curiculum, jam_per_minggu, curiculums } = data;
 
-    useEffect(() => {
-        handleGetMapels();
-    }, [])
-
-    const handleGetMapels = async () => {
-        try {
-            const res = await fetch(`${serverPort}/mapel/get`, { headers });
-            const data = await res.json();
-            setMapels(data.data);
-
-        } catch (error) {
-            console.log({ error })
-            Swal.fire('Something Wrong', error.message, 'error')
-        }
-    }
+    const [curiculumSelect, setCuriculumSelect] = useState(curiculum);
 
     const handleSubmitEdit = async (e) => {
         e.preventDefault();
         try {
             let body = {
-                name: e.target[0].value,
-                mengajar: e.target[1].value,
+                nama_mapel: e.target[0].value,
+                curiculum: e.target[1].value,
+                jam_per_minggu: e.target[2].value,
             }
 
-            if (e.target[2].files.length > 0) {
-                let imgUrl = null;
-                let files = Array.from(e.target[2].files);
-
-                await Promise.all(
-                    files.map(async (file) => {
-                        try {
-                            let formData = new FormData();
-                            formData.append('file', file);
-                            formData.append('type', "image");
-
-                            const resfile = await fetch(`${serverPort}/file/save`, {
-                                method: "POST",
-                                body: formData,
-                                headers: {
-                                    token: localStorage.getItem('token')
-                                }
-                            });
-
-                            const dataFile = await resfile.json();
-
-                            imgUrl = dataFile.url;
-                            console.log({ dataFile })
-
-                        } catch (error) {
-                            console.log({ error })
-                        }
-                    })
-                )
-
-                body.photo = imgUrl;
-            }
-
-            const res = await fetch(`${serverPort}/jurusan/guru/update/${id}/${_id}`, {
+            const res = await fetch(`${serverPort}/mapel/update/${_id}`, {
                 method: "POST",
                 body: JSON.stringify(body),
                 headers
@@ -395,61 +374,35 @@ const EditModal = ({ data, onClose }) => {
         <form onSubmit={handleSubmitEdit} className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
             <div className="bg-white p-6 rounded-lg shadow-lg w-[650px] animate-fade-in">
                 <h2 className="text-xl font-bold mb-4 text-center text-blue-600">
-                    Edit Data Guru
+                    Edit Data Mapel
                 </h2>
 
-                <label className="block text-sm font-medium text-gray-700">Nama Guru</label>
+                <label className="block text-sm text-gray-900 font-semibold">Nama Mapel</label>
                 <input
                     type="text"
-                    defaultValue={name}
-                    className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                    defaultValue={nama_mapel}
+                    className="w-full p-2 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-blue-300 focus:outline-none"
                     placeholder="Masukkan Nama..."
                 />
 
-                <label for="countries" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Mengajar mapel</label>
-                <select value={mapelGuru} onChange={(e) => setMapelGuru(e.target.value)} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3">
+                <label for="countries" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Semester Dan Jurusan</label>
+                <select value={curiculumSelect} onChange={(e) => setCuriculumSelect(e.target.value)} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3">
                     {/* <option selected>Choose Mapel</option> */}
-                    {mapels.length > 0 ? mapels.map((val, _i) => {
+                    {curiculums.length > 0 ? curiculums.map((val, _i) => {
                         return (
-                            <option value={val.nama_mapel}>{val.nama_mapel}</option>
+                            <option value={val._id}>{val.nama_jurusan} || Semester {val.semester} || Kelas {val.kelas}</option>
                         )
                     }) : null}
                 </select>
 
-                <div>
-                    <div className="flex justify-between items-center">
-                        <label className="block text-sm font-medium text-gray-700">
-                            Detail Media
-                        </label>
+                <label className="block text-sm text-gray-900 font-semibold">Jam per minggu</label>
+                <input
+                    type="number"
+                    defaultValue={jam_per_minggu}
+                    className="w-full p-2 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                    placeholder=""
+                />
 
-                        <label onClick={() => setToggleMedia(!toggleMedia)} className="block text-sm text-blue-600 cursor-pointer font-semibold">
-                            {toggleMedia ? 'Hide' : 'Show'} Photos
-                        </label>
-
-                    </div>
-                    <input
-
-                        type="file"
-                        onChange={() => setToggleMedia(false)}
-                        className="w-full ps-3 h-[40px] border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-blue-300 focus:outline-none cursor-pointer file:bg-blue-500 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:hover:bg-blue-600"
-                    />
-                </div>
-                {toggleMedia ? (
-                    <div className="overflow-x">
-
-                        <div id="gallery" className="flex items-center gap-3">
-                            {/*  */}
-
-                            <a
-                                //  onClick={(e) => e.preventDefault()}
-                                href={photo.src} data-pswp-width={photo.w} data-pswp-height={photo.h}>
-
-                                <img src={photo.src} width={photo.w} height={photo.h} style={{ cursor: "pointer" }} />
-                            </a>
-                        </div>
-
-                    </div>
-                ) : null}
 
                 <div className="flex justify-end uppercase space-x-2 mt-6">
                     <button
