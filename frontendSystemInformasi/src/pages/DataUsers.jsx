@@ -78,7 +78,7 @@ const DataUsers = () => {
                 throw new Error(data.message);
             }
 
-            Swal.fire("Successfully", data.message, "success")
+            Swal.fire("Successfully", data.message, "success").then(() => window.location.reload())
 
         } catch (error) {
             console.log({ error })

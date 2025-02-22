@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Tags } from "../models/tags.model.js";
+import { History } from "../models/history.model.js";
 
 export const Get = async (req, res) => {
 
@@ -59,6 +60,9 @@ export const Detail = async(req, res) => {
 export const Create = async (req, res) => {
     try {
         const tag = await Tags.create({ ...req.body });
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+            aktivitas : `Menambahkan tag baru dengan nama ${req.body.name} `});
+
 
         res.json({ message: "Succesfully create tag", tag });
 
@@ -83,6 +87,10 @@ export const Update = async (req, res) => {
         tag.name = name;
         await tag.save();
 
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+            aktivitas : `Memodifikasi data tag dengan id ${tag._id}`});
+
+
         res.json({ message: "Succesfully update tag", tag });
 
     } catch (error) {
@@ -99,6 +107,9 @@ export const Delete = async (req, res) => {
     try {
         const tag = await Tags.findById(req.params.id);
         await tag.deleteOne();
+
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+            aktivitas : `Menghapus data tag dengan id ${req.params.id}`});
 
         res.json({ message: "Succesfully delete tag"});
 

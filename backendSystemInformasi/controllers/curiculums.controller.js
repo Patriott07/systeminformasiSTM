@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Curiculums } from "../models/curiculums.model.js";
 import { Jurusans } from "../models/jurusan.model.js";
+import { History } from "../models/history.model.js";
 
 export const Get = async (req, res) => {
 
@@ -62,6 +63,9 @@ export const Create = async (req, res) => {
         const jurusan = await Jurusans.findById(req.body.jurusan);
         const curiculum = await Curiculums.create({ ...req.body, jurusan : jurusan._id });
 
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+                    aktivitas : `Menambahkan data curiculum baru dengan nama jurusan ${curiculum.nama_jurusan} dan semester ${curiculum.semester} `});
+
         res.json({ message: "Succesfully create curiculum", curiculum });
 
     } catch (error) {
@@ -89,6 +93,9 @@ export const Update = async (req, res) => {
 
         await curiculum.save();
 
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+                    aktivitas : `Memodifikasi data curiculum dengan id ${req.params.id}`});
+
         res.json({ message: "Succesfully update curiculum", curiculum });
 
     } catch (error) {
@@ -105,6 +112,9 @@ export const Delete = async (req, res) => {
     try {
         const curiculum = await Curiculums.findById(req.params.id);
         await curiculum.deleteOne();
+
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+                    aktivitas : `Menghapus data curiculum dengan id ${req.params.id}`});
 
         res.json({ message: "Succesfully delete curiculum"});
 

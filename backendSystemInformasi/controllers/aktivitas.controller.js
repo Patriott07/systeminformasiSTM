@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Aktivitas } from "../models/aktivitas.model.js";
+import { History } from "../models/history.model.js";
 
 export const Get = async (req, res) => {
 
@@ -43,7 +44,7 @@ export const Get = async (req, res) => {
 }
 
 
-export const Detail = async(req, res) => {
+export const Detail = async (req, res) => {
     try {
         const aktivitas = await Aktivitas.findById(req.params.id)
         res.json({ aktivitas });
@@ -61,6 +62,10 @@ export const Create = async (req, res) => {
     try {
         const aktv = await Aktivitas.create({ ...req.body });
 
+        await History.create({
+            created_by: req.user._id.toString(), name: req.user.name,
+            aktivitas: `Menambahkan data aktivitas baru dengan nama : ${aktv.title}`
+        });
         res.json({ message: "Succesfully create aktivitas", aktivitas: aktv });
 
     } catch (error) {
@@ -83,12 +88,16 @@ export const Update = async (req, res) => {
 
         aktv.title = title;
         aktv.description = description;
-       
-        if(req.body.hasOwnProperty("details_media")){
+
+        if (req.body.hasOwnProperty("details_media")) {
             aktv.details_media = details_media;
         }
 
         await aktv.save();
+        await History.create({
+            created_by: req.user._id.toString(), name: req.user.name,
+            aktivitas: `Memodifikasi data aktivitas dengan id : ${req.params.id}`
+        });
 
         res.json({ message: "Succesfully update aktivitas", aktv });
 
@@ -106,6 +115,11 @@ export const Delete = async (req, res) => {
     try {
         const aktv = await Aktivitas.findById(req.params.id);
         await aktv.deleteOne();
+
+        await History.create({
+            created_by: req.user._id.toString(), name: req.user.name,
+            aktivitas: `Menghapus data aktivitas `
+        });
 
         res.json({ message: "Succesfully delete Aktivitas" });
 

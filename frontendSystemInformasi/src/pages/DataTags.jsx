@@ -163,7 +163,7 @@ const DataTags = () => {
               </div>
             </div>
             <Link
-              to="/add_kurikulum"
+              to="/add_tag"
               className="w-fit text-white bg-purple-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
               Tambah Data

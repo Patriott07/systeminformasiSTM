@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Jurusans } from "../models/jurusan.model.js";
+import { History } from "../models/history.model.js";
 
 export const Get = async (req, res) => {
 
@@ -60,6 +61,9 @@ export const Create = async (req, res) => {
     try {
         const jurusan = await Jurusans.create({ ...req.body });
 
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+            aktivitas : `Menambahkan data jurusan baru dengan nama : ${jurusan.name}`});
+
         res.json({ message: "Succesfully create jurusan ", jurusan });
 
     } catch (error) {
@@ -89,6 +93,8 @@ export const Update = async (req, res) => {
         // jurusan.teachers = teachers;
 
         await jurusan.save();
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+            aktivitas : `Memodifikasi data jurusan dengan id : ${req.params.id}`});
 
         res.json({ message: "Succesfully update jurusan", jurusan });
 
@@ -106,6 +112,9 @@ export const Delete = async (req, res) => {
     try {
         const jurusan = await Jurusans.findById(req.params.id);
         await jurusan.deleteOne();
+
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+            aktivitas : `Menghapus data jurusan dengan id : ${req.params.id}`});
 
         res.json({ message: "Succesfully delete jurusan" });
 
@@ -146,6 +155,9 @@ export const CreateTeacher = async (req, res) => {
     jurusan.teachers = arrayOfTeacher;
     jurusan.save();
 
+    await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+        aktivitas : `Menambahkan data teacher baru pada jurusan ${jurusan.name} atas nama ${req.body.name}`});
+
     res.json({ message: "Succesfully Create teacher", guru: req.body });
 
 }
@@ -181,6 +193,9 @@ export const UpdateTeacher = async (req, res) => {
     jurusan.teachers = resultChanges;
     await jurusan.save();
 
+    await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+        aktivitas : `Memodifikasi teachers pada jurusan ${jurusan.name}`});
+
     res.json({ message: "Succesfully Update teacher", teachers: arrayOfTeacher });
 }
 
@@ -201,6 +216,9 @@ export const DeleteTeacher = async (req, res) => {
 
     jurusan.teachers = teachers;
     await jurusan.save();
+
+    await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+        aktivitas : `Menghapus data guru di jurusan : ${jurusan.name}. dengan id : ${id}`});
 
     res.json({ message: "Succesfully Delete teacher", teachers: teachers });
 }

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Users } from "../models/users.model.js";
+import { History } from "../models/history.model.js";
 
 export const Get = async (req, res) => {
 
@@ -56,7 +57,6 @@ export const Detail = async(req, res) => {
     }
 }
 
-
 export const Delete = async (req, res) => {
     try {
         const user = await Users.findById(req.params.id);
@@ -78,6 +78,8 @@ export const AssignToAdmin = async (req, res) => {
         user.role = "admin";
 
         await user.save();
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+            aktivitas : `Memberikan hak akses admin kepada account ${user.email}`});
 
         res.json({ message: "Succesfully assigning user to admin"});
 

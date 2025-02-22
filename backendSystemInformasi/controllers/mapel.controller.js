@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Mapels } from "../models/mapel_curiculum.model.js";
 import { Curiculums } from "../models/curiculums.model.js";
+import { History } from "../models/history.model.js";
 
 export const Get = async (req, res) => {
 
@@ -63,8 +64,10 @@ export const Create = async (req, res) => {
         const curiculum = await Curiculums.findById(req.body.curiculum);
         const mapel = await Mapels.create({ ...req.body, curiculum : curiculum._id });
 
-        res.json({ message: "Succesfully create mapel", mapel });
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+            aktivitas : `Menambahkan mapel baru dengan nama mapel : ${mapel.name}`});
 
+        res.json({ message: "Succesfully create mapel", mapel });
     } catch (error) {
         console.error('Error create mapel', { error })
         res.status(500)
@@ -89,6 +92,9 @@ export const Update = async (req, res) => {
 
         await mapel.save();
 
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+            aktivitas : `Memodifikasi data mapel dengan id : ${req.params.id}`});
+
         res.json({ message: "Succesfully update mapel", mapel });
 
     } catch (error) {
@@ -105,6 +111,9 @@ export const Delete = async (req, res) => {
     try {
         const mapel = await Mapels.findById(req.params.id);
         await mapel.deleteOne();
+
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+            aktivitas : `Menghapus data mapel dengan id : ${req.params.id}`});
 
         res.json({ message: "Succesfully delete mapel"});
 

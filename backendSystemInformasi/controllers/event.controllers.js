@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Events } from "../models/events.model.js";
+import { History } from "../models/history.model.js";
 
 export const Get = async (req, res) => {
 
@@ -61,6 +62,8 @@ export const Create = async (req, res) => {
     try {
         const event = await Events.create({ ...req.body });
 
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+                    aktivitas : `Menambahkan data event baru dengan nama event : ${event.judul_event}`});
         res.json({ message: "Succesfully create event", event });
 
     } catch (error) {
@@ -88,6 +91,8 @@ export const Update = async (req, res) => {
         event.tanggal = tanggal;
 
         await event.save();
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+                    aktivitas : `Memodifikasi data event dengan id : ${req.params.id}`});
 
         res.json({ message: "Succesfully update event", event });
 
@@ -105,6 +110,9 @@ export const Delete = async (req, res) => {
     try {
         const event = await Events.findById(req.params.id);
         await event.deleteOne();
+
+        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+                    aktivitas : `Menghapus data event dengan id : ${req.params.id}`});
 
         res.json({ message: "Succesfully delete event"});
 

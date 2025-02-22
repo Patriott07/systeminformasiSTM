@@ -17,6 +17,7 @@ import curiculumroute from './routes/curiculums.route.js';
 import mapelroute from './routes/mapel.route.js';
 import tagroute from './routes/tags.route.js';
 import userroute from './routes/user.route.js';
+import historyroute from './routes/history.route.js';
 
 
 dotenv.config({ path: '.env' });
@@ -44,6 +45,7 @@ app.use('/file', mediaroute)
 app.use('/mapel', mapelroute)
 app.use('/tags', tagroute)
 app.use('/curiculum', curiculumroute)
+app.use('/history', historyroute)
 
 app.listen(process.env.PORT, () => {
     console.log({ Message: `Server was running on ${process.env.PORT}` });
