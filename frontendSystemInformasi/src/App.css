@@ -38,12 +38,12 @@ h2 {
   background-color: #ffffff;
 }
 
-label {
+/* label {
   display: block;
   margin: 10px 0 5px;
   color: #555;
   font-weight: bold;
-}
+} */
 
 input, textarea {
   width: 98%;

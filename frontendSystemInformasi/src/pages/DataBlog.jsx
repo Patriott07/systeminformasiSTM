@@ -5,10 +5,15 @@ import { Link } from "react-router-dom";
 import { headers, serverPort } from '../utls/global_variable.js';
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
+import { useNavigate } from "react-router-dom";
+
+import Swal from 'sweetalert2';
 
 const DataBlog = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
+
+  const navigate = useNavigate();
 
   const galleryRef = useRef < HTMLTableElement > (null);
   const [images, setImages] = useState([]);
@@ -100,29 +105,6 @@ const DataBlog = () => {
     }
   }
 
-  const handleSubmitAdmin = async (id) => {
-    try {
-      const res = await fetch(`${serverPort}/user/assign`, {
-        method: "POST",
-        body: JSON.stringify({
-          id
-        }),
-        headers
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message);
-      }
-
-      Swal.fire("Successfully", data.message, "success")
-
-    } catch (error) {
-      console.log({ error })
-      Swal.fire("Something wrong!", error.message, "error")
-    }
-  }
 
   const handleDelete = async (id) => {
     try {
@@ -137,7 +119,7 @@ const DataBlog = () => {
         confirmButtonText: "Yes, delete it!"
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const res = await fetch(`${serverPort}/user/delete/${id}`, {
+          const res = await fetch(`${serverPort}/blog/delete/${id}`, {
             method: "DELETE",
             headers
           });
@@ -264,29 +246,22 @@ const DataBlog = () => {
                   </td>
                   <td className="px-6 py-4 flex flex-wrap gap-1">
                     {val.tags.map((tag) => {
-                      return(
+                      return (
                         <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">{tag}</span>
-                      ) 
+                      )
                     })}
                   </td>
                   <td className="px-6 py-4">2024-08-21</td>
                   <td className="px-6 py-4 flex flex-col gap-2">
                     <button
-                      onClick={() =>
-                        openEditModal({
-                          name: "Apple MacBook Pro 17",
-                          color: "Silver",
-                          category: "Laptop",
-                          price: "$2999",
-                        })
-                      }
+                      onClick={() => navigate(`/modify/blog/${val._id}`)}
                       className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" /></g></svg>
                       <span>Edit</span>
                     </button>
                     <button
-
+                      onClick={() => handleDelete(val._id)}
                       className="px-4 py-2 bg-red-500 text-white rounded-lg hover:opacity-90 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
                     >
                       <svg

@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import Side from "../components/Side";
 import { headers, serverPort } from '../utls/global_variable.js';
 
+import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
+
 
 const AddBlog = () => {
 
@@ -9,6 +12,31 @@ const AddBlog = () => {
   const [isShowResult, setShowResult] = useState(false);
   const [contents, setContents] = useState([]);
   const [countDoc, setCountDoc] = useState(0);
+  const [indexEl, setIndexEl] = useState(0);
+  const [resultValueBlog, setResultValueBlog] = useState({});
+  const [elementsBlog, setElementsBlog] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  // form
+  const [titleInput, setTitleInput] = useState(null);
+  const [dateInput, setDateInput] = useState(null);
+  const [cover_blog, setCoverBlog] = useState(null);
+  const [tagsInput, setTagsInput] = useState([]);
+
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    console.log({ tagsInput })
+  }, [tagsInput])
+
+  const handleCheckboxChange = (event) => {
+    const { checked, id } = event.target;
+    console.log({ event, id })
+    setTagsInput((prev) =>
+      checked ? [...prev, id] : prev.filter((item) => item !== id)
+    );
+  };
 
   const handleAddComponent = (type) => {
 
@@ -21,6 +49,8 @@ const AddBlog = () => {
         "input-component block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
       textarea.placeholder = "Start Writing here";
+      textarea.name = indexEl;
+      textarea.setAttribute('data-type', 'text');
 
       textarea.addEventListener("onchange", (e) => {
         console.log("Input changed:", e.target.value);
@@ -28,6 +58,7 @@ const AddBlog = () => {
 
       container.appendChild(textarea);
 
+      setElementsBlog([...elementsBlog, textarea]);
     }
 
     if (type == "img") {
@@ -38,12 +69,15 @@ const AddBlog = () => {
       inputValue.type = "text";
       inputValue.id = "file-" + countDoc;
       inputValue.hidden = true;
+      // inputValue.name = indexEl;
 
       label.for = "file_input";
       label.className = "block mb-2 text-sm font-medium text-gray-900 dark:text-white";
       label.innerHTML = "Choose Image"
 
-      input.name = "photo";
+      // input.name = "photo";
+      input.name = indexEl;
+      input.setAttribute('data-type', 'img');
       input.className = "input-component block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
       input.type = "file";
       input.id = "file_input"
@@ -53,6 +87,8 @@ const AddBlog = () => {
       container.appendChild(inputValue);
       container.appendChild(label);
       container.appendChild(input);
+
+      setElementsBlog([...elementsBlog, input]);
 
     }
 
@@ -65,11 +101,13 @@ const AddBlog = () => {
       inputValue.type = "text";
       inputValue.id = "file-" + countDoc;
 
+
       label.for = "file_input";
       label.className = "block mb-2 text-sm font-medium text-gray-900 dark:text-white";
       label.innerHTML = "Choose Video";
 
-      input.name = "video";
+      input.name = indexEl;
+      input.setAttribute('data-type', 'video');
       input.className = "input-component block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 "
       input.type = "file";
       input.id = "file_input"
@@ -80,13 +118,17 @@ const AddBlog = () => {
       container.appendChild(label);
       container.appendChild(input);
 
+      setElementsBlog([...elementsBlog, input]);
+
     }
 
     setCountDoc(countDoc + 1);
+    setIndexEl(indexEl + 1);
+
   };
-  
+
   const handleChangeInputFile = async (e, type, id) => {
-    console.log({ type, e }, 'woy')
+    console.log({ type, e }, 'woy udah onchange ni')
 
     const formData = new FormData();
 
@@ -113,6 +155,53 @@ const AddBlog = () => {
     }
   }
 
+
+  const handleFetchTags = async (SQ) => {
+    let url = `${serverPort}/tags/get`;
+
+    try {
+      const res = await fetch(url, {
+        headers
+      })
+
+      const data = await res.json();
+      console.log({ data })
+
+      setTags(data.data);
+
+    } catch (error) {
+      console.log({ message: "Something wrong while fetch users", error })
+    }
+  }
+
+  useEffect(() => {
+    handleFetchTags();
+  }, []);
+
+  const handleChangeCoverBlog = async (e) => {
+    try {
+      let formData = new FormData();
+      formData.append('file', e.target.files[0]);
+      formData.append('type', "image");
+
+      const resfile = await fetch(`${serverPort}/file/save`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      });
+
+      const dataFile = await resfile.json();
+
+      const imageViewer = document.getElementById("image-viewer");
+      imageViewer.classList.add(`bg-[url(${dataFile.url})]`);
+      setCoverBlog(dataFile.url);
+
+    } catch (error) {
+      console.log({ error })
+    }
+  }
 
   useEffect(() => {
     console.log({ contents })
@@ -176,29 +265,87 @@ const AddBlog = () => {
     }
   }
 
-  const handleSubmitBlog = (e) => {
+  const handleSubmitBlog = async (e) => {
     e.preventDefault();
+    console.log({ e, elementsBlog });
 
     try {
-      const documentsMedia = Array.from(document.getElementsByClassName("input-component"));
+      let format = [];
+      await Promise.all(
 
-      console.log('oke', documentsMedia, documentsMedia.length, {e})
+        Array.from(elementsBlog).map(async (el, _i) => {
+          try {
+            console.log({ el, _i }, el.getAttribute('data-type'))
+            let type_data = el.getAttribute('data-type');
+            let property = {};
 
-      for (let i = 0; i < documentsMedia.length; i++) {
+            if (type_data == "img" || type_data == "video") {
+              let formData = new FormData();
+              formData.append('file', el.files[0]);
+              if (type_data == "img") {
+                formData.append('type', "image");
+                property.type = "img";
 
-        if (documentsMedia[i].type == "textarea") {
-          //   console.log({doc : documentsMedia[i].value})
-          console.log(documentsMedia[i].value)
+              } else if (type_data == "video") {
+                formData.append('type', "video");
+                property.type = "vidio";
+              }
 
-        } else {
-          console.log(documentsMedia[i].files[0])
+              const resfile = await fetch(`${serverPort}/file/save`, {
+                method: "POST",
+                body: formData,
+                headers: {
+                  token: localStorage.getItem('token')
+                }
+              });
+
+              const dataFile = await resfile.json();
+              property.content = dataFile.url;
+
+              format.push(property);
+            } else {
+              console.log({ el })
+
+              format.push({
+                type: "text",
+                content: el.value
+              });
+            }
+
+
+          } catch (error) {
+            console.log({ error })
+          }
+        })
+
+      )
+
+      console.log({ format })
+
+      const res = await fetch(`${serverPort}/blog/create`,
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            title: titleInput,
+            date: dateInput,
+            photo: cover_blog,
+            tags: tagsInput,
+            contents: format
+          }),
         }
-      }
-      console.log('oke1', documentsMedia, documentsMedia.length)
+      );
 
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
+
+      Swal.fire("Succesfully", data.message, "success").then(() => navigate('/data_blog'));
 
     } catch (error) {
-
+      console.log({ error });
+      Swal.fire("Something Wrong", error.message, "error");
     }
   }
   return (
@@ -222,7 +369,7 @@ const AddBlog = () => {
             ))}
 
 
-            <div className="flex gap-2 my-5">
+            <div className="flex gap-2 my-5 ">
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('text')}>Add new Text</button>
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('img')}>Add new Image</button>
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('video')}>Add new Vidio</button>
@@ -235,37 +382,54 @@ const AddBlog = () => {
               Create Information Blog
             </div>
 
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center py-5">
               <div className="flex flex-col w-full px-4 ">
                 <div className="">
                   <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Judul Blog</label>
-                  <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul blog anda" required />
+                  <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul blog anda" required onChange={(e) => setTitleInput(e.target.value)} />
                 </div>
                 <div className="">
                   <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Blog</label>
-                  <input type="date" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul blog anda" required />
+                  <input
+                  onChange={(e) => setDateInput(e.target.value)}
+                  type="date" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul blog anda" required />
                 </div>
                 <div className="">
                   <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cover Blog</label>
-                  <input type="file" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-fulldark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul blog anda" required />
+                  <input type="file" id="first_name" onChange={handleChangeCoverBlog} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-fulldark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul blog anda" required />
                 </div>
 
-                <div className="bg w-full h-[30vh] bg-gray-800 rounded-sm">
+
+                <div id="image-viewer" className="bg w-full h-[30vh] bg-center bg-cover bg-gray-800 rounded-sm">
 
                 </div>
 
                 <div className="text-sm mt-3">Add Categories</div>
-
-                <div class="flex items-center mb-4 flex-wrap">
-                  <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 mt-5" />
-                  <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Default checkbox</label>
-
+                <div className="flex flex-wrap my-3 items-center gap-2">
+                  {tags.map((checkbox) => (
+                    <div key={checkbox._id} className="flex items-center flex-wrap">
+                      <input
+                        id={checkbox.name}
+                        onChange={handleCheckboxChange}
+                        type="checkbox"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 mt-5"
+                      />
+                      <label
+                        htmlFor={checkbox.id}
+                        className="ms-1 mt-1 text-xs font-medium text-gray-900 dark:text-gray-300"
+                      >
+                        {checkbox.name}
+                      </label>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="flex">
-                  <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Cancel Form</button>
+                  <button onClick={() => navigate('/data_blog')} type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Cancel Form</button>
 
-
+                  {/* {
+                    contents.
+                  } */}
                   <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
                 </div>
 
