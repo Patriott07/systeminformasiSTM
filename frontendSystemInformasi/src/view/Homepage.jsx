@@ -21,20 +21,20 @@ const Homepage = () => {
           </div>
         </nav>
       </section> */}
-      <nav className="w-full bg-gray-900 text-white py-4 fixed top-0 z-50">
-        <div className="w-10/12 mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">SMA BAKTI KOTA CIREBON</h1>
-          <div className="flex gap-8">
-            <a href="/" className="hover:text-blue-400">
+      <nav className="w-full bg-gray-900 text-white rounded-sm overflow-hidden lg:py-4 py-4 fixed top-0 z-50">
+        <div className="lg:w-10/12 w-10/12 mx-auto flex justify-between items-center">
+          <h1 className="lg:text-2xl text-sm font-bold">SMA BAKTI</h1>
+          <div className="flex gap-4 lg:gap-8">
+            <a href="/" className="hover:text-blue-400 lg:text-base text-xs">
               Home
             </a>
-            <a href="blog" className="hover:text-blue-400">
+            <a href="blog" className="hover:text-blue-400 lg:text-base text-xs">
               Blog
             </a>
-            <a href="/Kegiatan" className="hover:text-blue-400">
+            <a href="/Kegiatan" className="hover:text-blue-400 lg:text-base text-xs">
               Kegiatan
             </a>
-            <a href="/jurusan" className="hover:text-blue-400">
+            <a href="/jurusan" className="hover:text-blue-400 lg:text-base text-xs">
               Jurusan
             </a>
           </div>
@@ -45,9 +45,9 @@ const Homepage = () => {
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1611941671018-6c3907cb7a76?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHNjaG9vbCUyMGJ1aWxkaW5nfGVufDB8fDB8fHww')`,
         }}
-        className="w-full flex bg-cover justify-center items-center min-h-screen"
+        className="w-full rounded-lg flex bg-cover justify-center items-center min-h-[80vh] lg:min-h-screen"
       >
-        <div className="w-11/12  h-full flex text-center flex-col justify-center items-center">
+        <div className="w-11/12  h-full flex translate-y-1/2  lg:translate-y-0 text-center flex-col justify-center items-center">
           <div className="w-full lg:min-h-[45vh] lg:max-h-[45vh] min-h-[5vh] max-h-[5vh]  text-center flex flex-col justify-end items-center">
             <h1 className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">SELAMAT DATANG DI </h1>
             <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">SMA BAKTI KOTA CIREBON</span>
@@ -80,13 +80,13 @@ const Homepage = () => {
         <div className="w-10/12 justify-center flex flex-col items-center">
           <div className="w-full flex items-start">
             <div className="flex gap-8">
-              <img className="min-w-[45vh] max-w-[45vh]  max-h-[45vh] min-h-[45vh] bg-cover bg-center" src={Doc2} alt="" />
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={Doc2} alt="" />
               <div className="">
-                <h1 className="text-blue-500 uppercase text-2xl font-serif font-medium">Apa Itu SMA BAKTI KOTA CIREBON </h1>
-                <p className="max-w-lg text-justify">
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-serif font-medium">Apa Itu SMA BAKTI KOTA CIREBON </h1>
+                <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti, esse illum fuga quisquam qui natus ipsum officiis corporis officia laborum repellat, placeat maxime facilis dolores!
                 </p>
-                <button className="border-blue-500 py-2 px-4 rounded-xl border-2 mt-4">Read More</button>
+                <button className="border-blue-500 lg:py-2 lg:px-4 lg:text-base text-sm py-1 px-2 rounded-xl border-2 mt-4">Read More</button>
               </div>
             </div>
           </div>
@@ -94,33 +94,33 @@ const Homepage = () => {
           <div className="w-full flex items-end justify-end mt-8">
             <div className="flex gap-8">
               <div className="flex flex-col items-end">
-                <h1 className="text-blue-500 uppercase text-2xl text-justify font-serif font-medium">Kenapa harus SMA BAKTI KOTA CIREBON </h1>
-                <p className="max-w-lg text-justify">
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl text-justify font-serif font-medium">Kenapa harus SMA BAKTI KOTA CIREBON </h1>
+                <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti, esse illum fuga quisquam qui natus ipsum officiis corporis officia laborum repellat, placeat maxime facilis dolores quisquam qui natus ipsum!
                 </p>
-                <button className="border-blue-500 py-2 px-4 rounded-xl border-2 mt-4">Read More</button>
+                <button className="border-blue-500 lg:py-2 lg:px-4 lg:text-base text-sm py-1 px-2 rounded-xl border-2 mt-4">Read More</button>
               </div>
-              <img className="min-w-[45vh] max-w-[45vh]  max-h-[45vh] min-h-[45vh] bg-cover bg-center" src={Doc1} alt="" />
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={Doc1} alt="" />
             </div>
           </div>
           <div className="w-full flex items-start mt-8">
             <div className="flex gap-8">
-              <img className="min-w-[45vh] max-w-[45vh]  max-h-[45vh] min-h-[45vh] bg-cover bg-center" src={Doc2} alt="" />
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={Doc2} alt="" />
               <div className="">
-                <h1 className="text-blue-500 uppercase text-2xl font-serif font-medium">Kepala sekolah SMA BAKTI KOTA CIREBON </h1>
-                <p className="max-w-lg text-justify">
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-serif font-medium">Kepala sekolah SMA BAKTI KOTA CIREBON </h1>
+                <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti, esse illum fuga quisquam qui natus ipsum officiis corporis officia laborum repellat, placeat maxime facilis dolores!
                 </p>
-                <button className="border-blue-500 py-2 px-4 rounded-xl border-2 mt-4">Read More</button>
+                <button className="border-blue-500 lg:py-2 lg:px-4 lg:text-base text-sm py-1 px-2 rounded-xl border-2 mt-4">Read More</button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="min-h-[50vh]  flex justify-center">
-        <div className="w-10/12 flex">
-          <div className="max-w-[50%] min-w-[50%] flex flex-col justify-center   min-h-full text-lg font-serif">
+      <section className="min-h-[18rem]  flex justify-center ">
+        <div className="w-10/12 lg:flex">
+          <div className="lg:max-w-[50%] lg:min-w-[50%] w-full flex flex-col justify-center   min-h-full text-lg font-serif">
             <div className="gap-2 flex mb-2">
               <span className="min-w-[5rem]">Telp : </span>
               <h1> +62-0231-480202,</h1>
@@ -135,7 +135,7 @@ const Homepage = () => {
 
             </div>
           </div>
-          <div className="max-w-[50%] min-w-[50%] justify-center flex min-h-full">
+          <div className="lg:max-w-[50%] lg:min-w-[50%] w-full justify-center flex min-h-full">
           <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3064.578242155735!2d108.53415787362854!3d-6.735291293260876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f1df0e55b2ed3%3A0x51cf481547b4b319!2sSMK%20Negeri%201%20Cirebon!5e1!3m2!1sid!2sid!4v1738761226845!5m2!1sid!2sid"
         width="80%"
@@ -150,22 +150,22 @@ const Homepage = () => {
         </div>
       </section>
 
-      <section className="w-full justify-center flex mt-14">
-        <div className="w-10/12">
+      <section className="w-full justify-center flex mt-44 lg:mt-14">
+        <div className="lg:w-10/12 w-full">
           <h1 className="text-center mb-4 text-blue-500 text-xl font-serif">Our Blog</h1>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <div class="max-w-[19rem] bg-white border max-h-[27.2rem] border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          <div className="flex gap-4 lg:gap-8 justify-center flex-wrap">
+            <div class="lg:max-w-[19rem] max-w-[11rem] bg-white border lg:max-h-[27.2rem] min-h-[17rem] max-h-[17rem] border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
               <a href="#">
-                <img className="rounded-t-lg w-full bg-cover max-h-[35vh]" src={Poster} />
+                <img className="rounded-t-lg w-full bg-cover lg:max-h-[35vh] lg:min-h-[35vh] min-h-[11vh] max-h-[11vh]" src={Poster} />
               </a>
-              <div class="p-5">
+              <div class="lg:p-5 p-2">
                 <a href="#">
-                  <h5 class="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                  <h5 class="mb-1 text-[0.9rem] lg:text-lg font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
                 </a>
-                <p class="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                <p class="mb-2 font-normal lg:text-base text-[0.7rem] text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
                 <a
                   href="#"
-                  class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  class="inline-flex items-center lg:px-3 lg:py-2 px-2 py-1 lg:text-sm text-[0.7rem] font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Read more
                   <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -174,18 +174,19 @@ const Homepage = () => {
                 </a>
               </div>
             </div>
-            <div class="max-w-[19rem] bg-white border max-h-[27.2rem] border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          
+            <div class="lg:max-w-[19rem] max-w-[11rem] bg-white border lg:max-h-[27.2rem] min-h-[17rem] max-h-[17rem] border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
               <a href="#">
-                <img className="rounded-t-lg w-full bg-cover max-h-[35vh]" src={Poster} />
+                <img className="rounded-t-lg w-full bg-cover lg:max-h-[35vh] lg:min-h-[35vh] min-h-[11vh] max-h-[11vh]" src={Poster} />
               </a>
-              <div class="p-5">
+              <div class="lg:p-5 p-2">
                 <a href="#">
-                  <h5 class="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                  <h5 class="mb-1 text-[0.9rem] lg:text-lg font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
                 </a>
-                <p class="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                <p class="mb-2 font-normal lg:text-base text-[0.7rem] text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
                 <a
                   href="#"
-                  class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  class="inline-flex items-center lg:px-3 lg:py-2 px-2 py-1 lg:text-sm text-[0.7rem] font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Read more
                   <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -194,18 +195,19 @@ const Homepage = () => {
                 </a>
               </div>
             </div>
-            <div class="max-w-[19rem] bg-white border max-h-[27.2rem] border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          
+            <div class="lg:max-w-[19rem] max-w-[11rem] bg-white border lg:max-h-[27.2rem] min-h-[17rem] max-h-[17rem] border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
               <a href="#">
-                <img className="rounded-t-lg w-full bg-cover max-h-[35vh]" src={Poster} />
+                <img className="rounded-t-lg w-full bg-cover lg:max-h-[35vh] lg:min-h-[35vh] min-h-[11vh] max-h-[11vh]" src={Poster} />
               </a>
-              <div class="p-5">
+              <div class="lg:p-5 p-2">
                 <a href="#">
-                  <h5 class="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                  <h5 class="mb-1 text-[0.9rem] lg:text-lg font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
                 </a>
-                <p class="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                <p class="mb-2 font-normal lg:text-base text-[0.7rem] text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
                 <a
                   href="#"
-                  class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  class="inline-flex items-center lg:px-3 lg:py-2 px-2 py-1 lg:text-sm text-[0.7rem] font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Read more
                   <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -214,6 +216,9 @@ const Homepage = () => {
                 </a>
               </div>
             </div>
+          
+            
+          
           </div>
         </div>
       </section>
@@ -257,56 +262,7 @@ const Homepage = () => {
         </div>
       </footer>
 
-      {/* <section className="flex mx-4 lg:min-h-screen min-h-0.5  ">
-        <div className="flex justify-center w-[1000vh]">
-        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4  w-10/12 ">
-      
-      <div className="bg-slate-300/50 shadow-lg rounded-md  w-[11.2vh] h-[24vh] lg:w-[32vh] lg:h-[45vh]">
-        <div className="w-full flex flex-col items-center justify-center">
-            <img className="lg:h-[30vh] h-[13vh] w-full" src={Doc1} alt="" />
-            <div className="mt-2 lg:px-0 px-2">
-                <h1 className="text-center lg:text-base text-[11px] font-serif">Dr. Martin, Sp.O</h1>
-                <h1 className="text-center text-[10.5px] lg:text-base text-blue-500 font-serif">Spesialis Obstetri dan Ginekologi</h1>
-            </div>
-        </div>
-      </div>
-      <div className="bg-slate-300/50 shadow-lg rounded-md  w-[11.2vh] h-[24vh] lg:w-[32vh] lg:h-[45vh]">
-        <div className="w-full flex flex-col items-center justify-center">
-            <img className="lg:h-[30vh] h-[13vh] w-full" src={Doc1} alt="" />
-            <div className="mt-2 lg:px-0 px-2">
-                <h1 className="text-center lg:text-base text-[11px] font-serif">Dr. Martin, Sp.O</h1>
-                <h1 className="text-center text-[10.5px] lg:text-base text-blue-500 font-serif">Spesialis Obstetri dan Ginekologi</h1>
-            </div>
-        </div>
-      </div>
-      <div className="bg-slate-300/50 shadow-lg rounded-md  w-[11.2vh] h-[24vh] lg:w-[32vh] lg:h-[45vh]">
-        <div className="w-full flex flex-col items-center justify-center">
-            <img className="lg:h-[30vh] h-[13vh] w-full" src={Doc1} alt="" />
-            <div className="mt-2 lg:px-0 px-2">
-                <h1 className="text-center lg:text-base text-[11px] font-serif">Dr. Martin, Sp.O</h1>
-                <h1 className="text-center text-[10.5px] lg:text-base text-blue-500 font-serif">Spesialis Obstetri dan Ginekologi</h1>
-            </div>
-        </div>
-      </div>
-      <div className="bg-slate-300/50 shadow-lg rounded-md  w-[11.2vh] h-[24vh] lg:w-[32vh] lg:h-[45vh]">
-        <div className="w-full flex flex-col items-center justify-center">
-            <img className="lg:h-[30vh] h-[13vh] w-full" src={Doc1} alt="" />
-            <div className="mt-2 lg:px-0 px-2">
-                <h1 className="text-center lg:text-base text-[11px] font-serif">Dr. Martin, Sp.O</h1>
-                <h1 className="text-center text-[10.5px] lg:text-base text-blue-500 font-serif">Spesialis Obstetri dan Ginekologi</h1>
-            </div>
-        </div>
-      </div>
-     
-     
-    
-     
-    
-    </div>
-   
-        </div>
-      </section> */}
-    </>
+       </>
   );
 };
 

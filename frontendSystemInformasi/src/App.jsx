@@ -38,7 +38,7 @@ import DataTeachers from './pages/DataTeachers.jsx';
 import AddTeachers from './pages/AddTeachers.jsx';
 import AddTag from './pages/AddTag.jsx';
 import ModifyBlog from './pages/ModifyBlog.jsx';
-
+import BlogDetail  from "./view/DetailBlog.jsx";
 
 function App() {
 
@@ -54,6 +54,7 @@ function App() {
         <Route path="/Register" element={<Registerpage />} />
         <Route path="/Kegiatan" element={<Kegiatan />} />
         <Route path="/Targetjurusan" element={<Targetjurusan />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
 
 
         {/* DAPA */}
@@ -91,6 +92,7 @@ function App() {
 
         <Route path='/data_jurusan/teachers/:id/:name' element={<DataTeachers />} />
         <Route path='/add_teacher/:id' element={<AddTeachers />} />
+
       </Routes>
     </BrowserRouter>
   )
