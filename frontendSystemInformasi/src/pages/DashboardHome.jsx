@@ -54,7 +54,7 @@ const DashboardHome = () => {
 
     const handleSubmitSearch = async (e) => {
         e.preventDefault();
-        console.log({e})
+        console.log({ e })
         fetchHistory(e.target[0].value);
     }
 
@@ -96,57 +96,42 @@ const DashboardHome = () => {
             <div className="flex flex-grow ">
                 <Side />
 
-                <div className="relative pb-12 overflow-x-auto shadow-md sm:rounded-lg w-9/12 m-10">
+                <div className="relative pb-12 overflow-x-auto shadow-md sm:rounded-lg w-9/12 md:m-10">
                     <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
-                        <div className=" text-3xl text-white font-semibold">
+                        <div className="text-xl md:text-3xl text-white font-semibold">
                             Ringkasan Histories
                         </div>
-                        <p className=" text-white uppercase mt-2 font-semibold">Semua History Pengelolaan Dashboard terbaca disini</p>
+                        <p className="text-sm md:text-[16px] text-white uppercase mt-2 font-semibold">Semua History Pengelolaan Dashboard terbaca disini</p>
                     </div>
-                    <div className="flex items-center justify-between py-3 bg-white mt-[20vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
-                        {/* <select
-                            onChange={(e) => setSelectShowData(e.target.value)}
-                            id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
-                            <option value="user">Users</option>
-                            <option value="blog" selected>Blogs</option>
-                            <option value="kegiatan">Kegiatans</option>
-                            <option value="jurusan">Jurusans</option>
-                            <option value="kurikulum">Kurikulums</option>
-                            <option value="guru">Gurus</option>
-                            <option value="tag">Tags</option>
-                        </select> */}
-
+                    <div className="flex md:flex-row flex-col items-center justify-between py-3 bg-white mt-[25vh] lg:mt-[20vh] px-4 z-[5] md:w-11/12 mx-auto rounded-t">
                         <div action="" method="post">
                             <label htmlFor="table-search" className="sr-only">
                                 Search
                             </label>
                             <div className="relative mt-1">
                                 <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none">
-
                                 </div>
-                                <form onSubmit={handleSubmitSearch} className="flex items-start">
-
+                                <form onSubmit={handleSubmitSearch} className="flex md:flex-row flex-col items-start">
                                     <input
                                         type="text"
                                         id="table-search"
-                                        className="block py-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-64 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        className="block py-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg md:w-64 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Cari Aktivitas"
                                     />
 
-                                    <button type="submit" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <button type="submit" class="p-2.5 md:ms-2 md:w-fit w-full text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                         </svg>
                                         <span class="sr-only">Search</span>
                                     </button>
+                                    
                                 </form>
 
                             </div>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <div action="">
-
+                        <div className="flex md:items-center w-fit px-2 my-4 md:flex-row flex-col gap-4">
+                            <div>
                                 <label htmlFor="start_date" className="text-xs font-semibold text-gray-600">Mulai Tanggal :</label>
 
                                 <div class="relative max-w-sm">
@@ -161,9 +146,10 @@ const DashboardHome = () => {
                                         type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" />
                                 </div>
                             </div>
-                            <div className="font-semibold">-</div>
-                            <div action="">
 
+                            <div className="font-semibold hidden md:visible">-</div>
+
+                            <div>
                                 <label htmlFor="start_date" className="text-xs font-semibold text-gray-600">Hingga tanggal :</label>
 
                                 <div class="relative max-w-sm">
@@ -176,49 +162,49 @@ const DashboardHome = () => {
                                         onChange={(e) => setEndDate(e.target.value)}
                                         id="default-datepicker" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" />
                                 </div>
-
-
+                                
                             </div>
-
+                            
                         </div>
-
                     </div>
-                    <table className="text-sm text-left m-0 rounded-none rtl:text-right text-gray-500 dark:text-gray-400 border-t w-11/12 mx-auto">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" className="px-6 py-3">
-                                    No.
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Dilakukan oleh
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Datetime
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Aktivitas
-                                </th>
+
+                    <div className="overflow-x-auto overflow-y-auto max-h-96">
+                        <table className="text-sm text-left m-0 rounded-none rtl:text-right text-gray-500 dark:text-gray-400 border-t w-11/12 mx-auto">
+                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3">
+                                        No.
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        Dilakukan oleh
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        Datetime
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        Aktivitas
+                                    </th>
 
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {histories.length > 0 ? histories.map((val, _i) => {
-                                return (
-                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td className="px-6 py-4">{_i + 1}</td>
-                                        <th
-                                            scope="row"
-                                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                        >
-                                            {val.name}
-                                        </th>
-                                        <td className="px-6 py-4">
-                                           {val.date.split('.')[0].replace('T', ' Time:')}
-                                        </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {histories.length > 0 ? histories.map((val, _i) => {
+                                    return (
+                                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <td className="px-6 py-4">{_i + 1}</td>
+                                            <th
+                                                scope="row"
+                                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                {val.name}
+                                            </th>
+                                            <td className="px-6 py-4">
+                                                {val.date.split('.')[0].replace('T', ' Time:')}
+                                            </td>
 
-                                        <td className="px-6 py-4">{val.aktivitas}</td>
-                                        {/* <td className="px-6 py-4">
+                                            <td className="px-6 py-4">{val.aktivitas}</td>
+                                            {/* <td className="px-6 py-4">
                                     <button
                                         onClick={() =>
                                             openEditModal({
@@ -267,12 +253,13 @@ const DashboardHome = () => {
                                         <span>Delete</span>
                                     </a>
                                 </td> */}
-                                    </tr>
-                                )
-                            }) : null}
+                                        </tr>
+                                    )
+                                }) : null}
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <nav
                         aria-label="Page navigation example"

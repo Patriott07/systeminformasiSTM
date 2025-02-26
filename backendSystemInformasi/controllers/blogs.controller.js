@@ -44,7 +44,7 @@ export const Get = async (req, res) => {
     }
 }
 
-export const Detail = async(req, res) => {
+export const Detail = async (req, res) => {
     try {
         const blog = await Blogs.findById(req.params.id)
         res.json({ blog });
@@ -62,8 +62,10 @@ export const Create = async (req, res) => {
     try {
         const blog = await Blogs.create({ ...req.body, created_by: req.user._id, comments: [], like: 0 });
 
-        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
-                    aktivitas : `Menambahkan data blog baru dengan judul blog : ${blog.title}`});
+        await History.create({
+            created_by: req.user._id.toString(), name: req.user.name,
+            aktivitas: `Menambahkan data blog baru dengan judul blog : ${blog.title}`
+        });
 
         res.json({ message: "Succesfully create blog", blog });
 
@@ -93,8 +95,10 @@ export const Update = async (req, res) => {
 
         await blog.save();
 
-        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
-                    aktivitas : `Memodifikasi data blog dengan id : ${req.params.id}`});
+        await History.create({
+            created_by: req.user._id.toString(), name: req.user.name,
+            aktivitas: `Memodifikasi data blog dengan id : ${req.params.id}`
+        });
 
         res.json({ message: "Succesfully update blog", blog });
 
@@ -115,8 +119,10 @@ export const Delete = async (req, res) => {
         const blog = await Blogs.findById(req.params.id);
         await blog.deleteOne();
 
-        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
-                    aktivitas : `Menghapus data blog dengan id : ${req.params.id}`});
+        await History.create({
+            created_by: req.user._id.toString(), name: req.user.name,
+            aktivitas: `Menghapus data blog dengan id : ${req.params.id}`
+        });
 
         res.json({ message: "Succesfully delete blog" });
 
@@ -127,3 +133,20 @@ export const Delete = async (req, res) => {
     }
 }
 
+
+export const GetComment = async (req, res) => {
+    try {
+
+    } catch (error) {
+        console.log({ error })
+    }
+}
+
+
+export const CreateComment = async (req, res) => {
+    try {
+
+    } catch (error) {
+        console.log({ error })
+    }
+}

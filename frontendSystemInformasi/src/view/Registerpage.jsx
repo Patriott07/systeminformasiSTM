@@ -52,8 +52,8 @@ const Registerpage = () => {
         </div>
         
         {/* Right Side (Sign Up) */}
-        <div className="w-full md:w-1/2 bg-blue-500 text-white flex flex-col items-center justify-center p-8">
-          <h2 className="text-2xl font-bold">Halo, Teman!</h2>
+        <div className="w-full md:w-1/2 bg-blue-600 text-white flex flex-col items-center justify-center p-8">
+          <h2 className="text-2xl font-bold text-white">Halo, Teman!</h2>
           <p className="text-center text-white mt-4">Sudah Punya Akun? Anda Dapat Langsung Login Melalui Button Dibawah</p>
           <a href="/login" className="mt-6 border border-white text-white py-2 px-6 rounded hover:bg-white hover:text-blue-600">Login</a>
         </div>

@@ -7,6 +7,10 @@ const SchemaValueContents = mongoose.Schema({
 
 const SchemaChildComment = mongoose.Schema({
     comment: String,
+    date : {
+        type : Date,
+        default : Date.now
+    },
     by: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',

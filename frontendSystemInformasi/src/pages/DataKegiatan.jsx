@@ -224,7 +224,7 @@ const DataKegiatan = () => {
                     <td className="px-6 py-4">{_i + 1}</td>
                     <th
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      className="px-6 py-4 font-medium text-gray-900  dark:text-white"
                     >
                       {val.title}
                     </th>
@@ -244,7 +244,6 @@ const DataKegiatan = () => {
                       }
 
                       {Array.from({ length: val.details_media.length }).map((val2, __i) => {
-
                         return (
                           <a
                             //  onClick={(e) => e.preventDefault()}
@@ -253,8 +252,6 @@ const DataKegiatan = () => {
                         )
 
                       })}
-
-
                     </td>
                     <td className="px-6 py-4 flex flex-col gap-2">
                       <button
