@@ -125,9 +125,7 @@ const DashboardHome = () => {
                                         </svg>
                                         <span class="sr-only">Search</span>
                                     </button>
-                                    
                                 </form>
-
                             </div>
                         </div>
                         <div className="flex md:items-center w-fit px-2 my-4 md:flex-row flex-col gap-4">
