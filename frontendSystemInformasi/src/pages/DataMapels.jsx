@@ -178,21 +178,21 @@ const DataMapels = () => {
             <div className="flex flex-grow">
                 <Side />
 
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-9/12 m-10 pb-8">
+                <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-9/12 lg:m-10 pb-8">
                     <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
-                        <div className="font-semibold text-xl text-white">
+                        <div className="font-semibold lg:text-3xl text-xl text-white">
                             Data Mapel {name}
                         </div>
-                        <p className=" text-white uppercase mt-2 font-semibold text-sm">Mulai Kelola Mapel di SMKN 1 CIREBON ({countData} items)</p>
+                        <p className="lg:text-[16px] text-xs text-white uppercase mt-2 font-semibold">Mulai Kelola Mapel di SMKN 1 CIREBON ({countData} items)</p>
 
                     </div>
-                    <div className="flex items-center justify-between bg-white mt-[20vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
+                    <div className="flex md:flex-row flex-col items-center md:justify-between bg-white mt-[25vh] px-4 z-[5] w-12/12 mx-auto rounded-t">
 
-                        <form class="max-w-sm my-3">
+                        <form class="lg:flex items-start max-w-sm my-3">
 
                             <select
                                 onChange={handleChangeSelect}
-                                id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[300px]">
+                                id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[220px]">
                                 <option selected>Pilih Jurusan Dan Semester</option>
                                 {curiculums.length > 0 ? curiculums.map((val, _i) => {
                                     return (

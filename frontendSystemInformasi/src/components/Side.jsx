@@ -11,17 +11,20 @@ export default function Sidebar() {
     navigate('/Login');
   };
 
+  useEffect(() => {
+    console.log({isOpen})
+  }, [isOpen])
+
   const isActive = (path) => location.pathname === path;
-  
 
   return (
-    <div className="relative w-2/12">
+    <div className="relative lg:w-2/12 ">
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-controls="logo-sidebar"
         type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
       >
         <span className="sr-only">Open sidebar</span>
         <svg
@@ -42,7 +45,7 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         id="logo-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 bg-gray-50 dark:bg-gray-800`}
+        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 bg-gray-50 dark:bg-gray-800`}
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-12 overflow-y-auto">
@@ -50,7 +53,7 @@ export default function Sidebar() {
             onClick={() => setIsOpen(!isOpen)}
             aria-controls="logo-sidebar"
             type="button"
-            className="inline-flex items-center p-2 mb-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="inline-flex items-center p-2 mb-2 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           >
             <span className="sr-only">Open sidebar</span>
             <svg
