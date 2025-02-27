@@ -65,7 +65,7 @@ const AddMapels = () => {
 
             >
                 <div class="flex h-full grow flex-col bg-white">
-                    <div class="px-40 flex flex-1 justify-start py-5">
+                    <div class="lg:px-40 px-4 flex flex-1 justify-start py-5">
                         <form onSubmit={handleSubmitKegiatan} class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5  flex-1">
                             <div class="flex max-w-[480px] flex-wrap items-end gap-4 text-2xl font-semibold py-3">
                                 Tambah Mapel Baru

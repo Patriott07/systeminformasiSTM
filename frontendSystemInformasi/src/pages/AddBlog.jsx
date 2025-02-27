@@ -356,8 +356,8 @@ const AddBlog = () => {
         class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
 
       >
-        <div class=" flex h-full bg-gray-100 justify-between">
-          <div className="ms-[5vw] sm:w-8/12 p-8 text-[#110B56]">
+        <div class=" flex flex-col-reverse md:flex-row lg:flex-row lg:h-full bg-gray-100 h-full justify-between">
+          <div className="lg:ms-[5vw] sm:w-8/12 lg:p-8 p-4 text-[#110B56]">
             <div className="text-2xl font-semibold mb-3">
               Create Your Contents
             </div>
@@ -365,22 +365,21 @@ const AddBlog = () => {
             <div className="docs">
 
             </div>
+
             {elements.map((val, _i) => (
               <HandleShowComponent type={val} i={val.i} />
             ))}
 
 
-            <div className="flex gap-2 my-5 ">
+            <div className="flex flex-col md:flex-row gap-2 my-5 ">
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('text')}>Add new Text</button>
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('img')}>Add new Image</button>
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('video')}>Add new Vidio</button>
-
               <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
-
 
             </div>
           </div>
-          <div className="sm:w-4/12 h-[100vh] bg-white border-l">
+          <div className="sm:w-4/12 lg:h-[100vh] bg-white border-l">
             <div className="bg-purple-600 px-4 py-8 text-white font-semibold">
               Create Information Blog
             </div>
