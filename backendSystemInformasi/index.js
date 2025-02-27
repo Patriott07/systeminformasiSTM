@@ -1,11 +1,10 @@
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import { auth } from 'express-oauth2-jwt-bearer';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import fileUpload from 'express-fileupload';
-import cors from 'cors';
-
+import express from "express";
+import jwt from "jsonwebtoken";
+import { auth } from "express-oauth2-jwt-bearer";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import fileUpload from "express-fileupload";
+import cors from "cors";
 
 import authroute from './routes/auth.route.js';
 import eventroute from './routes/event.route.js';
@@ -20,20 +19,20 @@ import userroute from './routes/user.route.js';
 import historyroute from './routes/history.route.js';
 
 
-dotenv.config({ path: '.env' });
+dotenv.config({ path: ".env" });
 const app = express();
 
-app.use(cors())
+app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use(fileUpload());
 
 mongoose.connect(process.env.MONGO, {
-    // Note that mongoose will *not* pull bufferCommands from the query string
+  // Note that mongoose will *not* pull bufferCommands from the query string
 });
 
-mongoose.connection.on('connected', () => console.log('connected mongo'));
-mongoose.connection.on('disconnected', () => console.log('disconnected mongo'));
+mongoose.connection.on("connected", () => console.log("connected mongo"));
+mongoose.connection.on("disconnected", () => console.log("disconnected mongo"));
 
 app.use('/auth', authroute);
 app.use('/user', userroute);
@@ -48,5 +47,10 @@ app.use('/curiculum', curiculumroute)
 app.use('/history', historyroute)
 
 app.listen(process.env.PORT, () => {
-    console.log({ Message: `Server was running on ${process.env.PORT}` });
-})
+  console.log({ Message: `Server was running on ${process.env.PORT}` });
+});
+
+// Gunakan '0.0.0.0' agar bisa diakses dari HP
+// app.listen(process.env.PORT, "0.0.0.0", () => {
+//   console.log(`Server berjalan di http://0.0.0.0:${process.env.PORT}`);
+// });

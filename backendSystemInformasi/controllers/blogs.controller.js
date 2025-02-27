@@ -44,9 +44,9 @@ export const Get = async (req, res) => {
     }
 }
 
-export const Detail = async(req, res) => {
+export const Detail = async (req, res) => {
     try {
-        const blog = await Blogs.findById(req.params.id)
+        const blog = await Blogs.findById(req.params.id).populate('created_by')
         res.json({ blog });
     } catch (error) {
         console.error('Error see detail blog', { error })
@@ -62,8 +62,10 @@ export const Create = async (req, res) => {
     try {
         const blog = await Blogs.create({ ...req.body, created_by: req.user._id, comments: [], like: 0 });
 
-        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
-                    aktivitas : `Menambahkan data blog baru dengan judul blog : ${blog.title}`});
+        await History.create({
+            created_by: req.user._id.toString(), name: req.user.name,
+            aktivitas: `Menambahkan data blog baru dengan judul blog : ${blog.title}`
+        });
 
         res.json({ message: "Succesfully create blog", blog });
 
@@ -93,8 +95,10 @@ export const Update = async (req, res) => {
 
         await blog.save();
 
-        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
-                    aktivitas : `Memodifikasi data blog dengan id : ${req.params.id}`});
+        await History.create({
+            created_by: req.user._id.toString(), name: req.user.name,
+            aktivitas: `Memodifikasi data blog dengan id : ${req.params.id}`
+        });
 
         res.json({ message: "Succesfully update blog", blog });
 
@@ -115,8 +119,10 @@ export const Delete = async (req, res) => {
         const blog = await Blogs.findById(req.params.id);
         await blog.deleteOne();
 
-        await History.create({created_by : req.user._id.toString(), name : req.user.name, 
-                    aktivitas : `Menghapus data blog dengan id : ${req.params.id}`});
+        await History.create({
+            created_by: req.user._id.toString(), name: req.user.name,
+            aktivitas: `Menghapus data blog dengan id : ${req.params.id}`
+        });
 
         res.json({ message: "Succesfully delete blog" });
 
@@ -124,6 +130,43 @@ export const Delete = async (req, res) => {
         console.error('Error while delete blog', { error });
         res.json(502)
             .res({ message: "Error while delete blog", error: error.message })
+    }
+}
+
+export const CreateComment = async (req, res) => {
+    const { id } = req.params;
+    const { comment, name } = req.body;
+
+    const blog = await Blogs.findById(id);
+    if (!blog) {
+        return res.status(404).json({ message: "Blog tidak ditemukan" });
+    }
+
+    blog.comments.push({
+        comment,
+        name
+    });
+
+    await blog.save();
+    res.json({ message: "Komentar berhasil ditambahkan" });
+}
+
+export const GiveLike = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const blog = await Blogs.findById(id);
+        if (!blog) {
+            return res.status(404).json({ message: "Blog tidak ditemukan" });
+        }
+
+        blog.like = blog.like + 1;
+        await blog.save();
+
+        res.json({ message: "Blog berhasil di-like" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Terjadi kesalahan server" });
     }
 }
 

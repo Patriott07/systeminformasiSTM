@@ -16,6 +16,7 @@ const AddBlog = () => {
   const [resultValueBlog, setResultValueBlog] = useState({});
   const [elementsBlog, setElementsBlog] = useState([]);
   const [tags, setTags] = useState([]);
+  const [showTags, setShowTags] = useState(false);
 
   // form
   const [titleInput, setTitleInput] = useState(null);
@@ -374,7 +375,7 @@ const AddBlog = () => {
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('text')}>Add new Text</button>
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('img')}>Add new Image</button>
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('video')}>Add new Vidio</button>
-            
+              <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
 
             </div>
           </div>
@@ -392,8 +393,8 @@ const AddBlog = () => {
                 <div className="">
                   <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Blog</label>
                   <input
-                  onChange={(e) => setDateInput(e.target.value)}
-                  type="date" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul blog anda" required />
+                    onChange={(e) => setDateInput(e.target.value)}
+                    type="date" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul blog anda" required />
                 </div>
                 <div className="">
                   <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cover Blog</label>
@@ -401,37 +402,41 @@ const AddBlog = () => {
                 </div>
 
 
-                <div id="image-viewer" className="bg w-full h-[30vh] bg-center bg-cover bg-gray-800 rounded-sm">
+                <div id="image-viewer" className="bg w-full h-[30vh] bg-center bg-cover bg-gray-800/40 rounded-sm">
 
                 </div>
+                <div className="flex mt-3 justify-between">
+                  <div className="text-sm font-semibold">Add Categories</div>
+                  
 
-                <div className="text-sm mt-3">Add Categories</div>
-                <div className="flex flex-wrap my-3 items-center gap-2">
-                  {tags.map((checkbox) => (
-                    <div key={checkbox._id} className="flex items-center flex-wrap">
-                      <input
-                        id={checkbox.name}
-                        onChange={handleCheckboxChange}
-                        type="checkbox"
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 mt-5"
-                      />
-                      <label
-                        htmlFor={checkbox.id}
-                        className="ms-1 mt-1 text-xs font-medium text-gray-900 dark:text-gray-300"
-                      >
-                        {checkbox.name}
-                      </label>
-                    </div>
-                  ))}
                 </div>
+             
+                  <div className="flex flex-wrap mt-3 items-center gap-2">
+                    {tags.map((checkbox) => (
+                      <div key={checkbox._id} className="flex items-center flex-wrap">
+                        <input
+                          id={checkbox.name}
+                          onChange={handleCheckboxChange}
+                          type="checkbox"
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 mt-5"
+                        />
+                        <label
+                          htmlFor={checkbox.id}
+                          className="ms-1 mt-1 text-xs font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          {checkbox.name}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
 
-                <div className="flex">
-                  <button onClick={() => navigate('/data_blog')} type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Cancel Form</button>
+                <div className="flex mt-3">
+                  <button onClick={() => navigate('/data_blog')} type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Back To Home</button>
 
                   {/* {
                     contents.
                   } */}
-                  <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
+
                 </div>
 
               </div>
