@@ -34,6 +34,24 @@ const DataBlog = () => {
   const [pagination, setPagination] = useState(0);
   const [currentPagination, setCurrentPagination] = useState(1);
 
+  const [isOpenSidebar, setOpenSideBar] = useState(false);
+
+  const checkScreenWidth = async () => {
+    if (window.innerWidth < 560) { // dalam pixel
+      // state layar hp
+      setOpenSideBar(true);
+    } else if (window.innerWidth < 980) {
+      // state layar tablet
+      setOpenSideBar(false);
+
+    } else {
+      // state laptop
+      setOpenSideBar(true);
+    }
+    // cek layar screen
+    console.log(window.innerWidth)
+  }
+
   const openEditModal = (data) => {
     setEditData(data);
     setIsEditModalOpen(true);
@@ -61,6 +79,7 @@ const DataBlog = () => {
   }, [currentPagination]);
 
   useEffect(() => {
+    checkScreenWidth();
     handleFetchBlogs();
   }, []);
 
@@ -137,7 +156,38 @@ const DataBlog = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
-        <Side />
+
+        {isOpenSidebar ? (
+          <Side />
+        ) : null}
+
+        {/* Button untuk tablet */}
+        <div className="absolute top-[30px] right-[30px] z-10">
+          <button
+            onClick={() => {
+              console.log({ isOpenSidebar })
+              setOpenSideBar(isOpenSidebar ? false : true)
+            }}
+
+            type="button"
+            className=" p-3 bg-blue-500 items-center hidden z-[30] sm:flex lg:hidden mt-2 text-sm text-white rounded-lg "
+          >
+            <span className="sr-only">Open sidebar</span>
+            <svg
+              className="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clipRule="evenodd"
+                fillRule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              ></path>
+            </svg>
+          </button>
+        </div>
 
         <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg lg:w-9/12 m-10">
           <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
@@ -227,94 +277,94 @@ const DataBlog = () => {
               <tbody id="gallery">
                 {blogs.length > 0
                   ? blogs.map((val, _i) => (
-                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">{_i + 1}</td>
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900  dark:text-white"
-                        >
-                          {val.title}
-                        </th>
-                        <td className="px-6 py-4">
-                          {/* <img
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td className="px-6 py-4">{_i + 1}</td>
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900  dark:text-white"
+                      >
+                        {val.title}
+                      </th>
+                      <td className="px-6 py-4">
+                        {/* <img
                         src={val.photo}
                         className="w-20 h-20 rounded-sm object-cover"
                         alt=""
                       /> */}
 
-                          <a
-                            //  onClick={(e) => e.preventDefault()}
-                            target="_blank"
-                            href={images[_i]["src"]}
-                            data-pswp-width={images[_i]["w"]}
-                            data-pswp-height={images[_i]["h"]}
+                        <a
+                          //  onClick={(e) => e.preventDefault()}
+                          target="_blank"
+                          href={images[_i]["src"]}
+                          data-pswp-width={images[_i]["w"]}
+                          data-pswp-height={images[_i]["h"]}
+                        >
+                          <img
+                            src={images[_i]["src"]}
+                            alt={`Thumbnail ${_i}`}
+                            width="100"
+                            style={{ cursor: "pointer" }}
+                          />
+                        </a>
+                      </td>
+                      <td>{val.date}</td>
+                      <td className="px-6 py-4 flex flex-wrap gap-1">
+                        {val.tags.map((tag) => {
+                          return (
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">
+                              {tag}
+                            </span>
+                          );
+                        })}
+                      </td>
+                      <td className="px-6 py-4">2024-08-21</td>
+                      <td className="px-6 py-4 flex flex-col gap-2">
+                        <button
+                          onClick={() => navigate(`/modify/blog/${val._id}`)}
+                          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
                           >
-                            <img
-                              src={images[_i]["src"]}
-                              alt={`Thumbnail ${_i}`}
-                              width="100"
-                              style={{ cursor: "pointer" }}
-                            />
-                          </a>
-                        </td>
-                        <td>{val.date}</td>
-                        <td className="px-6 py-4 flex flex-wrap gap-1">
-                          {val.tags.map((tag) => {
-                            return (
-                              <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">
-                                {tag}
-                              </span>
-                            );
-                          })}
-                        </td>
-                        <td className="px-6 py-4">2024-08-21</td>
-                        <td className="px-6 py-4 flex flex-col gap-2">
-                          <button
-                            onClick={() => navigate(`/modify/blog/${val._id}`)}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                            >
-                              <g
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                              >
-                                <path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
-                                <path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
-                              </g>
-                            </svg>
-                            <span>Edit</span>
-                          </button>
-                          <button
-                            onClick={() => handleDelete(val._id)}
-                            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:opacity-90 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                          >
-                            <svg
-                              className="w-5 h-5 text-white"
-                              xmlns="http://www.w3.org/2000/svg"
+                            <g
                               fill="none"
-                              viewBox="0 0 24 24"
                               stroke="currentColor"
-                              strokeWidth="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M6 18L18 6M6 6l12 12"
-                              />
-                            </svg>
-                            <span>Delete</span>
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+                              <path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
+                              <path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
+                            </g>
+                          </svg>
+                          <span>Edit</span>
+                        </button>
+                        <button
+                          onClick={() => handleDelete(val._id)}
+                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:opacity-90 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                        >
+                          <svg
+                            className="w-5 h-5 text-white"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                          <span>Delete</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))
                   : null}
               </tbody>
             </table>

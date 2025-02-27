@@ -59,6 +59,24 @@ const DataKurikulum = () => {
   const [kurikulums, setKurikulums] = useState([]);
   const [jurusan, setJurusans] = useState([]);
 
+  const [isOpenSidebar, setOpenSideBar] = useState(false);
+
+  const checkScreenWidth = async () => {
+      if (window.innerWidth < 560) { // dalam pixel
+          // state layar hp
+          setOpenSideBar(true);
+      } else if (window.innerWidth < 980) {
+          // state layar tablet
+          setOpenSideBar(false);
+
+      } else {
+          // state laptop
+          setOpenSideBar(true);
+      }
+      // cek layar screen
+      console.log(window.innerWidth)
+  }
+
   const openEditModal = (data) => {
     setEditData(data);
     setIsEditModalOpen(true);
@@ -86,6 +104,8 @@ const DataKurikulum = () => {
   }, [currentPagination]);
 
   useEffect(() => {
+
+    checkScreenWidth();
     handleFetchKurikulum();
     handleFetchJurusan();
     handleGetJurusan();
@@ -179,9 +199,40 @@ const DataKurikulum = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
-        <Side />
 
-        <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-9/12 lg:m-12">
+        {isOpenSidebar ? (
+          <Side />
+        ) : null}
+
+        {/* Button untuk tablet */}
+        <div className="absolute top-[30px] right-[30px] z-10">
+          <button
+            onClick={() => {
+              console.log({ isOpenSidebar })
+              setOpenSideBar(isOpenSidebar ? false : true)
+            }}
+
+            type="button"
+            className=" p-3 bg-blue-500 items-center hidden z-[30] sm:flex lg:hidden mt-2 text-sm text-white rounded-lg "
+          >
+            <span className="sr-only">Open sidebar</span>
+            <svg
+              className="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clipRule="evenodd"
+                fillRule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-full lg:w-9/12 md:m-12">
           <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
             <div className="font-semibold lg:text-3xl text-xl text-white">
               Data Kurikulum
@@ -266,72 +317,72 @@ const DataKurikulum = () => {
               <tbody>
                 {kurikulums.length > 0
                   ? kurikulums.map((val, _i) => {
-                      return (
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                          <td className="px-6 py-4">{_i + 1}</td>
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          >
-                            {val.nama_jurusan}
-                          </th>
+                    return (
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">{_i + 1}</td>
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {val.nama_jurusan}
+                        </th>
 
-                          <td>{val.kelas}</td>
-                          <td className="px-6 py-4">{val.semester}</td>
-                          <td className="px-6 py-4">{val.year}</td>
-                          <td className="px-6 py-4 flex flex-col gap-2">
-                            <button
-                              onClick={() =>
-                                openEditModal({
-                                  ...val,
-                                  jurusans: jurusan,
-                                })
-                              }
-                              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                        <td>{val.kelas}</td>
+                        <td className="px-6 py-4">{val.semester}</td>
+                        <td className="px-6 py-4">{val.year}</td>
+                        <td className="px-6 py-4 flex flex-col gap-2">
+                          <button
+                            onClick={() =>
+                              openEditModal({
+                                ...val,
+                                jurusans: jurusan,
+                              })
+                            }
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
                             >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                              >
-                                <g
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                >
-                                  <path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
-                                  <path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
-                                </g>
-                              </svg>
-                              <span>Edit</span>
-                            </button>
-                            <button
-                              onClick={() => handleDelete(val._id)}
-                              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-purple-500 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                            >
-                              <svg
-                                className="w-5 h-5 text-white"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <g
                                 fill="none"
-                                viewBox="0 0 24 24"
                                 stroke="currentColor"
-                                strokeWidth="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
                               >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M6 18L18 6M6 6l12 12"
-                                />
-                              </svg>
-                              <span>Delete</span>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })
+                                <path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
+                                <path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
+                              </g>
+                            </svg>
+                            <span>Edit</span>
+                          </button>
+                          <button
+                            onClick={() => handleDelete(val._id)}
+                            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-purple-500 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                          >
+                            <svg
+                              className="w-5 h-5 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                            <span>Delete</span>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
                   : null}
               </tbody>
             </table>
@@ -453,12 +504,12 @@ const EditModal = ({ data, onClose }) => {
         >
           {jurusans.length > 0
             ? jurusans.map((val, _i) => {
-                return (
-                  <option id={val.name} value={val._id}>
-                    {val.name}
-                  </option>
-                );
-              })
+              return (
+                <option id={val.name} value={val._id}>
+                  {val.name}
+                </option>
+              );
+            })
             : null}
         </select>
 

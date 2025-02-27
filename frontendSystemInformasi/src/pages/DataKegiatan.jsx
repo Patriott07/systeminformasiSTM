@@ -19,6 +19,24 @@ const DataKegiatan = () => {
   const [images, setImages] = useState([]);
   const [activity, setActivity] = useState([]);
 
+  const [isOpenSidebar, setOpenSideBar] = useState(false);
+
+  const checkScreenWidth = async () => {
+      if (window.innerWidth < 560) { // dalam pixel
+          // state layar hp
+          setOpenSideBar(true);
+      } else if (window.innerWidth < 980) {
+          // state layar tablet
+          setOpenSideBar(false);
+
+      } else {
+          // state laptop
+          setOpenSideBar(true);
+      }
+      // cek layar screen
+      console.log(window.innerWidth)
+  }
+
   const openEditModal = (data) => {
     setEditData(data);
     setIsEditModalOpen(true);
@@ -46,6 +64,7 @@ const DataKegiatan = () => {
   }, [currentPagination]);
 
   useEffect(() => {
+    checkScreenWidth();
     handleFetchKegiatan();
 
     const lightbox = new PhotoSwipeLightbox({
@@ -137,9 +156,40 @@ const DataKegiatan = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
-        <Side />
 
-        <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-9/12 lg:m-12">
+        {isOpenSidebar ? (
+          <Side />
+        ) : null}
+
+        {/* Button untuk tablet */}
+        <div className="absolute top-[30px] right-[30px] z-10">
+          <button
+            onClick={() => {
+              console.log({ isOpenSidebar })
+              setOpenSideBar(isOpenSidebar ? false : true)
+            }}
+
+            type="button"
+            className=" p-3 bg-blue-500 items-center hidden z-[30] sm:flex lg:hidden mt-2 text-sm text-white rounded-lg "
+          >
+            <span className="sr-only">Open sidebar</span>
+            <svg
+              className="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clipRule="evenodd"
+                fillRule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-full lg:w-9/12 md:m-12">
           <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
             <div className="font-semibold text-xl lg:text-3xl text-white">
               Data Kegiatan
@@ -198,7 +248,7 @@ const DataKegiatan = () => {
             </Link>
           </div>
           <div className="overflow-x-auto w-12/12 lg:m-auto">
-          
+
             <table className="text-sm text-left m-0 rounded-none rtl:text-right text-gray-500 dark:text-gray-400 border-t w-11/12 mx-auto">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -225,100 +275,100 @@ const DataKegiatan = () => {
               <tbody className="text-sm" id="gallery">
                 {activity.length > 0
                   ? activity.map((val, _i) => {
-                      return (
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                          <td className="px-6 py-4">{_i + 1}</td>
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          >
-                            {val.title}
-                          </th>
-                          <td className="px-6 py-4">{val.description}</td>
-                          <td>{val.date}</td>
-                          <td className="px-6 py-4">
-                            {
-                              <a
-                                //  onClick={(e) => e.preventDefault()}
-                                href={val.details_media[0]["content"]}
-                                data-pswp-width={images[_i][0]["w"]}
-                                data-pswp-height={images[_i][0]["h"]}
-                              >
-                                <img
-                                  src={val.details_media[0]["content"]}
-                                  alt={`Thumbnail ${_i}`}
-                                  width="100"
-                                  style={{ cursor: "pointer" }}
-                                />
-                              </a>
-                            }
+                    return (
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">{_i + 1}</td>
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {val.title}
+                        </th>
+                        <td className="px-6 py-4">{val.description}</td>
+                        <td>{val.date}</td>
+                        <td className="px-6 py-4">
+                          {
+                            <a
+                              //  onClick={(e) => e.preventDefault()}
+                              href={val.details_media[0]["content"]}
+                              data-pswp-width={images[_i][0]["w"]}
+                              data-pswp-height={images[_i][0]["h"]}
+                            >
+                              <img
+                                src={val.details_media[0]["content"]}
+                                alt={`Thumbnail ${_i}`}
+                                width="100"
+                                style={{ cursor: "pointer" }}
+                              />
+                            </a>
+                          }
 
-                            {Array.from({ length: val.details_media.length }).map(
-                              (val2, __i) => {
-                                return (
-                                  <a
-                                    //  onClick={(e) => e.preventDefault()}
-                                    href={images[_i][__i]["src"]}
-                                    data-pswp-width={images[_i][__i]["w"]}
-                                    data-pswp-height={images[_i][__i]["h"]}
-                                  ></a>
-                                );
-                              }
-                            )}
-                          </td>
-                          <td className="px-6 py-4 flex flex-col gap-2">
-                            <button
-                              onClick={() =>
-                                openEditModal({
-                                  ...val,
-                                  details_media: images[_i],
-                                })
-                              }
-                              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                          {Array.from({ length: val.details_media.length }).map(
+                            (val2, __i) => {
+                              return (
+                                <a
+                                  //  onClick={(e) => e.preventDefault()}
+                                  href={images[_i][__i]["src"]}
+                                  data-pswp-width={images[_i][__i]["w"]}
+                                  data-pswp-height={images[_i][__i]["h"]}
+                                ></a>
+                              );
+                            }
+                          )}
+                        </td>
+                        <td className="px-6 py-4 flex flex-col gap-2">
+                          <button
+                            onClick={() =>
+                              openEditModal({
+                                ...val,
+                                details_media: images[_i],
+                              })
+                            }
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
                             >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                              >
-                                <g
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                >
-                                  <path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
-                                  <path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
-                                </g>
-                              </svg>
-                              <span>Edit</span>
-                            </button>
-                            <button
-                              onClick={() => handleDelete(val._id)}
-                              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                            >
-                              <svg
-                                className="w-5 h-5 text-white"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <g
                                 fill="none"
-                                viewBox="0 0 24 24"
                                 stroke="currentColor"
-                                strokeWidth="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
                               >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M6 18L18 6M6 6l12 12"
-                                />
-                              </svg>
-                              <span>Delete</span>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })
+                                <path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
+                                <path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
+                              </g>
+                            </svg>
+                            <span>Edit</span>
+                          </button>
+                          <button
+                            onClick={() => handleDelete(val._id)}
+                            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                          >
+                            <svg
+                              className="w-5 h-5 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                            <span>Delete</span>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
                   : null}
               </tbody>
             </table>
@@ -510,23 +560,23 @@ const EditModal = ({ data, onClose }) => {
             <div id="gallery" className="flex items-center gap-3">
               {detail_media.length > 0
                 ? detail_media.map((val, _i) => {
-                    console.log({ val });
-                    return (
-                      <a
-                        //  onClick={(e) => e.preventDefault()}
-                        href={val.src}
-                        data-pswp-width={val.w}
-                        data-pswp-height={val.h}
-                      >
-                        <img
-                          src={val.src}
-                          width={val.w}
-                          height={val.h}
-                          style={{ cursor: "pointer" }}
-                        />
-                      </a>
-                    );
-                  })
+                  console.log({ val });
+                  return (
+                    <a
+                      //  onClick={(e) => e.preventDefault()}
+                      href={val.src}
+                      data-pswp-width={val.w}
+                      data-pswp-height={val.h}
+                    >
+                      <img
+                        src={val.src}
+                        width={val.w}
+                        height={val.h}
+                        style={{ cursor: "pointer" }}
+                      />
+                    </a>
+                  );
+                })
                 : null}
             </div>
           </div>

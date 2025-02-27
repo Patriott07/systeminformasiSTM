@@ -17,7 +17,23 @@ const DashboardHome = () => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
-    const [isOpenSidebar, setOpenSideBar] = useState(true);
+    const [isOpenSidebar, setOpenSideBar] = useState(false);
+
+    const checkScreenWidth = async () => {
+        if (window.innerWidth < 560) { // dalam pixel
+            // state layar hp
+            setOpenSideBar(true);
+        } else if (window.innerWidth < 980) {
+            // state layar tablet
+            setOpenSideBar(false);
+
+        } else {
+            // state laptop
+            setOpenSideBar(true);
+        }
+        // cek layar screen
+        console.log(window.innerWidth)
+    }
 
     const openEditModal = (data) => {
         setEditData(data);
@@ -39,21 +55,7 @@ const DashboardHome = () => {
         if (type == "tag") return "Tags";
     }
 
-    const checkScreenWidth = async () => {
-        if (window.innerWidth < 560) { // dalam pixel
-            // state layar hp
-            setOpenSideBar(true);
-        } else if (window.innerWidth < 980) {
-            // state layar tablet
-            setOpenSideBar(false);
-
-        } else {
-            // state laptop
-            setOpenSideBar(true);
-        }
-        // cek layar screen
-        console.log(window.innerWidth)
-    }
+   
     useEffect(() => {
         // Jalankan fungsi checkscreenwidth
         checkScreenWidth();
@@ -119,11 +121,11 @@ const DashboardHome = () => {
                 ) : null}
 
                 {/* Button untuk tablet */}
-                <div className="absolute top-[30px] right-[30px] z-40">
+                <div className="absolute top-[30px] right-[30px] z-10">
                     <button
                         onClick={() => {
-                            console.log('test')
-                            setOpenSideBar(!isOpenSidebar)
+                            console.log({ isOpenSidebar })
+                            setOpenSideBar(isOpenSidebar ? false : true)
                         }}
 
                         type="button"
