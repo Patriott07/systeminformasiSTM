@@ -18,6 +18,8 @@ const DashboardHome = () => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
+    const [isOpenSidebar, setOpenSideBar] = useState(true);
+
     const openEditModal = (data) => {
         setEditData(data);
         setIsEditModalOpen(true);
@@ -38,8 +40,26 @@ const DashboardHome = () => {
         if (type == "tag") return "Tags";
     }
 
+    const checkScreenWidth = async () => {
+        if (window.innerWidth < 560) { // dalam pixel
+            // state layar hp
+            setOpenSideBar(true);
+        } else if (window.innerWidth < 980) {
+            // state layar tablet
+            setOpenSideBar(false);
+
+        } else {
+            // state laptop
+            setOpenSideBar(true);
+        }
+        // cek layar screen
+        console.log(window.innerWidth)
+    }
     useEffect(() => {
+        // Jalankan fungsi checkscreenwidth
+        checkScreenWidth();
         fetchHistory();
+
     }, []);
 
     useEffect(() => {
@@ -93,18 +113,52 @@ const DashboardHome = () => {
 
     return (
         <div className="flex flex-col min-h-screen ">
-            <div className="flex flex-grow ">
-                <Side />
+            <div className="flex">
 
-                <div className="relative pb-12 overflow-x-auto shadow-md sm:rounded-lg w-9/12 md:m-10">
+                {isOpenSidebar ? (
+                    <Side />
+                ) : null}
+
+                {/* Button untuk tablet */}
+                <div className="absolute top-[30px] right-[30px] z-40">
+                    <button
+                        onClick={() => {
+                            console.log('test')
+                            setOpenSideBar(!isOpenSidebar)
+                        }}
+
+                        type="button"
+                        className=" p-3 bg-blue-500 items-center hidden z-[30] sm:flex lg:hidden mt-2 text-sm text-white rounded-lg "
+                    >
+                        <span className="sr-only">Open sidebar</span>
+                        <svg
+                            className="w-6 h-6"
+                            aria-hidden="true"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                clipRule="evenodd"
+                                fillRule="evenodd"
+                                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div className="relative pb-12 overflow-x-auto shadow-md sm:rounded-lg lg:w-9/12 md:m-10">
+                    {/* Toggle Button */}
+
                     <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
+
                         <div className="text-xl md:text-3xl text-white font-semibold">
                             Ringkasan Histories
                         </div>
                         <p className="text-sm md:text-[16px] text-white uppercase mt-2 font-semibold">Semua History Pengelolaan Dashboard terbaca disini</p>
                     </div>
-                    <div className="flex md:flex-row flex-col items-center justify-between py-3 bg-white mt-[25vh] lg:mt-[20vh] px-4 z-[5] md:w-11/12 mx-auto rounded-t">
-                        <div action="" method="post">
+                    <div className="flex lg:flex-row flex-col items-center sm:items-start lg:items-center justify-between py-3 bg-white mt-[20vh] px-4 z-[5] lg:w-11/12 mx-auto rounded-t">
+                        <div action="" method="post" className="w-full md:w-fit">
                             <label htmlFor="table-search" className="sr-only">
                                 Search
                             </label>
@@ -128,7 +182,7 @@ const DashboardHome = () => {
                                 </form>
                             </div>
                         </div>
-                        <div className="flex md:items-center w-fit px-2 my-4 md:flex-row flex-col gap-4">
+                        <div className="flex md:items-center w-full md:w-fit px-2 my-4 md:flex-row flex-col gap-4">
                             <div>
                                 <label htmlFor="start_date" className="text-xs font-semibold text-gray-600">Mulai Tanggal :</label>
 
@@ -145,7 +199,7 @@ const DashboardHome = () => {
                                 </div>
                             </div>
 
-                            <div className="font-semibold hidden md:visible">-</div>
+                            <div className="font-semibold hidden md:block text-gray-500">-</div>
 
                             <div>
                                 <label htmlFor="start_date" className="text-xs font-semibold text-gray-600">Hingga tanggal :</label>
@@ -160,9 +214,9 @@ const DashboardHome = () => {
                                         onChange={(e) => setEndDate(e.target.value)}
                                         id="default-datepicker" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" />
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                     </div>
 
