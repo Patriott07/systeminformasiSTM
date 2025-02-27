@@ -46,7 +46,7 @@ export const Get = async (req, res) => {
 
 export const Detail = async (req, res) => {
     try {
-        const blog = await Blogs.findById(req.params.id)
+        const blog = await Blogs.findById(req.params.id).populate('created_by')
         res.json({ blog });
     } catch (error) {
         console.error('Error see detail blog', { error })
@@ -133,20 +133,40 @@ export const Delete = async (req, res) => {
     }
 }
 
-
-export const GetComment = async (req, res) => {
-    try {
-
-    } catch (error) {
-        console.log({ error })
-    }
-}
-
-
 export const CreateComment = async (req, res) => {
-    try {
+    const { id } = req.params;
+    const { comment, name } = req.body;
 
+    const blog = await Blogs.findById(id);
+    if (!blog) {
+        return res.status(404).json({ message: "Blog tidak ditemukan" });
+    }
+
+    blog.comments.push({
+        comment,
+        name
+    });
+
+    await blog.save();
+    res.json({ message: "Komentar berhasil ditambahkan" });
+}
+
+export const GiveLike = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const blog = await Blogs.findById(id);
+        if (!blog) {
+            return res.status(404).json({ message: "Blog tidak ditemukan" });
+        }
+
+        blog.like = blog.like + 1;
+        await blog.save();
+
+        res.json({ message: "Blog berhasil di-like" });
     } catch (error) {
-        console.log({ error })
+        console.error(error);
+        res.status(500).json({ message: "Terjadi kesalahan server" });
     }
 }
+
