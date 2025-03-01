@@ -106,7 +106,7 @@ const DashboardHome = () => {
               Semua History Pengelolaan Dashboard terbaca disini
             </p>
           </div>
-          <div className="flex md:flex-row flex-col items-center md:justify-between bg-white lg:mt-[20vh] mt-[25vh] px-4 z-[5] lg:w-11/12 mx-auto rounded-t">
+          <div className="flex lg:flex-row flex-col items-center md:justify-center bg-white lg:mt-[20vh] mt-[25vh] px-4 z-[5] lg:w-11/12 mx-auto rounded-t">
             {/* <select
                             onChange={(e) => setSelectShowData(e.target.value)}
                             id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -120,7 +120,7 @@ const DashboardHome = () => {
                             <option value="tag">Tags</option>
                         </select> */}
 
-            <div action="" method="post">
+            <div className="pb-4 bg-white dark:bg-gray-900 p-4">
               <label htmlFor="table-search" className="sr-only">
                 Search
               </label>
@@ -128,13 +128,13 @@ const DashboardHome = () => {
                 <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none"></div>
                 <form
                   onSubmit={handleSubmitSearch}
-                  className="flex md:flex-row flex-col items-start"
+                  className="lg:flex items-start"
                 >
                   <input
                     type="text"
                     id="table-search"
-                    className="mt-4 lg:mt-0 flex md:min-w-72 md:max-w-40 w-full py-2 ps-8 text-sm text-gray-900 border border-gray-300 rounded-lg w-55 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Cari Aktivitas"
+                    className="flex md:min-w-72 md:max-w-40 w-full py-2 ps-8 text-sm text-gray-900 border border-gray-300 rounded-lg w-55 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search for items"
                   />
 
                   <button
@@ -161,106 +161,105 @@ const DashboardHome = () => {
                 </form>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-4">
-              <div action="">
-                <label
-                  htmlFor="start_date"
-                  className="text-xs font-semibold text-gray-600"
-                >
-                  Mulai Tanggal :
-                </label>
+                  <div className="lg:ms-44 flex flex-col lg:flex-row items-center gap-4">
+                    <div className="">
+                      <label
+                        htmlFor="start_date"
+                        className="text-xs font-semibold text-gray-600"
+                      >
+                        Mulai Tanggal :
+                      </label>
 
-                <div class="relative max-w-sm">
-                  <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                    <svg
-                      class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                    </svg>
-                  </div>
-                  <input
-                    datepicker
-                    onChange={(e) => setStartDate(e.target.value)}
-                    id="default-datepicker"
-                    type="date"
-                    class="flex-col bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Select date"
-                  />
-                </div>
-              </div>
-              <div className="font-semibold">-</div>
-              <div action="">
-                <label
-                  htmlFor="start_date"
-                  className="text-xs font-semibold text-gray-600"
-                >
-                  Hingga tanggal :
-                </label>
+                      <div class="relative max-w-sm">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                          <svg
+                            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                          </svg>
+                        </div>
+                        <input
+                          datepicker
+                          onChange={(e) => setStartDate(e.target.value)}
+                          id="default-datepicker"
+                          type="date"
+                          class="flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[200px] ps-14 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="Select date"
+                        />
+                      </div>
+                    </div>
+                    <div action="">
+                      <label
+                        htmlFor="start_date"
+                        className="text-xs font-semibold text-gray-600"
+                      >
+                        Hingga tanggal :
+                      </label>
 
-                <div class="relative max-w-sm">
-                  <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                    <svg
-                      class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                    </svg>
+                      <div class="relative max-w-sm">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                          <svg
+                            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"  
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                          </svg>
+                        </div>
+                        <input
+                          datepicker
+                          onChange={(e) => setEndDate(e.target.value)}
+                          id="default-datepicker"
+                          type="date"
+                          class="flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[200px] ps-14 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="Select date"
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <input
-                    datepicker
-                    onChange={(e) => setEndDate(e.target.value)}
-                    id="default-datepicker"
-                    type="date"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Select date"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
-            <div className="overflow-x-auto w-12/12 lg:m-auto">
-          <table className="text-sm text-left m-0 rounded-none rtl:text-right text-gray-500 dark:text-gray-400 border-t w-11/12 mx-auto">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  No.
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Dilakukan oleh
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Datetime
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Aktivitas
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {histories.length > 0
-                ? histories.map((val, _i) => {
-                    return (
-                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">{_i + 1}</td>
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          {val.name}
-                        </th>
-                        <td className="px-6 py-4">
-                          {val.date.split(".")[0].replace("T", " Time:")}
-                        </td>
+          <div className="overflow-x-auto w-12/12 lg:m-auto">
+            <table className="text-sm text-left m-0 rounded-none rtl:text-right text-gray-500 dark:text-gray-400 border-t w-11/12 mx-auto">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    No.
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Dilakukan oleh
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Datetime
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Aktivitas
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {histories.length > 0
+                  ? histories.map((val, _i) => {
+                      return (
+                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                          <td className="px-6 py-4">{_i + 1}</td>
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {val.name}
+                          </th>
+                          <td className="px-6 py-4">
+                            {val.date.split(".")[0].replace("T", " Time:")}
+                          </td>
 
-                        <td className="px-6 py-4">{val.aktivitas}</td>
-                        {/* <td className="px-6 py-4">
+                          <td className="px-6 py-4">{val.aktivitas}</td>
+                          {/* <td className="px-6 py-4">
                                     <button
                                         onClick={() =>
                                             openEditModal({
@@ -309,13 +308,13 @@ const DashboardHome = () => {
                                         <span>Delete</span>
                                     </a>
                                 </td> */}
-                      </tr>
-                    );
-                  })
-                : null}
-            </tbody>
-          </table>
-            </div>                  
+                        </tr>
+                      );
+                    })
+                  : null}
+              </tbody>
+            </table>
+          </div>
           <nav
             aria-label="Page navigation example"
             className="ms-11 mt-4 flex items-between justify-between"
