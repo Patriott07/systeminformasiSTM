@@ -2,7 +2,62 @@ import react from "react";
 import Doc1 from "../assets/Doc1.png";
 import Doc2 from "../assets/Dock.png";
 import Poster from "../assets/poster.webp";
+import SMKK from "../assets/smkk.jpg";
+import SMKK1 from "../assets/smkk1.jpg";
+import SMKK2 from "../assets/smkk2.jpg";
+import { useState, useEffect } from "react";
+import SMKK3 from "../assets/smkk3.jpg";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { Link } from "react-router-dom";
+
 const Homepage = () => {
+   const [blog, setBlog] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [blogs, setBlogs] = useState([]);
+    useEffect(() => {
+      AOS.init({ duration: 1000, once: false });
+    }, []);
+   useEffect(() => {
+      const fetchBlogs = async () => {
+        const token = localStorage.getItem("token");
+  
+        try {
+          const res = await fetch(`http://localhost:5050/blog/get`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              token: `${token}`,
+            },
+          });
+  
+          const data = await res.json();
+          console.log({ data });
+  
+          if (!res.ok) {
+            setError(data.message || "Failed to fetch blogs");
+            return;
+          }
+  
+          // Limit to 3 blogs
+          const limitedBlogs = data.data.slice(0, 3); // Taking only the first 3 blogs
+          setBlogs(limitedBlogs);
+          setTotalPages(data.pagination.totalPages);
+  
+          // Ambil semua tag unik
+          const tags = new Set();
+          limitedBlogs.forEach((blog) => {
+            blog.tags.forEach((tag) => tags.add(tag));
+          });
+          setAllTags([...tags]);
+        } catch (err) {
+          setError("An error occurred. Please try again.");
+        }
+      };
+  
+      fetchBlogs();
+    }, []);
   return (
     <>
       {/* <section className="flex mx-4">
@@ -23,7 +78,7 @@ const Homepage = () => {
       </section> */}
       <nav className="w-full bg-gray-900 text-white rounded-sm overflow-hidden lg:py-4 py-4 fixed top-0 z-50">
         <div className="lg:w-10/12 w-10/12 mx-auto flex justify-between items-center">
-          <h1 className="lg:text-2xl text-sm font-bold">SMA BAKTI</h1>
+          <h1 className="lg:text-2xl text-sm font-bold">SMKN 1 CIREBON</h1>
           <div className="flex gap-4 lg:gap-8">
             <a href="/" className="hover:text-blue-400 lg:text-base text-xs">
               Home
@@ -52,7 +107,7 @@ const Homepage = () => {
             <h1 className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">SELAMAT DATANG DI </h1>
             <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">SMA BAKTI KOTA CIREBON</span>
             <p className="lg:max-w-xl max-w-sm mt-1 text-base lg:text-xl font-serif text-white">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi autem alias, ut est <span className="text-blue-400"> dolorum fuga!</span>
+              mencetak lulusan yang siap kerja, memiliki keterampilan di bidangnya, serta mampu bersaing <span className="text-blue-400"> di dunia industri</span>
             </p>
             <div className="flex gap-4 pb-8">
               <button className="lg:px-4 px-2 py-2 text-sm lg:text-base lg:py-3 mt-2 bg-blue-400 rounded-lg">Example Button </button>
@@ -78,40 +133,40 @@ const Homepage = () => {
 
       <section className="w-full justify-center flex mt-8">
         <div className="w-10/12 justify-center flex flex-col items-center">
-          <div className="w-full flex items-start">
+          <div data-aos="fade-up" className="w-full flex items-start">
             <div className="flex gap-8">
-              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={Doc2} alt="" />
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={SMKK1} alt="" />
               <div className="">
-                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-serif font-medium">Apa Itu SMA BAKTI KOTA CIREBON </h1>
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-serif font-medium">Apa Itu SMKN I KOTA CIREBON </h1>
                 <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti, esse illum fuga quisquam qui natus ipsum officiis corporis officia laborum repellat, placeat maxime facilis dolores!
+                  SMK Negeri 1 Kota Cirebon adalah salah satu Sekolah Menengah Kejuruan (SMK) unggulan di Kota Cirebon yang berlokasi di Jalan Perjuangan By Pass Sunyaragi, Cirebon, Jawa Barat. Sekolah ini berfokus pada pendidikan kejuruan
+                  yang membekali siswa dengan keterampilan teknis dan profesional agar siap memasuki dunia kerja atau melanjutkan pendidikan ke jenjang yang lebih tinggi.
                 </p>
-                <button className="border-blue-500 lg:py-2 lg:px-4 lg:text-base text-sm py-1 px-2 rounded-xl border-2 mt-4">Read More</button>
               </div>
             </div>
           </div>
 
-          <div className="w-full flex items-end justify-end mt-8">
+          <div data-aos="fade-up" className="w-full flex items-end justify-end mt-8">
             <div className="flex gap-8">
               <div className="flex flex-col items-end">
-                <h1 className="text-blue-500 uppercase text-base lg:text-2xl text-justify font-serif font-medium">Kenapa harus SMA BAKTI KOTA CIREBON </h1>
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl text-justify font-serif font-medium">Kenapa harus SMKN I KOTA CIREBON </h1>
                 <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti, esse illum fuga quisquam qui natus ipsum officiis corporis officia laborum repellat, placeat maxime facilis dolores quisquam qui natus ipsum!
+                  SMKN 1 Cirebon bertujuan untuk mencetak lulusan yang siap kerja, memiliki keterampilan di bidangnya, serta mampu bersaing di dunia industri maupun melanjutkan pendidikan ke jenjang yang lebih tinggi. Sekolah ini juga
+                  memiliki fasilitas laboratorium, bengkel praktik, serta kerja sama dengan berbagai industri untuk mendukung pembelajaran siswa.
                 </p>
-                <button className="border-blue-500 lg:py-2 lg:px-4 lg:text-base text-sm py-1 px-2 rounded-xl border-2 mt-4">Read More</button>
               </div>
-              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={Doc1} alt="" />
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={SMKK2} alt="" />
             </div>
           </div>
-          <div className="w-full flex items-start mt-8">
+          <div data-aos="fade-up" className="w-full flex items-start mt-8">
             <div className="flex gap-8">
-              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={Doc2} alt="" />
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={SMKK3} alt="" />
               <div className="">
-                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-serif font-medium">Kepala sekolah SMA BAKTI KOTA CIREBON </h1>
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-serif font-medium">Kepala sekolah SMKN I KOTA CIREBON KOTA CIREBON </h1>
                 <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti, esse illum fuga quisquam qui natus ipsum officiis corporis officia laborum repellat, placeat maxime facilis dolores!
+                  Kepala Sekolah SMK Negeri 1 Kota Cirebon saat ini adalah Arifuddin, S.Pd., M.T. Beliau bertanggung jawab dalam memimpin sekolah, mengembangkan kurikulum, serta memastikan bahwa seluruh program keahlian yang ditawarkan
+                  dapat memberikan pendidikan terbaik bagi para siswa. Di bawah kepemimpinannya
                 </p>
-                <button className="border-blue-500 lg:py-2 lg:px-4 lg:text-base text-sm py-1 px-2 rounded-xl border-2 mt-4">Read More</button>
               </div>
             </div>
           </div>
@@ -126,26 +181,25 @@ const Homepage = () => {
               <h1> +62-0231-480202,</h1>
             </div>
             <div className="flex gap-2 mb-2">
-              <span className="min-w-[5rem]" >Email : </span>
+              <span className="min-w-[5rem]">Email : </span>
               <h1>info@smkn1-cirebon.sch.id</h1>
             </div>
             <div className="flex gap-2 mb-2">
               <span className="min-w-[5rem]">Alamat :</span>
-            <h1>Jalan Perjuangan, Kelurahan Sunyaragi, Kecamatan Kesambi, Kota Cirebon, Jawa Barat, </h1>
-
+              <h1>Jalan Perjuangan, Kelurahan Sunyaragi, Kecamatan Kesambi, Kota Cirebon, Jawa Barat, </h1>
             </div>
           </div>
           <div className="lg:max-w-[50%] lg:min-w-[50%] w-full justify-center flex min-h-full">
-          <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3064.578242155735!2d108.53415787362854!3d-6.735291293260876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f1df0e55b2ed3%3A0x51cf481547b4b319!2sSMK%20Negeri%201%20Cirebon!5e1!3m2!1sid!2sid!4v1738761226845!5m2!1sid!2sid"
-        width="80%"
-        height="90%"
-        style={{ border: '0' }}
-        allowFullScreen=""
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title="SMK Negeri 1 Cirebon Map"
-      />
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3064.578242155735!2d108.53415787362854!3d-6.735291293260876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f1df0e55b2ed3%3A0x51cf481547b4b319!2sSMK%20Negeri%201%20Cirebon!5e1!3m2!1sid!2sid!4v1738761226845!5m2!1sid!2sid"
+              width="80%"
+              height="90%"
+              style={{ border: "0" }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="SMK Negeri 1 Cirebon Map"
+            />
           </div>
         </div>
       </section>
@@ -154,71 +208,33 @@ const Homepage = () => {
         <div className="lg:w-10/12 w-full">
           <h1 className="text-center mb-4 text-blue-500 text-xl font-serif">Our Blog</h1>
           <div className="flex gap-4 lg:gap-8 justify-center flex-wrap">
-            <div class="lg:max-w-[19rem] max-w-[11rem] bg-white border lg:max-h-[27.2rem] min-h-[17rem] max-h-[17rem] border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-              <a href="#">
-                <img className="rounded-t-lg w-full bg-cover lg:max-h-[35vh] lg:min-h-[35vh] min-h-[11vh] max-h-[11vh]" src={Poster} />
-              </a>
-              <div class="lg:p-5 p-2">
-                <a href="#">
-                  <h5 class="mb-1 text-[0.9rem] lg:text-lg font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                </a>
-                <p class="mb-2 font-normal lg:text-base text-[0.7rem] text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                <a
-                  href="#"
-                  class="inline-flex items-center lg:px-3 lg:py-2 px-2 py-1 lg:text-sm text-[0.7rem] font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  Read more
-                  <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                  </svg>
-                </a>
-              </div>
+          {blogs.map((blog) => (
+          <div data-aos="fade-up" key={blog._id} className="max-w-xs min-w-[20rem] relative bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          <div className="min-h-[88%] max-h-[88%]">
+          <a href={`/blog/${blog._id}`}>
+             <img className="rounded-t-lg w-full h-32 lg:h-48 object-cover" src={blog.photo} alt={blog.title} />
+           </a>
+           <div className="lg:p-5 p-3">
+             <Link to={`/blog/${blog._id}`}>
+               <h5 className="mb-1 lg:text-lg text-xs font-bold tracking-tight text-gray-900 dark:text-white">{blog.title}</h5>
+             </Link>
+             <p className="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">{blog.content}</p>
+             <div className="flex flex-wrap gap-1 lg:gap-2 mb-2">
+               {blog.tags.map((tag) => (
+                 <span key={tag} className="px-2 py-1 text-[0.5rem] lg:text-xs bg-gray-200 text-gray-700 rounded-full mr-2">
+                   {tag}
+                 </span>
+               ))}
+             </div>
+           </div>
+          </div>
+            <div className="ml-4 ">
+            <Link to={`/blog/${blog._id}`} className="inline-flex   items-center lg:px-3 lg:py-2 px-2 py-1 lg:text-sm text-[0.5rem]  font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">
+               Read more
+             </Link>
             </div>
-          
-            <div class="lg:max-w-[19rem] max-w-[11rem] bg-white border lg:max-h-[27.2rem] min-h-[17rem] max-h-[17rem] border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-              <a href="#">
-                <img className="rounded-t-lg w-full bg-cover lg:max-h-[35vh] lg:min-h-[35vh] min-h-[11vh] max-h-[11vh]" src={Poster} />
-              </a>
-              <div class="lg:p-5 p-2">
-                <a href="#">
-                  <h5 class="mb-1 text-[0.9rem] lg:text-lg font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                </a>
-                <p class="mb-2 font-normal lg:text-base text-[0.7rem] text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                <a
-                  href="#"
-                  class="inline-flex items-center lg:px-3 lg:py-2 px-2 py-1 lg:text-sm text-[0.7rem] font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  Read more
-                  <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          
-            <div class="lg:max-w-[19rem] max-w-[11rem] bg-white border lg:max-h-[27.2rem] min-h-[17rem] max-h-[17rem] border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-              <a href="#">
-                <img className="rounded-t-lg w-full bg-cover lg:max-h-[35vh] lg:min-h-[35vh] min-h-[11vh] max-h-[11vh]" src={Poster} />
-              </a>
-              <div class="lg:p-5 p-2">
-                <a href="#">
-                  <h5 class="mb-1 text-[0.9rem] lg:text-lg font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                </a>
-                <p class="mb-2 font-normal lg:text-base text-[0.7rem] text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                <a
-                  href="#"
-                  class="inline-flex items-center lg:px-3 lg:py-2 px-2 py-1 lg:text-sm text-[0.7rem] font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  Read more
-                  <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          
-            
-          
+         </div>
+))}
           </div>
         </div>
       </section>
@@ -261,8 +277,7 @@ const Homepage = () => {
           <p className="mt-8 text-gray-400">© 2023 SMA BAKTI. All rights reserved.</p>
         </div>
       </footer>
-
-       </>
+    </>
   );
 };
 

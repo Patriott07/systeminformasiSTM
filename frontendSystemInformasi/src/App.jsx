@@ -27,7 +27,7 @@ import Loginpage from './view/Loginpage.jsx';
 import Registerpage from './view/Registerpage.jsx';
 import Kegiatan from './view/Kegiatan.jsx';
 import Targetjurusan from './view/Targetjurusan.jsx';
-
+import DetailJurusan from './view/DetailJurusan.jsx';
 
 
 // IMPORT
@@ -55,6 +55,7 @@ function App() {
         <Route path="/Kegiatan" element={<Kegiatan />} />
         <Route path="/Targetjurusan" element={<Targetjurusan />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/jurusan/:id" element={<DetailJurusan />} />
 
 
         {/* DAPA */}

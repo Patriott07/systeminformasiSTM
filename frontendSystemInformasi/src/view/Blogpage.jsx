@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Poster from "../assets/poster.webp";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 const Blogpage = () => {
   const [currentPageCategory1, setCurrentPageCategory1] = useState(1);
   const [currentPageCategory2, setCurrentPageCategory2] = useState(1);
@@ -12,6 +14,10 @@ const Blogpage = () => {
   const [blogsPerPage, setBlogsPerPage] = useState(6);
   const [selectedTag, setSelectedTag] = useState("");
   const [allTags, setAllTags] = useState([]);
+
+  useEffect(() => {
+        AOS.init({ duration: 1500, once: false });
+      }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -119,7 +125,7 @@ const Blogpage = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredBlogs.map((blog) => (
-              <div key={blog._id} className="w-full relative bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+              <div data-aos="fade-up" key={blog._id} className="w-full relative bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                <div className="min-h-[88%] max-h-[88%]">
                <a href={`/blog/${blog._id}`}>
                   <img className="rounded-t-lg w-full h-32 lg:h-48 object-cover" src={blog.photo} alt={blog.title} />

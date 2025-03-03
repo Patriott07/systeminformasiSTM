@@ -50,7 +50,7 @@ const BlogDetail = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       const token = localStorage.getItem("token");
-
+  
       try {
         const res = await fetch(`http://localhost:5050/blog/get`, {
           method: "GET",
@@ -59,32 +59,41 @@ const BlogDetail = () => {
             token: `${token}`,
           },
         });
-
+  
         const data = await res.json();
         console.log({ data });
-
+  
         if (!res.ok) {
           setError(data.message || "Failed to fetch blogs");
           return;
         }
-
-        // Limit to 3 blogs
-        const limitedBlogs = data.data.slice(0, 3); // Taking only the first 3 blogs
-        setBlogs(limitedBlogs);
-        setTotalPages(data.pagination.totalPages);
-
-        // Ambil semua tag unik
-        const tags = new Set();
-        limitedBlogs.forEach((blog) => {
-          blog.tags.forEach((tag) => tags.add(tag));
-        });
-        setAllTags([...tags]);
+  
+        if (data.data.length > 0) {
+          // Mengambil 3 blog secara acak
+          const shuffled = data.data.sort(() => 0.5 - Math.random());
+          const randomBlogs = shuffled.slice(0, 3);
+          setBlogs(randomBlogs);
+          setTotalPages(data.pagination.totalPages);
+  
+          // Ambil semua tag unik dari blog yang dipilih
+          const tags = new Set();
+          randomBlogs.forEach((blog) => {
+            blog.tags.forEach((tag) => tags.add(tag));
+          });
+          setAllTags([...tags]);
+        }
       } catch (err) {
         setError("An error occurred. Please try again.");
       }
     };
-
+  
+    // Panggil pertama kali
     fetchBlogs();
+  
+    // Set interval untuk memperbarui setiap 15 detik
+    const interval = setInterval(fetchBlogs, 15000);
+  
+    return () => clearInterval(interval); // Bersihkan interval saat komponen di-unmount
   }, []); // No dependency on currentPage anymore
   // Hilangkan dependency `currentPage` karena tidak pakai pagination
   if (loading) return <p>Loading...</p>;

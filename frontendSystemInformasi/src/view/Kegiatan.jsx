@@ -88,8 +88,8 @@ const Kegiatan = () =>{
         backgroundImage: `url('https://images.unsplash.com/photo-1543505298-b8be9b52a21a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`
       }} className="flex lg:min-h-screen h-[80vh] max-h-screen bg-cover w-full justify-center items-center">
           <div className="w-10/12 flex flex-col justify-center items-center min-h-screen">
-          <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg bg-blue-700/60 text-center text-white font-serif mb-4">Kegiatan SMK Bakti Kota Cirebon</h1>
-          <p className="max-w-md p-1 lg:text-base text-sm rounded-lg bg-blue-700/60 text-center text-white">"Lorem ipsum dolor sit amet consectetur, adipisicing elit. A eligendi dolores facilis ad non tempore asperiores veritatis?"</p>
+          <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg bg-blue-700/60 text-center text-white font-serif mb-4">Kegiatan SMKN I Kota Cirebon</h1>
+          <p className="max-w-md p-1 lg:text-base text-sm rounded-lg bg-blue-700/60 text-center text-white">"Selamat Datang Di Page Kegiatan SMKN I KOTA CIREBON"</p>
           </div>
       </section>
 
@@ -116,7 +116,7 @@ const Kegiatan = () =>{
           </div>
         </div>
 
-        <div className={selectedCategory === "all" ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4" : "flex flex-col items-center"}>
+        <div className={selectedCategory === "all" ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8" : "flex flex-col g items-center"}>
           {filteredKegiatan.length > 0 ? (
             filteredKegiatan.map((item) => (
               <div key={item._id} className="mb-6 text-center w-full">
