@@ -14,6 +14,24 @@ const DataUsers = () => {
   const [pagination, setPagination] = useState(0);
   const [currentPagination, setCurrentPagination] = useState(1);
 
+  const [isOpenSidebar, setOpenSideBar] = useState(false);
+
+  const checkScreenWidth = async () => {
+      if (window.innerWidth < 560) { // dalam pixel
+          // state layar hp
+          setOpenSideBar(true);
+      } else if (window.innerWidth < 980) {
+          // state layar tablet
+          setOpenSideBar(false);
+
+      } else {
+          // state laptop
+          setOpenSideBar(true);
+      }
+      // cek layar screen
+      console.log(window.innerWidth)
+  }
+
   const handleSubmitSearch = async (e) => {
     e.preventDefault();
     handlerFetchUser(e.target[0].value);
@@ -31,6 +49,7 @@ const DataUsers = () => {
   }, [currentPagination]);
 
   useEffect(() => {
+    checkScreenWidth();
     handlerFetchUser();
   }, []);
 
@@ -131,9 +150,40 @@ const DataUsers = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
-        <Side />
 
-        <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-9/12 md:m-10">
+        {isOpenSidebar ? (
+          <Side />
+        ) : null}
+
+        {/* Button untuk tablet */}
+        <div className="absolute top-[30px] right-[30px] z-10">
+          <button
+            onClick={() => {
+              console.log({ isOpenSidebar })
+              setOpenSideBar(isOpenSidebar ? false : true)
+            }}
+
+            type="button"
+            className="p-3 bg-red-500 items-center hidden z-[30] sm:flex lg:hidden me-3 mt-3 text-sm text-white rounded-lg"
+          >
+            <span className="sr-only">Open sidebar</span>
+            <svg
+              className="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clipRule="evenodd"
+                fillRule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-full lg:w-9/12 md:m-10">
           <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
             <div className="font-semibold text-3xl text-white">Data Users</div>
             <p className=" text-white uppercase mt-2 pb-4 font-semibold">
@@ -207,34 +257,34 @@ const DataUsers = () => {
               <tbody>
                 {users.length > 0
                   ? users.map((val, _i) => (
-                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">1</td>
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          {val.name}
-                        </th>
-                        <td className="px-6 py-4">{val.email}</td>
-                        <td className="px-6 py-4">{val.role ?? "user"}</td>
-                        <td className="px-6 py-4 flex flex-col gap-2">
-                          {val.role !== "admin" && (
-                            <button
-                              onClick={() => handleSubmitAdmin(val._id)}
-                              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                            >
-                              <span>Assign to admin</span>
-                            </button>
-                          )}
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td className="px-6 py-4">1</td>
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {val.name}
+                      </th>
+                      <td className="px-6 py-4">{val.email}</td>
+                      <td className="px-6 py-4">{val.role ?? "user"}</td>
+                      <td className="px-6 py-4 flex flex-col gap-2">
+                        {val.role !== "admin" && (
                           <button
-                            onClick={() => handleDelete(val._id)}
-                            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:opacity-90 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                            onClick={() => handleSubmitAdmin(val._id)}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
                           >
-                            <span>Delete</span>
+                            <span>Assign to admin</span>
                           </button>
-                        </td>
-                      </tr>
-                    ))
+                        )}
+                        <button
+                          onClick={() => handleDelete(val._id)}
+                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:opacity-90 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                        >
+                          <span>Delete</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))
                   : null}
               </tbody>
             </table>

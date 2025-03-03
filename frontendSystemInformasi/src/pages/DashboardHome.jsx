@@ -9,6 +9,8 @@ const DashboardHome = () => {
   const [selectShowData, setSelectShowData] = useState("blog");
   const [editData, setEditData] = useState(null);
 
+  const [isOpenSidebar, setOpenSideBar] = useState(false);
+
   const [histories, setHistories] = useState([]);
   const [countData, setCountData] = useState(0);
   const [pagination, setPagination] = useState(0);
@@ -95,8 +97,33 @@ const DashboardHome = () => {
   return (
     <div className="flex flex-col min-h-screen ">
       <div className="flex flex-grow ">
-        <Side />
+        {isOpenSidebar || window.innerWidth >= 1024 ? <Side /> : null}
 
+        <div className="absolute top-[30px] right-[30px] z-10">
+          <button
+            onClick={() => {
+              console.log({ isOpenSidebar });
+              setOpenSideBar(isOpenSidebar ? false : true);
+            }}
+            type="button"
+            className="p-3 bg-red-500 items-center hidden z-[30] sm:flex lg:hidden me-3 mt-3 text-sm text-white rounded-lg"
+          >
+            <span className="sr-only">Open sidebar</span>
+            <svg
+              className="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clipRule="evenodd"
+                fillRule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              ></path>
+            </svg>
+          </button>
+        </div>
         <div className="relative pb-12 overflow-x-auto shadow-md sm:rounded-lg lg:w-9/12 m-0 md:m-10">
           <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
             <div className=" lg:text-3xl text-xl text-white font-semibold">
@@ -161,68 +188,68 @@ const DashboardHome = () => {
                 </form>
               </div>
             </div>
-                  <div className="lg:ms-44 flex flex-col lg:flex-row items-center gap-4">
-                    <div className="">
-                      <label
-                        htmlFor="start_date"
-                        className="text-xs font-semibold text-gray-600"
-                      >
-                        Mulai Tanggal :
-                      </label>
+            <div className="lg:ms-44 flex flex-col lg:flex-row items-center gap-4">
+              <div className="">
+                <label
+                  htmlFor="start_date"
+                  className="text-xs font-semibold text-gray-600"
+                >
+                  Mulai Tanggal :
+                </label>
 
-                      <div class="relative max-w-sm">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                          <svg
-                            class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                          </svg>
-                        </div>
-                        <input
-                          datepicker
-                          onChange={(e) => setStartDate(e.target.value)}
-                          id="default-datepicker"
-                          type="date"
-                          class="flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[200px] ps-14 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="Select date"
-                        />
-                      </div>
-                    </div>
-                    <div action="">
-                      <label
-                        htmlFor="start_date"
-                        className="text-xs font-semibold text-gray-600"
-                      >
-                        Hingga tanggal :
-                      </label>
-
-                      <div class="relative max-w-sm">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                          <svg
-                            class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"  
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                          </svg>
-                        </div>
-                        <input
-                          datepicker
-                          onChange={(e) => setEndDate(e.target.value)}
-                          id="default-datepicker"
-                          type="date"
-                          class="flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[200px] ps-14 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="Select date"
-                        />
-                      </div>
-                    </div>
+                <div class="relative max-w-sm">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                    <svg
+                      class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                    </svg>
                   </div>
+                  <input
+                    datepicker
+                    onChange={(e) => setStartDate(e.target.value)}
+                    id="default-datepicker"
+                    type="date"
+                    class="flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[200px] ps-14 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Select date"
+                  />
+                </div>
+              </div>
+              <div action="">
+                <label
+                  htmlFor="start_date"
+                  className="text-xs font-semibold text-gray-600"
+                >
+                  Hingga tanggal :
+                </label>
+
+                <div class="relative max-w-sm">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                    <svg
+                      class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                    </svg>
+                  </div>
+                  <input
+                    datepicker
+                    onChange={(e) => setEndDate(e.target.value)}
+                    id="default-datepicker"
+                    type="date"
+                    class="flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[200px] ps-14 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Select date"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           <div className="overflow-x-auto w-12/12 lg:m-auto">
             <table className="text-sm text-left m-0 rounded-none rtl:text-right text-gray-500 dark:text-gray-400 border-t w-11/12 mx-auto">
