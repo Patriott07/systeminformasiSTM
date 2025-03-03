@@ -7,19 +7,20 @@ const SchemaValueContents = mongoose.Schema({
 
 const SchemaChildComment = mongoose.Schema({
     comment: String,
-    by: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',
+    date: {
+        type: Date,
+        default: Date.now
     },
-    details_comment: [
-        {
-            comment: String,
-            by: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'users',
-            }
-        },
-    ]
+    name: String,
+    details_comment: {
+        type: [
+            {
+                comment: String,
+                name: String,
+            },
+        ],
+        required : false
+    }
 })
 
 const SchemaBlog = mongoose.Schema({
@@ -38,8 +39,9 @@ const SchemaBlog = mongoose.Schema({
     ],
     photo: String,
     like: Number,
+    // like: [{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }],
     comments: [SchemaChildComment],
-    tags : [String],
+    tags: [String],
 }, {
     timestamps: true
 })

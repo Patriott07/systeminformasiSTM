@@ -22,6 +22,24 @@ const DataJurusan = () => {
   const [images, setImages] = useState([]);
   const [jurusans, setJurusans] = useState([]);
 
+  const [isOpenSidebar, setOpenSideBar] = useState(false);
+
+  const checkScreenWidth = async () => {
+      if (window.innerWidth < 560) { // dalam pixel
+          // state layar hp
+          setOpenSideBar(true);
+      } else if (window.innerWidth < 980) {
+          // state layar tablet
+          setOpenSideBar(false);
+
+      } else {
+          // state laptop
+          setOpenSideBar(true);
+      }
+      // cek layar screen
+      console.log(window.innerWidth)
+  }
+
   const openEditModal = (data) => {
     setEditData(data);
     setIsEditModalOpen(true);
@@ -49,6 +67,7 @@ const DataJurusan = () => {
   }, [currentPagination])
 
   useEffect(() => {
+    checkScreenWidth();
     handleFetchJurusan();
 
     const lightbox = new PhotoSwipeLightbox({
@@ -148,17 +167,47 @@ const DataJurusan = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
-        <Side />
+        {isOpenSidebar ? (
+          <Side />
+        ) : null}
 
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-9/12 m-10 pb-8">
+        {/* Button untuk tablet */}
+        <div className="absolute top-[30px] right-[30px] z-10">
+          <button
+            onClick={() => {
+              console.log({ isOpenSidebar })
+              setOpenSideBar(isOpenSidebar ? false : true)
+            }}
+
+            type="button"
+            className="p-3 bg-red-500 items-center hidden z-[30] sm:flex lg:hidden me-3 mt-3 text-sm text-white rounded-lg"
+          >
+            <span className="sr-only">Open sidebar</span>
+            <svg
+              className="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clipRule="evenodd"
+                fillRule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <div className="relative overflow-x-auto pb-8 shadow-md sm:rounded-lg w-full lg:w-9/12  md:m-10">
           <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
-            <div className="font-semibold text-3xl text-white">
+            <div className="font-semibold text-xl lg:text-3xl text-white">
               Data Jurusan
             </div>
-            <p className=" text-white uppercase mt-2 font-semibold">Mulai Kelola Jurusan SMKN 1 Cirebon ({countData} items)</p>
+            <p className=" text-white lg:text-[16px] text-sm uppercase mt-2 font-semibold">Mulai Kelola Jurusan SMKN 1 Cirebon ({countData} items)</p>
 
           </div>
-          <div className="flex items-center justify-between bg-white mt-[20vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
+          <div className="flex md:flex-row flex-col items-center md:justify-between bg-white lg:mt-[20vh] mt-[25vh] px-4 z-[5] lg:w-11/12 mx-auto rounded-t">
             <div className="pb-4 bg-white dark:bg-gray-900 p-4">
               <label htmlFor="table-search" className="sr-only">
                 Search
@@ -167,16 +216,16 @@ const DataJurusan = () => {
                 <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none">
 
                 </div>
-                <form onSubmit={handleSubmitSearch} className="flex items-start">
+                <form onSubmit={handleSubmitSearch} className="lg:flex items-start">
 
                   <input
                     type="text"
                     id="table-search"
-                    className="block py-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="flex md:min-w-72 md:max-w-40 w-full py-2 ps-8 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search for items"
                   />
 
-                  <button type="submit" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  <button type="submit" class="flex min-w-full lg:max-w-[3rem] lg:min-w-[3rem] p-2 lg:mx-2 justify-center items-center text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
@@ -189,111 +238,113 @@ const DataJurusan = () => {
             </div>
             <Link
               to="/add_jurusan"
-              className="w-fit text-white bg-purple-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              className="ms-2 md:w-fit w-52 flex flex-col text-white bg-purple-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
               Tambah Data
             </Link>
           </div>
-          <table className="text-sm text-left m-0 rounded-none rtl:text-right text-gray-500 dark:text-gray-400 border-t w-11/12 mx-auto">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  No
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Name Jurusan
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Deskripsi
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Photo Jurusan
-                </th>
-                <th scope="col" className="px-9 py-3">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody id="gallery">
-              {jurusans.length > 0 ? jurusans.map((val, _i) => {
-                return (
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td className="px-6 py-4">{_i + 1}</td>
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900  dark:text-white"
-                    >
-                      {val.name}
-                    </th>
-                    <td className="px-6 py-4">
-                      {val.deskripsi}
-                    </td>
-                    <td>
-                      {<a
-                        //  onClick={(e) => e.preventDefault()}
-                        href={val.images[0]} data-pswp-width={images[_i][0]['w']} data-pswp-height={images[_i][0]['h']}>
+          <div className="overflow-x-auto w-12/12 lg:m-auto">
+            <table className="text-sm text-left m-0 rounded-none rtl:text-right text-gray-500 dark:text-gray-400 border-t w-11/12 mx-auto">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    No
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Name Jurusan
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Deskripsi
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Photo Jurusan
+                  </th>
+                  <th scope="col" className="px-9 py-3">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="gallery">
+                {jurusans.length > 0 ? jurusans.map((val, _i) => {
+                  return (
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td className="px-6 py-4">{_i + 1}</td>
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900  dark:text-white"
+                      >
+                        {val.name}
+                      </th>
+                      <td className="px-6 py-4">
+                        {val.deskripsi}
+                      </td>
+                      <td>
+                        {<a
+                          //  onClick={(e) => e.preventDefault()}
+                          href={val.images[0]} data-pswp-width={images[_i][0]['w']} data-pswp-height={images[_i][0]['h']}>
 
-                        <img src={val.images[0]} alt={`Thumbnail ${_i}`} width="100" style={{ cursor: "pointer" }} />
-                      </a>
-                      }
-
-                      {Array.from({ length: val.images.length }).map((val2, __i) => {
-
-                        return (
-                          <a
-                            //  onClick={(e) => e.preventDefault()}
-                            href={images[_i][__i]['src']} data-pswp-width={images[_i][__i]['w']} data-pswp-height={images[_i][__i]['h']}>
-                          </a>
-                        )
-
-                      })}
-                    </td>
-
-                    <td className="px-6 py-4 flex flex-col gap-2">
-                      <button
-                        onClick={() =>
-                          openEditModal({
-                            ...val,
-                            images: images[_i]
-                          })
+                          <img src={val.images[0]} alt={`Thumbnail ${_i}`} width="100" style={{ cursor: "pointer" }} />
+                        </a>
                         }
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                      >
-                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" /></g></svg>
-                        <span>Edit</span>
-                      </button>
-                      <button
-                        onClick={() => handleDelete(val._id)}
-                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:opacity-90 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
-                      >
-                        <svg
-                          className="w-5 h-5 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth="2"
+
+                        {Array.from({ length: val.images.length }).map((val2, __i) => {
+
+                          return (
+                            <a
+                              //  onClick={(e) => e.preventDefault()}
+                              href={images[_i][__i]['src']} data-pswp-width={images[_i][__i]['w']} data-pswp-height={images[_i][__i]['h']}>
+                            </a>
+                          )
+
+                        })}
+                      </td>
+
+                      <td className="px-6 py-4 flex flex-col gap-2">
+                        <button
+                          onClick={() =>
+                            openEditModal({
+                              ...val,
+                              images: images[_i]
+                            })
+                          }
+                          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                        <span>Delete</span>
-                      </button>
-                      <button onClick={() => navigate(`/data_jurusan/teachers/${val._id}/${val.name}`)} type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" /></g></svg>
+                          <span>Edit</span>
+                        </button>
+                        <button
+                          onClick={() => handleDelete(val._id)}
+                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:opacity-90 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                        >
+                          <svg
+                            className="w-5 h-5 text-white"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                          <span>Delete</span>
+                        </button>
+                        <button onClick={() => navigate(`/data_jurusan/teachers/${val._id}/${val.name}`)} type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 flex items-center">
 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59 16.58L13.17 12L8.59 7.41L10 6l6 6l-6 6z" /></svg>
-                        Teachers</button>
-                    </td>
-                  </tr>
-                )
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59 16.58L13.17 12L8.59 7.41L10 6l6 6l-6 6z" /></svg>
+                          Teachers</button>
+                      </td>
+                    </tr>
+                  )
 
-              }) : null}
+                }) : null}
 
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
 
           <nav
             aria-label="Page navigation example"

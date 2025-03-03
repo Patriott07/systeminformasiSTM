@@ -16,6 +16,7 @@ const AddBlog = () => {
   const [resultValueBlog, setResultValueBlog] = useState({});
   const [elementsBlog, setElementsBlog] = useState([]);
   const [tags, setTags] = useState([]);
+  const [showTags, setShowTags] = useState(false);
 
   // form
   const [titleInput, setTitleInput] = useState(null);
@@ -24,6 +25,24 @@ const AddBlog = () => {
   const [tagsInput, setTagsInput] = useState([]);
 
   const navigate = useNavigate();
+
+  const [isOpenSidebar, setOpenSideBar] = useState(false);
+
+  const checkScreenWidth = async () => {
+      if (window.innerWidth < 560) { // dalam pixel
+          // state layar hp
+          setOpenSideBar(true);
+      } else if (window.innerWidth < 980) {
+          // state layar tablet
+          setOpenSideBar(false);
+
+      } else {
+          // state laptop
+          setOpenSideBar(true);
+      }
+      // cek layar screen
+      console.log(window.innerWidth)
+  }
 
 
   useEffect(() => {
@@ -175,6 +194,7 @@ const AddBlog = () => {
   }
 
   useEffect(() => {
+    checkScreenWidth();
     handleFetchTags();
   }, []);
 
@@ -350,13 +370,43 @@ const AddBlog = () => {
   }
   return (
     <form onSubmit={handleSubmitBlog} encType="multipart/form-data" className="flex justify-between">
-      <Side />
+      {isOpenSidebar ? (
+        <Side />
+      ) : null}
+
+      {/* Button untuk tablet */}
+      <div className="absolute top-[30px] right-[30px] z-10">
+        <button
+          onClick={() => {
+            console.log({ isOpenSidebar })
+            setOpenSideBar(isOpenSidebar ? false : true)
+          }}
+
+          type="button"
+          className=" p-3 bg-blue-500 items-center hidden z-[30] sm:flex lg:hidden mt-2 text-sm text-white rounded-lg "
+        >
+          <span className="sr-only">Open sidebar</span>
+          <svg
+            className="w-6 h-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clipRule="evenodd"
+              fillRule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+            ></path>
+          </svg>
+        </button>
+      </div>
       <div
         class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
 
       >
-        <div class=" flex h-full bg-gray-100 justify-between">
-          <div className="ms-[5vw] sm:w-8/12 p-8 text-[#110B56]">
+        <div class=" flex flex-col-reverse md:flex-row lg:flex-row lg:h-full bg-gray-100 h-full justify-between">
+          <div className="lg:ms-[5vw] sm:w-8/12 lg:p-8 p-4 text-[#110B56]">
             <div className="text-2xl font-semibold mb-3">
               Create Your Contents
             </div>
@@ -364,20 +414,21 @@ const AddBlog = () => {
             <div className="docs">
 
             </div>
+
             {elements.map((val, _i) => (
               <HandleShowComponent type={val} i={val.i} />
             ))}
 
 
-            <div className="flex gap-2 my-5 ">
+            <div className="flex flex-col md:flex-row gap-2 my-5 ">
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('text')}>Add new Text</button>
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('img')}>Add new Image</button>
               <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('video')}>Add new Vidio</button>
-              <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onClick={() => setShowResult(!isShowResult)}>{isShowResult ? 'Hide Result' : 'Show Result'}</button>
+              <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
 
             </div>
           </div>
-          <div className="sm:w-4/12 h-[100vh] bg-white border-l">
+          <div className="sm:w-4/12 lg:h-[100vh] bg-white border-l">
             <div className="bg-purple-600 px-4 py-8 text-white font-semibold">
               Create Information Blog
             </div>
@@ -391,8 +442,8 @@ const AddBlog = () => {
                 <div className="">
                   <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Blog</label>
                   <input
-                  onChange={(e) => setDateInput(e.target.value)}
-                  type="date" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul blog anda" required />
+                    onChange={(e) => setDateInput(e.target.value)}
+                    type="date" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Judul blog anda" required />
                 </div>
                 <div className="">
                   <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cover Blog</label>
@@ -400,12 +451,16 @@ const AddBlog = () => {
                 </div>
 
 
-                <div id="image-viewer" className="bg w-full h-[30vh] bg-center bg-cover bg-gray-800 rounded-sm">
+                <div id="image-viewer" className="bg w-full h-[30vh] bg-center bg-cover bg-gray-800/40 rounded-sm">
+
+                </div>
+                <div className="flex mt-3 justify-between">
+                  <div className="text-sm font-semibold">Add Categories</div>
+
 
                 </div>
 
-                <div className="text-sm mt-3">Add Categories</div>
-                <div className="flex flex-wrap my-3 items-center gap-2">
+                <div className="flex flex-wrap mt-3 items-center gap-2">
                   {tags.map((checkbox) => (
                     <div key={checkbox._id} className="flex items-center flex-wrap">
                       <input
@@ -424,13 +479,13 @@ const AddBlog = () => {
                   ))}
                 </div>
 
-                <div className="flex">
-                  <button onClick={() => navigate('/data_blog')} type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Cancel Form</button>
+                <div className="flex mt-3">
+                  <button onClick={() => navigate('/data_blog')} type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Back To Home</button>
 
                   {/* {
                     contents.
                   } */}
-                  <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
+
                 </div>
 
               </div>

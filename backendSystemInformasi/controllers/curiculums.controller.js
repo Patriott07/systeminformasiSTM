@@ -46,7 +46,7 @@ export const Get = async (req, res) => {
 
 export const Detail = async(req, res) => {
     try {
-        const curiculum = await Curiculums.findById(req.params.id)
+        const curiculum = await Curiculums.findById(req.params.id).populate('jurusan')
         res.json({ curiculum });
     } catch (error) {
         console.error('Error see detail curiculum', { error })

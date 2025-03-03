@@ -11,3 +11,4 @@ routes.post('/update/:id', verifyToken, verifyAdmin, Update);
 routes.delete('/delete/:id', verifyToken, verifyAdmin, Delete);
 
 export default routes;
+

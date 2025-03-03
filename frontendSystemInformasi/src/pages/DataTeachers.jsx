@@ -27,6 +27,23 @@ const DataTeachers = () => {
 
     const { id, name } = useParams();
 
+    const [isOpenSidebar, setOpenSideBar] = useState(false);
+
+    const checkScreenWidth = async () => {
+        if (window.innerWidth < 560) { // dalam pixel
+            // state layar hp
+            setOpenSideBar(true);
+        } else if (window.innerWidth < 980) {
+            // state layar tablet
+            setOpenSideBar(false);
+
+        } else {
+            // state laptop
+            setOpenSideBar(true);
+        }
+        // cek layar screen
+        console.log(window.innerWidth)
+    }
 
     const openEditModal = (data) => {
         setEditData(data);
@@ -55,6 +72,7 @@ const DataTeachers = () => {
     }, [currentPagination])
 
     useEffect(() => {
+        checkScreenWidth();
         handleFetchTeachers();
 
         const lightbox = new PhotoSwipeLightbox({
@@ -155,30 +173,62 @@ const DataTeachers = () => {
     return (
         <div className="flex flex-col min-h-screen">
             <div className="flex flex-grow">
-                <Side />
 
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-9/12 m-10 pb-8">
+                {isOpenSidebar ? (
+                    <Side />
+                ) : null}
+
+                {/* Button untuk tablet */}
+                <div className="absolute top-[30px] right-[30px] z-10">
+                    <button
+                        onClick={() => {
+                            console.log({ isOpenSidebar })
+                            setOpenSideBar(isOpenSidebar ? false : true)
+                        }}
+
+                        type="button"
+                        className="p-3 bg-red-500 items-center hidden z-[30] sm:flex lg:hidden me-3 mt-3 text-sm text-white rounded-lg"
+                    >
+                        <span className="sr-only">Open sidebar</span>
+                        <svg
+                            className="w-6 h-6"
+                            aria-hidden="true"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                clipRule="evenodd"
+                                fillRule="evenodd"
+                                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-full lg:w-9/12 md:m-10">
                     <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
-                        <div className="font-semibold text-xl text-white">
+                        <div className="font-semibold text-md lg:text-3xl text-white">
                             Data Teachers Di Jurusan {name}
                         </div>
-                        <p className=" text-white uppercase mt-2 font-semibold text-sm">Mulai Kelola Guru di Jurusan {name} ({countData} items)</p>
+                        <p className=" text-white lg:text-[16px] text-xs uppercase mt-2 font-semibold">Mulai Kelola Guru di Jurusan {name} ({countData} items)</p>
 
                     </div>
-                    <div className="flex items-center justify-between bg-white mt-[20vh] px-4 z-[5] w-11/12 mx-auto rounded-t">
+                    <div className="flex md:flex-row flex-col items-center md:justify-between bg-white lg:mt-[20vh] mt-[25vh] px-4 z-[5] lg:w-11/12 mx-auto rounded-t">
                         <div className="py-4 bg-white dark:bg-gray-900 p-4">
                             <label htmlFor="table-search" className="sr-only">
                                 Search
                             </label>
-                           
+
                         </div>
                         <Link
                             to={`/add_teacher/${id}`}
-                            className="w-fit mt-3 mb-4 text-white bg-purple-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                            className="ms-2 md:w-fit w-52 flex flex-col text-white bg-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-3 me-0"
                         >
                             Tambah Data
                         </Link>
                     </div>
+                    <div className="overflow-x-auto w-12/12 lg:m-auto">
                     <table className="text-sm text-left m-0 rounded-none rtl:text-right text-gray-500 dark:text-gray-400 border-t w-11/12 mx-auto">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -233,7 +283,7 @@ const DataTeachers = () => {
                                                 }
                                                 className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
                                             >
-                                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" /></g></svg>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" /></g></svg>
                                                 <span>Edit</span>
                                             </button>
                                             <button
@@ -264,6 +314,7 @@ const DataTeachers = () => {
 
                         </tbody>
                     </table>
+                    </div>
 
                     <nav
                         aria-label="Page navigation example"
@@ -305,7 +356,7 @@ const DataTeachers = () => {
 
 const EditModal = ({ data, onClose }) => {
     const { _id, name, mengajar, photo } = data;
-    const {id} = useParams();
+    const { id } = useParams();
     // const [_id, setId] = useState(data._id);
     // const [name, setName] = useState(data.name);
     // const [deskripsi, setDeskripsi] = useState(data.deskripsi);

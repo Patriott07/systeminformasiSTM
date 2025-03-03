@@ -11,17 +11,20 @@ export default function Sidebar() {
     navigate('/Login');
   };
 
+  useEffect(() => {
+    console.log({isOpen})
+  }, [isOpen])
+
   const isActive = (path) => location.pathname === path;
-  
 
   return (
-    <div className="relative w-2/12">
+    <div className="relative lg:w-2/12 ">
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-controls="logo-sidebar"
         type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
       >
         <span className="sr-only">Open sidebar</span>
         <svg
@@ -42,7 +45,7 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         id="logo-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 bg-gray-50 dark:bg-gray-800`}
+        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 bg-gray-50 dark:bg-gray-800`}
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-12 overflow-y-auto">
@@ -50,7 +53,7 @@ export default function Sidebar() {
             onClick={() => setIsOpen(!isOpen)}
             aria-controls="logo-sidebar"
             type="button"
-            className="inline-flex items-center p-2 mb-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="inline-flex items-center p-2 mb-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           >
             <span className="sr-only">Open sidebar</span>
             <svg
@@ -109,7 +112,7 @@ export default function Sidebar() {
               </Link>
             </li>
             <li>
-              <Link to="/data_mapels" className={`flex items-center p-2 rounded-lg gap-2 ${isActive('/data_mapel') ? 'bg-purple-500 text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'}`}>
+              <Link to="/data_mapels" className={`flex items-center p-2 rounded-lg gap-2 ${isActive('/data_mapels') ? 'bg-purple-500 text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="currentColor" d="M15 4.7V4a6.8 6.8 0 0 0-4.484-1.999a2.84 2.84 0 0 0-2.513.995a3.02 3.02 0 0 0-2.515-.995A6.8 6.8 0 0 0 1 4v.7L0 5v10l6.7-1.4l.3.4h2l.3-.4L16 15V5zm-9.52 6.61a8.2 8.2 0 0 0-3.526.902L2 4.42A5.22 5.22 0 0 1 5.369 3a4.55 4.55 0 0 1 2.159.701l-.019 7.869a6.6 6.6 0 0 0-2.039-.259zm8.52.88a8.1 8.1 0 0 0-3.468-.88l-.161-.002c-.66 0-1.297.096-1.899.274l.047-7.902a4.5 4.5 0 0 1 2.096-.679a5.22 5.22 0 0 1 3.386 1.422l-.003 7.768z" /></svg>
                 <span>Mapel</span>
               </Link>

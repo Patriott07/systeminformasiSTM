@@ -9,6 +9,28 @@ import { Link, useNavigate } from "react-router-dom";
 const AddKegiatan = () => {
 
   const navigate = useNavigate();
+  const [isOpenSidebar, setOpenSideBar] = useState(false);
+
+  const checkScreenWidth = async () => {
+      if (window.innerWidth < 560) { // dalam pixel
+          // state layar hp
+          setOpenSideBar(true);
+      } else if (window.innerWidth < 980) {
+          // state layar tablet
+          setOpenSideBar(false);
+
+      } else {
+          // state laptop
+          setOpenSideBar(true);
+      }
+      // cek layar screen
+      console.log(window.innerWidth)
+  }
+
+  useEffect(() => {
+    checkScreenWidth();
+  }, [])
+
   const handleSubmitKegiatan = async (e) => {
 
     e.preventDefault();
@@ -45,7 +67,7 @@ const AddKegiatan = () => {
             console.log({ error })
           }
         })
-        
+
       )
 
       const res = await fetch(`${serverPort}/aktivitas/create`,
@@ -74,13 +96,45 @@ const AddKegiatan = () => {
 
   return (
     <div className="flex justify-between">
-      <Side />
+
+      {isOpenSidebar ? (
+        <Side />
+      ) : null}
+
+      {/* Button untuk tablet */}
+      <div className="absolute top-[30px] right-[30px] z-10">
+        <button
+          onClick={() => {
+            console.log({ isOpenSidebar })
+            setOpenSideBar(isOpenSidebar ? false : true)
+          }}
+
+          type="button"
+          className=" p-3 bg-blue-500 items-center hidden z-[30] sm:flex lg:hidden mt-2 text-sm text-white rounded-lg "
+        >
+          <span className="sr-only">Open sidebar</span>
+          <svg
+            className="w-6 h-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clipRule="evenodd"
+              fillRule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
       <div
         class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
 
       >
         <div class="flex h-full grow flex-col bg-white">
-          <div class="px-40 flex flex-1 justify-start py-5">
+          <div class="lg:px-40 px-4 flex flex-1 justify-start py-5">
             <form onSubmit={handleSubmitKegiatan} class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5  flex-1">
               <div class="flex max-w-[480px] flex-wrap items-end gap-4 text-2xl font-semibold py-3">
                 Posting Kegiatan Baru
