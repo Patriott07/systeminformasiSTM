@@ -45,6 +45,7 @@ export const Get = async (req, res) => {
     }
 }
 
+
 export const Detail = async(req, res) => {
     try {
         const mapel = await Mapels.findById(req.params.id)

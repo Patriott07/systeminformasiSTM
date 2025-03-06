@@ -2,6 +2,8 @@ import react from "react";
 import Doc1 from "../assets/Doc1.png";
 import Doc2 from "../assets/Dock.png";
 import Poster from "../assets/poster.webp";
+import SMK from "../assets/smkn1.jpg";
+
 import SMKK from "../assets/smkk.jpg";
 import SMKK1 from "../assets/smkk1.jpg";
 import SMKK2 from "../assets/smkk2.jpg";
@@ -10,122 +12,100 @@ import SMKK3 from "../assets/smkk3.jpg";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+
 
 const Homepage = () => {
-   const [blog, setBlog] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [blogs, setBlogs] = useState([]);
-    useEffect(() => {
-      AOS.init({ duration: 1000, once: false });
-    }, []);
-   useEffect(() => {
-      const fetchBlogs = async () => {
-        const token = localStorage.getItem("token");
-  
-        try {
-          const res = await fetch(`http://localhost:5050/blog/get`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              token: `${token}`,
-            },
-          });
-  
-          const data = await res.json();
-          console.log({ data });
-  
-          if (!res.ok) {
-            setError(data.message || "Failed to fetch blogs");
-            return;
-          }
-  
-          // Limit to 3 blogs
-          const limitedBlogs = data.data.slice(0, 3); // Taking only the first 3 blogs
-          setBlogs(limitedBlogs);
-          setTotalPages(data.pagination.totalPages);
-  
-          // Ambil semua tag unik
-          const tags = new Set();
-          limitedBlogs.forEach((blog) => {
-            blog.tags.forEach((tag) => tags.add(tag));
-          });
-          setAllTags([...tags]);
-        } catch (err) {
-          setError("An error occurred. Please try again.");
+  const [blog, setBlog] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [blogs, setBlogs] = useState([]);
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: false });
+  }, []);
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const token = localStorage.getItem("token");
+
+      try {
+        const res = await fetch(`http://localhost:5050/blog/get`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            token: `${token}`,
+          },
+        });
+
+        const data = await res.json();
+        console.log({ data });
+
+        if (!res.ok) {
+          setError(data.message || "Failed to fetch blogs");
+          return;
         }
-      };
-  
-      fetchBlogs();
-    }, []);
+
+        // Limit to 3 blogs
+        const limitedBlogs = data.data.slice(0, 3); // Taking only the first 3 blogs
+        setBlogs(limitedBlogs);
+        setTotalPages(data.pagination.totalPages);
+
+        // Ambil semua tag unik
+        const tags = new Set();
+        limitedBlogs.forEach((blog) => {
+          blog.tags.forEach((tag) => tags.add(tag));
+        });
+        setAllTags([...tags]);
+      } catch (err) {
+        setError("An error occurred. Please try again.");
+      }
+    };
+
+    fetchBlogs();
+  }, []);
   return (
     <>
-      {/* <section className="flex mx-4">
-        <nav className="flex w-[1000vh] justify-between mt-2 lg:text-2xl font-serif ">
-          <h1>Rs. Bahagia</h1>
-          <div className="flex gap-2 ">
-            <a href className="text-stone-700 duration-75 transition-colors cursor-cell hover:text-blue-500">
-              Dokter
-            </a>
-            <a href className="text-stone-700 duration-75 transition-colors cursor-cell hover:text-blue-500">
-              Poli
-            </a>
-            <a href className="text-stone-700 duration-75 transition-colors cursor-cell hover:text-blue-500">
-              Login
-            </a>
-          </div>
-        </nav>
-      </section> */}
-      <nav className="w-full bg-gray-900 text-white rounded-sm overflow-hidden lg:py-4 py-4 fixed top-0 z-50">
-        <div className="lg:w-10/12 w-10/12 mx-auto flex justify-between items-center">
-          <h1 className="lg:text-2xl text-sm font-bold">SMKN 1 CIREBON</h1>
-          <div className="flex gap-4 lg:gap-8">
-            <a href="/" className="hover:text-blue-400 lg:text-base text-xs">
-              Home
-            </a>
-            <a href="blog" className="hover:text-blue-400 lg:text-base text-xs">
-              Blog
-            </a>
-            <a href="/Kegiatan" className="hover:text-blue-400 lg:text-base text-xs">
-              Kegiatan
-            </a>
-            <a href="/jurusan" className="hover:text-blue-400 lg:text-base text-xs">
-              Jurusan
-            </a>
-          </div>
-        </div>
-      </nav>
+      
+
+      <Navbar />
 
       <section
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1611941671018-6c3907cb7a76?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHNjaG9vbCUyMGJ1aWxkaW5nfGVufDB8fDB8fHww')`,
+          // backgroundImage: `url('https://images.unsplash.com/photo-1611941671018-6c3907cb7a76?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHNjaG9vbCUyMGJ1aWxkaW5nfGVufDB8fDB8fHww')`,
+          backgroundImage: `url('${SMK}')`,
+
         }}
-        className="w-full rounded-lg flex bg-cover justify-center items-center min-h-[80vh] lg:min-h-screen"
+        className="w-full relative rounded-lg flex bg-cover bg-center bg-fixed justify-center items-center min-h-[80vh] lg:min-h-screen"
       >
+
+        {/* bg black */}
+        <div className="absolute top-0 bg-[#000000]/80 left-0 w-full h-full">
+
+        </div>
+
         <div className="w-11/12  h-full flex translate-y-1/2  lg:translate-y-0 text-center flex-col justify-center items-center">
-          <div className="w-full lg:min-h-[45vh] lg:max-h-[45vh] min-h-[5vh] max-h-[5vh]  text-center flex flex-col justify-end items-center">
-            <h1 className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">SELAMAT DATANG DI </h1>
-            <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">SMA BAKTI KOTA CIREBON</span>
-            <p className="lg:max-w-xl max-w-sm mt-1 text-base lg:text-xl font-serif text-white">
+          <div className="w-full lg:min-h-[45vh] lg:max-h-[45vh] min-h-[5vh] max-h-[5vh] text-center flex flex-col justify-end items-center gap-4">
+            <h1 className="lg:text-5xl text-3xl font-serif font-medium text-blue-100">SELAMAT DATANG DI </h1>
+            <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">SMKN 1 KOTA CIREBON</span>
+            <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">
               mencetak lulusan yang siap kerja, memiliki keterampilan di bidangnya, serta mampu bersaing <span className="text-blue-400"> di dunia industri</span>
             </p>
-            <div className="flex gap-4 pb-8">
+            {/* <div className="flex gap-4 pb-8">
               <button className="lg:px-4 px-2 py-2 text-sm lg:text-base lg:py-3 mt-2 bg-blue-400 rounded-lg">Example Button </button>
               <button className="px-2 py-1 mt-2 bg-green-400 rounded-lg">Example Button </button>
-            </div>
+            </div> */}
           </div>
-          <div className="w-full flex gap-7 text-white justify-center items-end h-[12vh] lg:h-[15vh] mt-auto">
+          <div className="w-full flex items-start gap-8 text-white justify-center h-[12vh] lg:h-[15vh] lg:mt-2 mt-auto">
             <div className="flex flex-col">
-              <span className="lg:text-xl text-sm">Ekstrakulikuler Siswa</span>
-              <span className="lg:text-base text-xs">We Have 10+ Ekskul</span>
+              <span className="lg:text-xl text-sm">Jurusan Pilihan</span>
+              <span className="lg:text-base text-xs w-[200px]">Tersedia 10+ Jurusan berbeda dengan keahlian khusus masing-,asing</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="lg:text-xl text-sm">Lab Dan Tempat Praktik</span>
+              <span className="lg:text-base text-xs w-[200px]">Kami Menyediakan ruang lab dan praktik untuk kebutuhan siswa. 10+ lab serta r.praktik</span>
             </div>
             <div className="flex flex-col">
               <span className="lg:text-xl text-sm">Ekstrakulikuler Siswa</span>
-              <span className="lg:text-base text-xs">We Have 10+ Ekskul</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="lg:text-xl text-sm">Ekstrakulikuler Siswa</span>
-              <span className="lg:text-base text-xs">We Have 10+ Ekskul</span>
+              <span className="lg:text-base text-xs w-[200px]">Kami menyediakan lebih dari 10+ Ekskul aktif yang bisa dimanfaatkan siswa</span>
             </div>
           </div>
         </div>
@@ -134,10 +114,10 @@ const Homepage = () => {
       <section className="w-full justify-center flex mt-8">
         <div className="w-10/12 justify-center flex flex-col items-center">
           <div data-aos="fade-up" className="w-full flex items-start">
-            <div className="flex gap-8">
-              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={SMKK1} alt="" />
+            <div className="flex sm:flex-row flex-col gap-8">
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={SMKK1} alt="" />
               <div className="">
-                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-serif font-medium">Apa Itu SMKN I KOTA CIREBON </h1>
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-mono font-medium">Apa Itu SMKN I KOTA CIREBON </h1>
                 <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
                   SMK Negeri 1 Kota Cirebon adalah salah satu Sekolah Menengah Kejuruan (SMK) unggulan di Kota Cirebon yang berlokasi di Jalan Perjuangan By Pass Sunyaragi, Cirebon, Jawa Barat. Sekolah ini berfokus pada pendidikan kejuruan
                   yang membekali siswa dengan keterampilan teknis dan profesional agar siap memasuki dunia kerja atau melanjutkan pendidikan ke jenjang yang lebih tinggi.
@@ -147,22 +127,22 @@ const Homepage = () => {
           </div>
 
           <div data-aos="fade-up" className="w-full flex items-end justify-end mt-8">
-            <div className="flex gap-8">
+            <div className="flex sm:flex-row flex-col gap-8">
               <div className="flex flex-col items-end">
-                <h1 className="text-blue-500 uppercase text-base lg:text-2xl text-justify font-serif font-medium">Kenapa harus SMKN I KOTA CIREBON </h1>
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl text-justify font-mono font-medium">Kenapa harus SMKN I KOTA CIREBON </h1>
                 <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
                   SMKN 1 Cirebon bertujuan untuk mencetak lulusan yang siap kerja, memiliki keterampilan di bidangnya, serta mampu bersaing di dunia industri maupun melanjutkan pendidikan ke jenjang yang lebih tinggi. Sekolah ini juga
                   memiliki fasilitas laboratorium, bengkel praktik, serta kerja sama dengan berbagai industri untuk mendukung pembelajaran siswa.
                 </p>
               </div>
-              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={SMKK2} alt="" />
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={SMKK2} alt="" />
             </div>
           </div>
           <div data-aos="fade-up" className="w-full flex items-start mt-8">
-            <div className="flex gap-8">
-              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[15vh] bg-cover bg-center" src={SMKK3} alt="" />
+            <div className="flex sm:flex-row flex-col gap-8">
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={SMKK3} alt="" />
               <div className="">
-                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-serif font-medium">Kepala sekolah SMKN I KOTA CIREBON KOTA CIREBON </h1>
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-mono font-medium">Kepala sekolah SMKN I KOTA CIREBON KOTA CIREBON </h1>
                 <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
                   Kepala Sekolah SMK Negeri 1 Kota Cirebon saat ini adalah Arifuddin, S.Pd., M.T. Beliau bertanggung jawab dalam memimpin sekolah, mengembangkan kurikulum, serta memastikan bahwa seluruh program keahlian yang ditawarkan
                   dapat memberikan pendidikan terbaik bagi para siswa. Di bawah kepemimpinannya
@@ -204,37 +184,37 @@ const Homepage = () => {
         </div>
       </section>
 
-      <section className="w-full justify-center flex mt-44 lg:mt-14">
+      <section className="w-full justify-center flex mt-44 mb-12 lg:mt-14">
         <div className="lg:w-10/12 w-full">
-          <h1 className="text-center mb-4 text-blue-500 text-xl font-serif">Our Blog</h1>
+          <h1 className="text-center mb-4 text-blue-500 text-xl font-semibold font-mono">Our Latest Blog</h1>
           <div className="flex gap-4 lg:gap-8 justify-center flex-wrap">
-          {blogs.map((blog) => (
-          <div data-aos="fade-up" key={blog._id} className="max-w-xs min-w-[20rem] relative bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-          <div className="min-h-[88%] max-h-[88%]">
-          <a href={`/blog/${blog._id}`}>
-             <img className="rounded-t-lg w-full h-32 lg:h-48 object-cover" src={blog.photo} alt={blog.title} />
-           </a>
-           <div className="lg:p-5 p-3">
-             <Link to={`/blog/${blog._id}`}>
-               <h5 className="mb-1 lg:text-lg text-xs font-bold tracking-tight text-gray-900 dark:text-white">{blog.title}</h5>
-             </Link>
-             <p className="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">{blog.content}</p>
-             <div className="flex flex-wrap gap-1 lg:gap-2 mb-2">
-               {blog.tags.map((tag) => (
-                 <span key={tag} className="px-2 py-1 text-[0.5rem] lg:text-xs bg-gray-200 text-gray-700 rounded-full mr-2">
-                   {tag}
-                 </span>
-               ))}
-             </div>
-           </div>
-          </div>
-            <div className="ml-4 ">
-            <Link to={`/blog/${blog._id}`} className="inline-flex   items-center lg:px-3 lg:py-2 px-2 py-1 lg:text-sm text-[0.5rem]  font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">
-               Read more
-             </Link>
-            </div>
-         </div>
-))}
+            {blogs.map((blog) => (
+              <div data-aos="fade-up" key={blog._id} className="max-w-xs min-w-[20rem]  relative bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <div className="min-h-[85%] max-h-[85%]">
+                  <a href={`/blog/${blog._id}`}>
+                    <img className="rounded-t-lg w-full h-32 lg:h-48 object-cover" src={blog.photo} alt={blog.title} />
+                  </a>
+                  <div className="lg:p-5 p-3">
+                    <Link to={`/blog/${blog._id}`}>
+                      <h5 className="mb-1 lg:text-lg text-xs font-bold tracking-tight text-gray-900 dark:text-white">{blog.title}</h5>
+                    </Link>
+                    <p className="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">{blog.content}</p>
+                    <div className="flex flex-wrap gap-1 lg:gap-2 mb-2">
+                      {blog.tags.map((tag) => (
+                        <span key={tag} className="px-2 py-1 text-[0.5rem] lg:text-xs bg-gray-200 text-gray-700 rounded-full mr-2">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="ml-4 pb-4">
+                  <Link to={`/blog/${blog._id}`} className="inline-flex   items-center lg:px-3 lg:py-2 px-2 py-1 lg:text-sm text-[0.5rem]  font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">
+                    Read more
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

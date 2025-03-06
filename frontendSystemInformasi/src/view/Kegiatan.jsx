@@ -13,154 +13,149 @@ import Kegi11 from "../assets/Kegi11.jpg"
 import Kegi12 from "../assets/Kegi12.jpg"
 import { useState } from "react";
 import { useEffect } from "react";
-const Kegiatan = () =>{
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [kegiatan, setKegiatan] = useState([]);
-    const [error, setError] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1); // Tambahkan state untuk pagination jika diperlukan
-    const [selectedCategory, setSelectedCategory] = useState("all"); // State untuk kategori
-    const [filteredKegiatan, setFilteredKegiatan] = useState([]);
-    
-     const imageSizes = ["h-32", "h-40", "h-48", "h-56", "h-64"];
+import Navbar from "../components/Navbar";
 
-     useEffect(() => {
-      const fetchKegiatan = async () => {
-        const token = localStorage.getItem("token");
-  
-        try {
-          const res = await fetch("http://localhost:5050/aktivitas/get", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              token: `${token}`,
-            },
-          });
-  
-          const data = await res.json();
-  
-          if (!res.ok) {
-            setError(data.message || "Failed to fetch activities");
-            return;
-          }
-  
-          setKegiatan(data.data || []);
-        } catch (err) {
-          setError("An error occurred. Please try again.");
+import SMK from "../assets/smkn1.jpg";
+
+const Kegiatan = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [kegiatan, setKegiatan] = useState([]);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1); // Tambahkan state untuk pagination jika diperlukan
+  const [selectedCategory, setSelectedCategory] = useState("all"); // State untuk kategori
+  const [filteredKegiatan, setFilteredKegiatan] = useState([]);
+
+  const imageSizes = ["h-32", "h-40", "h-48", "h-56", "h-64"];
+
+  useEffect(() => {
+    const fetchKegiatan = async () => {
+      const token = localStorage.getItem("token");
+
+      try {
+        const res = await fetch("http://localhost:5050/aktivitas/get", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            token: `${token}`,
+          },
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          setError(data.message || "Failed to fetch activities");
+          return;
         }
-      };
-  
-      fetchKegiatan();
-    }, []);
-  
-    useEffect(() => {
-      setFilteredKegiatan(
-        selectedCategory === "all"
-          ? kegiatan
-          : kegiatan.filter((item) => item.title === selectedCategory)
-      );
-    }, [selectedCategory, kegiatan]);
-  
-  
 
-    return(
-        <>
-        <nav className="w-full bg-gray-900 text-white rounded-sm overflow-hidden lg:py-4 py-4 fixed top-0 z-50">
-        <div className="lg:w-10/12 w-10/12 mx-auto flex justify-between items-center">
-          <h1 className="lg:text-2xl text-sm font-bold">SMA BAKTI</h1>
-          <div className="flex gap-4 lg:gap-8">
-            <a href="/" className="hover:text-blue-400 lg:text-base text-xs">
-              Home
-            </a>
-            <a href="blog" className="hover:text-blue-400 lg:text-base text-xs">
-              Blog
-            </a>
-            <a href="/Kegiatan" className="hover:text-blue-400 lg:text-base text-xs">
-              Kegiatan
-            </a>
-            <a href="/jurusan" className="hover:text-blue-400 lg:text-base text-xs">
-              Jurusan
-            </a>
-          </div>
+        setKegiatan(data.data || []);
+      } catch (err) {
+        setError("An error occurred. Please try again.");
+      }
+    };
+
+    fetchKegiatan();
+  }, []);
+
+  useEffect(() => {
+    setFilteredKegiatan(
+      selectedCategory === "all"
+        ? kegiatan
+        : kegiatan.filter((item) => item.title === selectedCategory)
+    );
+  }, [selectedCategory, kegiatan]);
+
+
+
+  return (
+    <>
+      <Navbar />
+
+      <section style={{
+        // backgroundImage: `url('https://images.unsplash.com/photo-1543505298-b8be9b52a21a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`
+        backgroundImage: `url('${SMK}')`
+      }} className="flex bg-right bg-fixed relative lg:min-h-screen h-[80vh] max-h-screen bg-cover w-full justify-center items-center">
+
+        {/* bg black */}
+        <div className="absolute top-0 bg-[#000000]/80 left-0 w-full h-full">
+
         </div>
-      </nav>
 
-      <section  style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1543505298-b8be9b52a21a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`
-      }} className="flex lg:min-h-screen h-[80vh] max-h-screen bg-cover w-full justify-center items-center">
-          <div className="w-10/12 flex flex-col justify-center items-center min-h-screen">
-          <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg bg-blue-700/60 text-center text-white font-serif mb-4">Kegiatan SMKN I Kota Cirebon</h1>
-          <p className="max-w-md p-1 lg:text-base text-sm rounded-lg bg-blue-700/60 text-center text-white">"Selamat Datang Di Page Kegiatan SMKN I KOTA CIREBON"</p>
-          </div>
+
+        <div className="w-10/12 flex flex-col justify-center items-center min-h-screen z-10">
+          <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg text-center text-white font-serif mb-4 w-10/12">SELAMAT DATANG DI KEGIATAN</h1>
+          <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg text-center text-blue-400 font-serif mb-4 w-10/12"> SMKN 1 KOTA CIREBON</h1>
+          <p className="lg:text-xl text-xl lg:p-2 rounded-lg  text-center text-white font-serif mb-4 max-w-md p-1">Pantau Kegiatan Yang Telah Berlangsung Di SMKN 1 Cirebon</p>
+        </div>
       </section>
 
       <div className="flex justify-center  lg:min-h-screen bg-gray-100">
-      <div className="w-10/12">
-        <div className="lg:justify-between justify-between gap-2 py-4 flex">
-        <h1 className="lg:text-2xl text-sm font-serif text-blue-500">
-          {selectedCategory === "all" ? "Semua Kegiatan" : selectedCategory}
-        </h1>
-          <div>
-            <h1 className="text-blue-500 lg:text-2xl text-sm font-serif mb-2">Daftar Kegiatan:</h1>
-            <select
-              className="border border-gray-300 lg:text-base text-xs rounded-lg lg:p-2 p-1 lg:min-w-full min-w-[3rem] max-w-[10rem]"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              <option value="all">All</option>
-              {kegiatan.map((item) => (
-                <option key={item._id} value={item.title}>
-                  {item.title}
-                </option>
-              ))}
-            </select>
+        <div className="sm:w-10/12 w-10/12">
+          <div className="lg:justify-between justify-between gap-2 py-4 flex">
+            <h1 className="lg:text-2xl text-sm font-serif text-blue-500">
+              {selectedCategory === "all" ? "Semua Kegiatan" : selectedCategory}
+            </h1>
+            <div>
+              <h1 className="text-blue-500 lg:text-2xl text-sm font-serif mb-2">Daftar Kegiatan:</h1>
+              <select
+                className="border border-gray-300 lg:text-base text-xs rounded-lg lg:p-2 p-1 lg:min-w-full min-w-[3rem] max-w-[10rem]"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="all">All</option>
+                {kegiatan.map((item) => (
+                  <option key={item._id} value={item.title}>
+                    {item.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className={selectedCategory === "all" ? "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8" : "flex flex-col g items-center"}>
+            {filteredKegiatan.length > 0 ? (
+              filteredKegiatan.map((item) => (
+                <div key={item._id} className="mb-6 text-start w-full">
+                  <h2 className="lg:text-xl text-sm text-start font-bold mb-2">{item.title}</h2>
+                  <p className="text-gray-600 lg:text-base text-xs mb-4">{item.description}</p>
+                  <div className={selectedCategory === "all" ? "flex flex-col items-center gap-4" : "flex flex-wrap justify-center gap-4"}>
+                    {item.details_media
+                      .filter((media) => media.type === "img")
+                      .map((media) => (
+                        <div key={media._id} className="w-full">
+                          <img
+                            className={selectedCategory === "all" ? "lg:min-h-60 lg:min-w-[22rem] lg:max-w-[22rem]  object-cover rounded-lg cursor-pointer" : "lg:min-h-64 lg:min-w-64 min-w-[9rem] max-w-[9rem] max-h-[9rem] min-h-[9rem] object-cover rounded-lg cursor-pointer"}
+                            src={media.content}
+                            alt={item.title || "Gambar Kegiatan"}
+                            onClick={() => setSelectedImage(media.content)}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-center text-gray-500">Tidak ada kegiatan yang tersedia</p>
+            )}
           </div>
         </div>
 
-        <div className={selectedCategory === "all" ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8" : "flex flex-col g items-center"}>
-          {filteredKegiatan.length > 0 ? (
-            filteredKegiatan.map((item) => (
-              <div key={item._id} className="mb-6 text-center w-full">
-                <h2 className="lg:text-xl text-sm font-bold mb-2">{item.title}</h2>
-                <p className="text-gray-600 lg:text-base text-xs mb-4">{item.description}</p>
-                <div className={selectedCategory === "all" ? "flex flex-col items-center gap-4" : "flex flex-wrap justify-center gap-4"}>
-                  {item.details_media
-                    .filter((media) => media.type === "img")
-                    .map((media) => (
-                      <div key={media._id}>
-                        <img
-                          className={selectedCategory === "all" ? "lg:min-h-60 lg:min-w-[22rem] lg:max-w-[22rem] min-h-[7rem] max-h-[7rem] min-w-[10rem] max-w-[10rem] object-cover rounded-lg cursor-pointer" : "lg:min-h-64 lg:min-w-64 min-w-[9rem] max-w-[9rem] max-h-[9rem] min-h-[9rem] object-cover rounded-lg cursor-pointer"}
-                          src={media.content}
-                          alt={item.title || "Gambar Kegiatan"}
-                          onClick={() => setSelectedImage(media.content)}
-                        />
-                      </div>
-                    ))}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500">Tidak ada kegiatan yang tersedia</p>
-          )}
-        </div>
+
+        {selectedImage && (
+          <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-75 z-50">
+            <div className="relative">
+              <button
+                className="absolute top-2 right-2 bg-white text-black p-2 rounded-full"
+                onClick={() => setSelectedImage(null)}
+              >
+                ✕
+              </button>
+              <img className="max-w-full max-h-screen rounded-lg" src={selectedImage} alt="Preview" />
+            </div>
+          </div>
+        )}
       </div>
 
-
-      {selectedImage && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-75 z-50">
-          <div className="relative">
-            <button
-              className="absolute top-2 right-2 bg-white text-black p-2 rounded-full"
-              onClick={() => setSelectedImage(null)}
-            >
-              ✕
-            </button>
-            <img className="max-w-full max-h-screen rounded-lg" src={selectedImage} alt="Preview" />
-          </div>
-        </div>
-      )}
-    </div>
- 
-<footer className="w-full bg-gray-900 text-white py-4 mt-3">
+      <footer className="w-full bg-gray-900 text-white py-4 mt-3">
         <div className="w-10/12 mx-auto text-center">
           <div className="flex flex-col lg:flex-row justify-between items-center">
             <div className="mb-6 lg:mb-0">
@@ -200,8 +195,8 @@ const Kegiatan = () =>{
         </div>
       </footer>
 
-        </>
-    )
+    </>
+  )
 }
 
 export default Kegiatan;

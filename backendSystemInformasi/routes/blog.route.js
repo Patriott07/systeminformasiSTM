@@ -5,8 +5,8 @@ import {Create, Delete, Get, Update, Detail, CreateComment, GiveLike} from '../c
 
 const router = express.Router();
 
-router.get('/get', verifyToken, Get);
-router.get('/get/:id', verifyToken, Detail);
+router.get('/get', Get);
+router.get('/get/:id', Detail);
 router.post('/create', verifyToken, verifyAdmin, Create);
 router.post('/update/:id', verifyToken, verifyAdmin, Update);
 router.delete('/delete/:id', verifyToken,verifyAdmin, Delete);

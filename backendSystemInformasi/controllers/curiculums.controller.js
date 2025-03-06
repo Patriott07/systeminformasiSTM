@@ -2,13 +2,14 @@ import mongoose from "mongoose";
 import { Curiculums } from "../models/curiculums.model.js";
 import { Jurusans } from "../models/jurusan.model.js";
 import { History } from "../models/history.model.js";
+import { Mapels } from "../models/mapel_curiculum.model.js";
 
 export const Get = async (req, res) => {
 
     try {
         // butuh pagination sama fitur search mungkin
         const { p = 0, s } = req.query;
-        let maxItems = 20;
+        let maxItems = 1000;
 
         // Buat query pencarian (jika ada parameter search)
         const searchQuery = s
@@ -46,8 +47,26 @@ export const Get = async (req, res) => {
 
 export const Detail = async(req, res) => {
     try {
-        const curiculum = await Curiculums.findById(req.params.id).populate('jurusan')
+        console.log(req.params.id);
+        const curiculum = await Curiculums.find({jurusan : new mongoose.Types.ObjectId(req.params.id)}).populate('jurusan')
         res.json({ curiculum });
+    } catch (error) {
+        console.error('Error see detail curiculum', { error })
+        res.status(500)
+            .json({
+                message: "Something problem in server",
+                error: error.message
+            })
+    }
+}
+
+export const DetailMapels = async(req, res) => {
+    try {
+        console.log(req.params.id);
+        const curiculum = await Curiculums.findById(req.params.id).populate('jurusan');
+
+        const mapels = await Mapels.find({curiculum : new mongoose.Types.ObjectId(req.params.id)});
+        res.json({ curiculum, mapels });
     } catch (error) {
         console.error('Error see detail curiculum', { error })
         res.status(500)

@@ -188,7 +188,7 @@ const DashboardHome = () => {
                 </form>
               </div>
             </div>
-            <div className="lg:ms-44 flex flex-col lg:flex-row items-center gap-4">
+            <div className="lg:ms-24 flex flex-col lg:flex-row items-center gap-4">
               <div className="">
                 <label
                   htmlFor="start_date"

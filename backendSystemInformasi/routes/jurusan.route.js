@@ -5,15 +5,15 @@ import { Create, CreateTeacher, Delete, DeleteTeacher, Get, Detail, GetTeachers,
 const router = express.Router();
 
 // jurusan
-router.get('/get', verifyToken, Get);
-router.get('/get/:id', verifyToken, Detail);
+router.get('/get', Get);
+router.get('/get/:id', Detail);
 router.post('/create', verifyToken, verifyAdmin, Create);
 router.post('/update/:id', verifyToken, verifyAdmin, Update);
 router.delete('/delete/:id', verifyToken, verifyAdmin, Delete);
 
 
 // teachers
-router.get('/guru/get/:jurusan_id', verifyToken, GetTeachers);
+router.get('/guru/get/:jurusan_id', GetTeachers);
 router.post('/guru/create/:jurusan_id', verifyToken, verifyAdmin, CreateTeacher);
 router.post('/guru/update/:jurusan_id/:id', verifyToken, verifyAdmin, UpdateTeacher);
 router.delete('/guru/delete/:jurusan_id/:id', verifyToken, verifyAdmin, DeleteTeacher);
