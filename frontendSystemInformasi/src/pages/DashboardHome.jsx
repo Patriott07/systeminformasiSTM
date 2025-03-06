@@ -19,6 +19,12 @@ const DashboardHome = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  const handleChangePagination = (num) => {
+    if (num > 0 && num < pagination + 1) {
+      setCurrentPagination(num);
+    }
+  };
+
   const openEditModal = (data) => {
     setEditData(data);
     setIsEditModalOpen(true);

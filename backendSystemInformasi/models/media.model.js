@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const SchemaMedia = mongoose.Schema({
-    link : String,
+    url : String,
     path : String,
     type : String
 },{
     timestamps : true
 });
 
-export const Medias = mongoose.model('medias', SchemaMedia)
+export const Medias = mongoose.model('medias', SchemaMedia);
