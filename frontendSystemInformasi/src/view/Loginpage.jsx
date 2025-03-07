@@ -8,8 +8,9 @@ const Loginpage = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const handleLogin = async (e) => {
-    e.preventDefault();
     
+    e.preventDefault();
+
     try {
       const res = await fetch("http://localhost:5050/auth/login", {
         method: "POST",
@@ -29,19 +30,17 @@ const Loginpage = () => {
 
       // Pastikan token ada sebelum menyimpannya
       if (data.token) {
-
-        console.log("Token received:", data.token); // Log token to console
+        
         localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.role);
         setMessage("Login berhasil");
         setError(null);
-        
-        if(data.role == "admin")
-        {
+
+        if (data.role == "admin") {
           navigate("/dashboard/home"); // RedireFct to homepage or any other page
 
-        }else{
-
-          navigate("/blog"); // RedireFct to homepage or any other page
+        } else {
+          navigate("/"); // RedireFct to homepage or any other page
         }
       }
     } catch (err) {
@@ -51,53 +50,53 @@ const Loginpage = () => {
   };
 
 
-    return (
-   <>
-   <div className="flex items-center justify-center min-h-screen bg-slate-200">
-      <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white shadow-lg rounded-2xl overflow-hidden">
-        {/* Left Side (Login) */}
-        <div className="w-full md:w-1/2 p-8">
-          <h2 className="text-2xl font-bold text-center mb-6 text-blue-500">Sign in</h2>
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-          {message && <p className="text-green-500 text-sm text-center">{message}</p>}
-          <p className="text-center text-gray-500 mb-4">atau gunakan akun anda</p>
-          <form onSubmit={handleLogin}>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded mb-4"
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded mb-4"
-              required
-            />
-            <p className="text-sm text-blue-500 text-right mb-4 cursor-pointer">Lupa kata sandi anda?</p>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600"
-            >
-              SIGN IN
-            </button>
-          </form>
-        </div>
+  return (
+    <>
+      <div className="flex items-center justify-center min-h-screen bg-slate-200">
+        <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white shadow-lg rounded-2xl overflow-hidden">
+          {/* Left Side (Login) */}
+          <div className="w-full md:w-1/2 p-8">
+            <h2 className="text-2xl font-bold text-center mb-6 text-blue-500">Sign in</h2>
+            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+            {message && <p className="text-green-500 text-sm text-center">{message}</p>}
+            <p className="text-center text-gray-500 mb-4">atau gunakan akun anda</p>
+            <form onSubmit={handleLogin}>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded mb-4"
+                required
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded mb-4"
+                required
+              />
+              <p className="text-sm text-blue-500 text-right mb-4 cursor-pointer">Lupa kata sandi anda?</p>
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600"
+              >
+                SIGN IN
+              </button>
+            </form>
+          </div>
 
-        {/* Right Side (Sign Up) */}
-        <div className="w-full md:w-1/2 bg-blue-600 text-white flex flex-col items-center justify-center p-8">
-          <h2 className="text-2xl font-bold text-white">Halo, Teman!</h2>
-          <p className="text-center text-white mt-4">Belum Punya Akun? Anda Dapat Langsung Register Melalui Button Dibawah</p>
-          <a href="/register" className="mt-6 border border-white text-white py-2 px-6 rounded hover:bg-white hover:text-blue-600">Register</a>
+          {/* Right Side (Sign Up) */}
+          <div className="w-full md:w-1/2 bg-blue-600 text-white flex flex-col items-center justify-center p-8">
+            <h2 className="text-2xl font-bold text-white">Halo, Teman!</h2>
+            <p className="text-center text-white mt-4">Belum Punya Akun? Anda Dapat Langsung Register Melalui Button Dibawah</p>
+            <a href="/register" className="mt-6 border border-white text-white py-2 px-6 rounded hover:bg-white hover:text-blue-600">Register</a>
+          </div>
         </div>
       </div>
-    </div>
-   </>
-    );
-    };
+    </>
+  );
+};
 
 export default Loginpage;

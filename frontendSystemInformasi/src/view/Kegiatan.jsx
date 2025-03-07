@@ -25,7 +25,17 @@ const Kegiatan = () => {
   const [selectedCategory, setSelectedCategory] = useState("all"); // State untuk kategori
   const [filteredKegiatan, setFilteredKegiatan] = useState([]);
 
+  const [indexTarget, setIndexTarget] = useState(0);
   const imageSizes = ["h-32", "h-40", "h-48", "h-56", "h-64"];
+
+  const startRandomImage = () => {
+    console.log({ message: "ok", kegiatan })
+    if (kegiatan.length != 0) {
+      const randomNum = Math.floor(Math.random() * kegiatan.length);
+      setIndexTarget(randomNum);
+      console.log({ message: "ok", randomNum });
+    }
+  }
 
   useEffect(() => {
     const fetchKegiatan = async () => {
@@ -54,6 +64,13 @@ const Kegiatan = () => {
     };
 
     fetchKegiatan();
+
+    // Membuat interval yang berjalan setiap 5 detik (5000 ms)
+    const interval = setInterval(() => {
+      startRandomImage();
+    }, 1000 * 10);
+
+
   }, []);
 
   useEffect(() => {
@@ -65,28 +82,28 @@ const Kegiatan = () => {
   }, [selectedCategory, kegiatan]);
 
 
-
   return (
     <>
       <Navbar />
+      {filteredKegiatan.length > 0 ? (
+        <section style={{
+          // backgroundImage: `url('https://images.unsplash.com/photo-1543505298-b8be9b52a21a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`
+          backgroundImage: `url('${filteredKegiatan[indexTarget]['details_media'][0]['content']}')`
+        }} className="flex bg-right bg-fixed relative lg:min-h-screen h-[80vh] max-h-screen bg-cover w-full justify-center items-center">
 
-      <section style={{
-        // backgroundImage: `url('https://images.unsplash.com/photo-1543505298-b8be9b52a21a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`
-        backgroundImage: `url('${SMK}')`
-      }} className="flex bg-right bg-fixed relative lg:min-h-screen h-[80vh] max-h-screen bg-cover w-full justify-center items-center">
+          {/* bg black */}
+          <div className="absolute top-0 bg-[#000000]/80 left-0 w-full h-full">
 
-        {/* bg black */}
-        <div className="absolute top-0 bg-[#000000]/80 left-0 w-full h-full">
-
-        </div>
+          </div>
 
 
-        <div className="w-10/12 flex flex-col justify-center items-center min-h-screen z-10">
-          <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg text-center text-white font-serif mb-4 w-10/12">SELAMAT DATANG DI KEGIATAN</h1>
-          <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg text-center text-blue-400 font-serif mb-4 w-10/12"> SMKN 1 KOTA CIREBON</h1>
-          <p className="lg:text-xl text-xl lg:p-2 rounded-lg  text-center text-white font-serif mb-4 max-w-md p-1">Pantau Kegiatan Yang Telah Berlangsung Di SMKN 1 Cirebon</p>
-        </div>
-      </section>
+          <div className="w-10/12 flex flex-col justify-center items-center min-h-screen z-10">
+            <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg text-center text-white font-serif mb-4 w-10/12">SELAMAT DATANG DI KEGIATAN</h1>
+            <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg text-center text-blue-400 font-serif mb-4 w-10/12"> SMKN 1 KOTA CIREBON</h1>
+            <p className="lg:text-xl text-xl lg:p-2 rounded-lg  text-center text-white font-serif mb-4 max-w-md p-1">Pantau Kegiatan Yang Telah Berlangsung Di SMKN 1 Cirebon</p>
+          </div>
+        </section>
+      ) : null}
 
       <div className="flex justify-center  lg:min-h-screen bg-gray-100">
         <div className="sm:w-10/12 w-10/12">

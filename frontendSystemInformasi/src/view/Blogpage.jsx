@@ -17,6 +17,7 @@ const Blogpage = () => {
   const [blogsPerPage, setBlogsPerPage] = useState(6);
   const [selectedTag, setSelectedTag] = useState("");
   const [allTags, setAllTags] = useState([]);
+  const [indexTarget, setIndexTarget] = useState(0);
 
   useEffect(() => {
     AOS.init({ duration: 1500, once: false });
@@ -40,7 +41,7 @@ const Blogpage = () => {
 
   const fetchBlogs = async (p) => {
     const token = localStorage.getItem("token");
-    
+
     try {
       const res = await fetch(`http://localhost:5050/blog/get?p=${currentPage - 1}`, {
         method: "GET",
@@ -66,6 +67,10 @@ const Blogpage = () => {
         blog.tags.forEach((tag) => tags.add(tag));
       });
       setAllTags([...tags]);
+
+      const randomNum = Math.floor(Math.random() * data.data.length);
+      setIndexTarget(randomNum);
+
     } catch (err) {
       setError("An error occurred. Please try again.");
     }
@@ -89,24 +94,27 @@ const Blogpage = () => {
   return (
     <>
       <Navbar />
-      <section style={{
-        backgroundImage: `url('${SMK}')`
-      }} className="flex relative bg-left bg-fixed lg:min-h-screen h-[80vh] max-h-screen bg-cover w-full justify-center items-center">
 
-        {/* bg black */}
-        <div className="absolute top-0 bg-[#000000]/80 left-0 w-full h-full">
+      {blogs.length > 0 ? (
+        <section style={{
+          backgroundImage: `url('${blogs[indexTarget]['photo']}')`
+        }} className="flex relative bg-left bg-fixed lg:min-h-screen h-[80vh] max-h-screen bg-cover w-full justify-center items-center">
 
-        </div>
+          {/* bg black */}
+          <div className="absolute top-0 bg-[#000000]/80 left-0 w-full h-full">
 
-        <div className="w-10/12 flex flex-col justify-center items-center min-h-screen z-10">
-          <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg  text-center text-white font-serif mb-4">SELAMAT DATANG DI PORTAL BERITA</h1>
-          <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg  text-center text-blue-400 font-serif mb-4">SMKN I KOTA CIREBON</h1>
-          {/* <p className="max-w-md p-1 lg:text-base text-sm rounded-lg text-center text-white">"Selamat Datang Di Page Kegiatan SMKN I KOTA CIREBON"</p> */}
-          <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">
-            Selamat Datang Di Portal Informasi Sekolah SMKN 1 CIREBON
-          </p>
-        </div>
-      </section>
+          </div>
+
+          <div className="w-10/12 flex flex-col justify-center items-center min-h-screen z-10">
+            <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg  text-center text-white font-serif mb-4">SELAMAT DATANG DI PORTAL BERITA</h1>
+            <h1 className="lg:text-5xl text-3xl lg:p-2 rounded-lg  text-center text-blue-400 font-serif mb-4">SMKN I KOTA CIREBON</h1>
+            {/* <p className="max-w-md p-1 lg:text-base text-sm rounded-lg text-center text-white">"Selamat Datang Di Page Kegiatan SMKN I KOTA CIREBON"</p> */}
+            <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">
+              Selamat Datang Di Portal Informasi Sekolah SMKN 1 CIREBON
+            </p>
+          </div>
+        </section>
+      ) : null}
 
       <div className="flex justify-center pb-8 items-center lg:min-h-screen bg-gray-100">
         <div className="w-10/12 mt-[15vh] sm:mt-[20vh]">

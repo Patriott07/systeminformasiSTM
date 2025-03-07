@@ -1,10 +1,6 @@
 import react from "react";
-import Doc1 from "../assets/Doc1.png";
-import Doc2 from "../assets/Dock.png";
-import Poster from "../assets/poster.webp";
 import SMK from "../assets/smkn1.jpg";
 
-import SMKK from "../assets/smkk.jpg";
 import SMKK1 from "../assets/smkk1.jpg";
 import SMKK2 from "../assets/smkk2.jpg";
 import { useState, useEffect } from "react";
@@ -13,7 +9,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-
 
 const Homepage = () => {
   const [blog, setBlog] = useState(null);
@@ -64,7 +59,7 @@ const Homepage = () => {
   }, []);
   return (
     <>
-      
+
 
       <Navbar />
 
