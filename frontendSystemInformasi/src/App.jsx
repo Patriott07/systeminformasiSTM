@@ -28,6 +28,7 @@ import Registerpage from './view/Registerpage.jsx';
 import Kegiatan from './view/Kegiatan.jsx';
 import Targetjurusan from './view/Targetjurusan.jsx';
 import DetailJurusan from './view/DetailJurusan.jsx';
+import Footer from './view/Footer.jsx';
 
 
 // IMPORT
@@ -56,6 +57,7 @@ function App() {
         <Route path="/Targetjurusan" element={<Targetjurusan />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/jurusan/:id" element={<DetailJurusan />} />
+        <Route path="/Footer" element={<Footer />} />
 
 
         {/* DAPA */}

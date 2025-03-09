@@ -7,6 +7,7 @@ import "aos/dist/aos.css";
 import Navbar from "../components/Navbar";
 import SMK from "../assets/smkn1.jpg";
 
+import Footer from "./Footer";
 const Blogpage = () => {
   const [currentPageCategory1, setCurrentPageCategory1] = useState(1);
   const [currentPageCategory2, setCurrentPageCategory2] = useState(1);
@@ -166,6 +167,8 @@ const Blogpage = () => {
           </div>
         </div>
       </div>
+
+      <Footer />
     </>
   );
 };
