@@ -14,10 +14,30 @@ const Jurusan = () => {
   const [jurusan, setJurusan] = useState(null);
   const [error, setError] = useState(null);
   const [jurusanList, setJurusanList] = useState([]);
+
+  const [indexTarget, setIndexTarget] = useState(0);
+
+  const startRandomImage = () => {
+    console.log({ message: "ok", jurusanList })
+    if (jurusanList.length > 0) {
+      const randomNum = Math.floor(Math.random() * jurusanList.length);
+      setIndexTarget(randomNum);
+      console.log({ message: "ok", randomNum });
+    }
+  }
+
   const navigate = useNavigate();
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
+
+    const interval = setInterval(() => {
+      startRandomImage();
+    }, 1000 * 10);
+
+   
+
   }, []);
+
   useEffect(() => {
     const fetchJurusan = async () => {
       const token = localStorage.getItem("token");
@@ -61,6 +81,7 @@ const Jurusan = () => {
     return array.sort(() => Math.random() - 0.5);
   };
 
+
   if (error) {
     return <p className="text-red-500 text-center">{error}</p>;
   }
@@ -72,68 +93,40 @@ const Jurusan = () => {
   return (
     <>
       <Navbar />
+      {jurusanList.length > 0 ? (
 
-      {/* <section className="lg:min-h-screen flex  justify-center">
-        <div className="w-10/12  flex flex-col lg:flex-row  ljustify-center">
-          <div className="lg:max-w-[50%] lg:min-w-[50%] w-full lg:min-h-screen lg:mt-0 mt-20  flex flex-col justify-center">
-            <h1 className="max-w-md lg:text-3xl text-xl text-center lg:text-left font-serif">
-              <span className="text-blue-500">Lorem ipsum dolor sit amet,</span> consectetur adipisicing elit. Qui aliquid corrupti laborum eaque earum maxime vero.
-            </h1>
-            <div className="mt-6">
-              <p className="max-w-sm font-serif lg:text-left text-center lg:text-base text-sm"> "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quod, sequi quos sint consequuntur dicta."</p>
-            </div>
+        <section
+          style={{
+            // backgroundImage: `url('https://images.unsplash.com/photo-1611941671018-6c3907cb7a76?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHNjaG9vbCUyMGJ1aWxkaW5nfGVufDB8fDB8fHww')`,
+            backgroundImage: `url('${jurusanList[indexTarget]['images'][0]}')`,
+
+          }}
+          className="w-full relative rounded-lg flex bg-cover  bg-fixed justify-center items-center min-h-[80vh] lg:min-h-screen bg-bottom"
+        >
+
+          {/* bg black */}
+          <div className="absolute top-0 bg-[#000000]/80 left-0 w-full h-full">
+
           </div>
-          <div className="lg:max-w-[50%] lg:min-w-[50%] w-full h-[30rem] lg:min-h-screen items-center  flex flex-col justify-center">
-            <div className="flex gap-4">
-              <div className="lg:w-[13rem] lg:h-[13rem] w-[8rem] h-[8rem]  rounded-br-3xl overflow-hidden  bg-black">
-                <img className="bg-cover " src={Kegi10} alt="" />
-              </div>
-              <div className="lg:w-[13rem] lg:h-[13rem] w-[8rem] h-[8rem] rounded-bl-3xl overflow-hidden bg-black">
-                <img className="bg-cover " src={Kegi11} alt="" />
-              </div>
-            </div>
-            <div className="flex gap-4 mt-4">
-              <div className="lg:w-[13rem] lg:h-[13rem] w-[8rem] h-[8rem]  rounded-tr-3xl overflow-hidden bg-black">
-                <img className="bg-cover " src={Kegi12} alt="" />
-              </div>
-              <div className="lg:w-[13rem] lg:h-[13rem] w-[8rem] h-[8rem]   rounded-tl-3xl overflow-hidden bg-black">
-                <img className="bg-cover " src={Kegi9} alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
 
-      <section
-        style={{
-          // backgroundImage: `url('https://images.unsplash.com/photo-1611941671018-6c3907cb7a76?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHNjaG9vbCUyMGJ1aWxkaW5nfGVufDB8fDB8fHww')`,
-          backgroundImage: `url('${SMK}')`,
-
-        }}
-        className="w-full relative rounded-lg flex bg-cover  bg-fixed justify-center items-center min-h-[80vh] lg:min-h-screen bg-bottom"
-      >
-
-        {/* bg black */}
-        <div className="absolute top-0 bg-[#000000]/80 left-0 w-full h-full">
-
-        </div>
-
-        <div className="w-11/12  h-full flex translate-y-1/2  lg:translate-y-0 text-center flex-col justify-center items-center">
-          <div className="w-full lg:min-h-[45vh] lg:max-h-[45vh] min-h-[5vh] max-h-[5vh] text-center flex flex-col justify-end items-center gap-4">
-            <h1 className="lg:text-5xl text-3xl font-serif font-medium text-blue-100">SELAMAT DATANG DI </h1>
-            <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">INFORMASI JURUSAN DI SMKN 1</span>
-            <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">CIREBON</span>
-            <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">
-              Tersedia Hingga 10+ jurusan untuk mencetak lulusan yang siap kerja, memiliki keterampilan di bidangnya, serta mampu bersaing <span className="text-blue-400"> di dunia industri</span>
-            </p>
-            {/* <div className="flex gap-4 pb-8">
+          <div className="w-11/12  h-full flex translate-y-1/2  lg:translate-y-0 text-center flex-col justify-center items-center">
+            <div className="w-full lg:min-h-[45vh] lg:max-h-[45vh] min-h-[5vh] max-h-[5vh] text-center flex flex-col justify-end items-center gap-4">
+              <h1 className="lg:text-5xl text-3xl font-serif font-medium text-blue-100">SELAMAT DATANG DI </h1>
+              <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">INFORMASI JURUSAN DI SMKN 1</span>
+              <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">CIREBON</span>
+              <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">
+                Tersedia Hingga 10+ jurusan untuk mencetak lulusan yang siap kerja, memiliki keterampilan di bidangnya, serta mampu bersaing <span className="text-blue-400"> di dunia industri</span>
+              </p>
+              {/* <div className="flex gap-4 pb-8">
               <button className="lg:px-4 px-2 py-2 text-sm lg:text-base lg:py-3 mt-2 bg-blue-400 rounded-lg">Example Button </button>
               <button className="px-2 py-1 mt-2 bg-green-400 rounded-lg">Example Button </button>
             </div> */}
-          </div>
+            </div>
 
-        </div>
-      </section>
+          </div>
+        </section>
+
+      ) : null}
 
       <section className="w-full flex flex-col items-center justify-center">
         {jurusanList.map((jurusan) => (

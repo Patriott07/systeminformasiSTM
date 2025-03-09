@@ -8,14 +8,27 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     navigate('/Login');
   };
 
   useEffect(() => {
-    console.log({isOpen})
+    console.log({ isOpen })
   }, [isOpen])
 
   const isActive = (path) => location.pathname === path;
+
+  const checkRole = () => {
+    const role = localStorage.getItem('role') || null;
+    const token = localStorage.getItem('token') || null;
+
+    if (!role || role != "admin" || !token) {
+      navigate('/Login');
+    }
+  }
+  useEffect(() => {
+    checkRole();
+  }, []);
 
   return (
     <div className="relative lg:w-2/12 ">

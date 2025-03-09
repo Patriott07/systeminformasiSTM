@@ -26,7 +26,17 @@ const Kegiatan = () =>{
     const [selectedCategory, setSelectedCategory] = useState("all"); // State untuk kategori
     const [filteredKegiatan, setFilteredKegiatan] = useState([]);
     
+  const [indexTarget, setIndexTarget] = useState(0);
      const imageSizes = ["h-32", "h-40", "h-48", "h-56", "h-64"];
+
+  const startRandomImage = () => {
+    console.log({ message: "ok", kegiatan })
+    if (kegiatan.length != 0) {
+      const randomNum = Math.floor(Math.random() * kegiatan.length);
+      setIndexTarget(randomNum);
+      console.log({ message: "ok", randomNum });
+    }
+  }
 
     useEffect(() => {
         AOS.init({ duration: 1500, once: false });

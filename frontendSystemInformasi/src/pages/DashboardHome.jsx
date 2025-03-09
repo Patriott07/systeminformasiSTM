@@ -47,6 +47,7 @@ const DashboardHome = () => {
 
   useEffect(() => {
     fetchHistory();
+    checkScreenWidth();
   }, []);
 
   useEffect(() => {
@@ -100,11 +101,29 @@ const DashboardHome = () => {
     }
   };
 
+
+  const checkScreenWidth = async () => {
+    if (window.innerWidth < 560) { // dalam pixel
+      // state layar hp
+      setOpenSideBar(true);
+    } else if (window.innerWidth < 980) {
+      // state layar tablet
+      setOpenSideBar(false);
+
+    } else {
+      // state laptop
+      setOpenSideBar(true);
+    }
+    // cek layar screen
+    console.log(window.innerWidth)
+  }
+
   return (
     <div className="flex flex-col min-h-screen ">
       <div className="flex flex-grow ">
-        {isOpenSidebar || window.innerWidth >= 1024 ? <Side /> : null}
-
+        {isOpenSidebar ? (
+          <Side />
+        ) : null}
         <div className="absolute top-[30px] right-[30px] z-10">
           <button
             onClick={() => {
@@ -139,7 +158,7 @@ const DashboardHome = () => {
               Semua History Pengelolaan Dashboard terbaca disini
             </p>
           </div>
-          <div className="flex lg:flex-row flex-col items-center md:justify-center bg-white lg:mt-[20vh] mt-[25vh] px-4 z-[5] lg:w-11/12 mx-auto rounded-t">
+          <div className="flex lg:flex-row flex-col sm:items-center md:justify-center bg-white lg:mt-[20vh] mt-[25vh] px-4 z-[5] lg:w-11/12 mx-auto rounded-t">
             {/* <select
                             onChange={(e) => setSelectShowData(e.target.value)}
                             id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -194,8 +213,8 @@ const DashboardHome = () => {
                 </form>
               </div>
             </div>
-            <div className="lg:ms-24 flex flex-col lg:flex-row items-center gap-4">
-              <div className="">
+            <div className="lg:ms-24 flex flex-col mx-auto lg:flex-row items-center gap-4">
+              <div className="w-full">
                 <label
                   htmlFor="start_date"
                   className="text-xs font-semibold text-gray-600"
@@ -225,7 +244,7 @@ const DashboardHome = () => {
                   />
                 </div>
               </div>
-              <div action="">
+              <div className="w-full">
                 <label
                   htmlFor="start_date"
                   className="text-xs font-semibold text-gray-600"
@@ -278,21 +297,21 @@ const DashboardHome = () => {
               <tbody>
                 {histories.length > 0
                   ? histories.map((val, _i) => {
-                      return (
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                          <td className="px-6 py-4">{_i + 1}</td>
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          >
-                            {val.name}
-                          </th>
-                          <td className="px-6 py-4">
-                            {val.date.split(".")[0].replace("T", " Time:")}
-                          </td>
+                    return (
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">{_i + 1}</td>
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {val.name}
+                        </th>
+                        <td className="px-6 py-4">
+                          {val.date.split(".")[0].replace("T", " Time:")}
+                        </td>
 
-                          <td className="px-6 py-4">{val.aktivitas}</td>
-                          {/* <td className="px-6 py-4">
+                        <td className="px-6 py-4">{val.aktivitas}</td>
+                        {/* <td className="px-6 py-4">
                                     <button
                                         onClick={() =>
                                             openEditModal({
@@ -341,9 +360,9 @@ const DashboardHome = () => {
                                         <span>Delete</span>
                                     </a>
                                 </td> */}
-                        </tr>
-                      );
-                    })
+                      </tr>
+                    );
+                  })
                   : null}
               </tbody>
             </table>
