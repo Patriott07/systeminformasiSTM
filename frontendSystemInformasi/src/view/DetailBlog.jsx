@@ -114,7 +114,7 @@ const BlogDetail = () => {
       e.preventDefault();
       const comment = e.target[0].value;
 
-      const badWords = ["jelek", "anjir", "huek", "anjing", "babi", "puki", "jir", "asu", "anjing", "bajingan", "kontol", "memek", "bangsat",
+      const badWords = ["jelek", "anjir", "huek", "jing", "tay", "tai", "bau", "jinglah", "curang", "mek", "tol", "buset", "anjing", "babi", "puki", "jir", "asu", "anjing", "bajingan", "kontol", "memek", "bangsat",
         "goblok", "kampret", "tolol", "peler", "pepek", "jancok",
         "keparat", "brengsek", "monyet", "laknat", "sinting",
         "setan", "iblis", "biadab", "brengsek", "tai", "babi",
