@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import SMK from "../assets/smkn1.jpg";
 import { serverPort } from "../utls/global_variable";
 
-
 const DetailJurusan = () => {
   const { id } = useParams(); // Ambil id dari parameter URL
   const [jurusan, setJurusan] = useState(null);
@@ -52,14 +51,14 @@ const DetailJurusan = () => {
       const res = await fetch(`${serverPort}/Curiculum/get/mapels/${id}`);
       const data = await res.json();
 
-      console.log({ data })
+      console.log({ data });
       setMapels(data.mapels);
       setCuriculumDetail(data.curiculum);
       setIndexCuriculum(data.curiculum.semester);
     } catch (error) {
-      console.log({ error })
+      console.log({ error });
     }
-  }
+  };
 
   //ERROR NULL FETCH
   useEffect(() => {
@@ -85,7 +84,7 @@ const DetailJurusan = () => {
         }
 
         const data = await res.json();
-        console.log({ data })
+        console.log({ data });
         console.log("Fetched Detail Data:", data); // Debug hasil fetch
 
         fetchMapels(data.curiculum[0]._id);
@@ -101,9 +100,6 @@ const DetailJurusan = () => {
     }
   }, [id]);
 
-
-
-
   return (
     <>
       <section
@@ -112,20 +108,14 @@ const DetailJurusan = () => {
         }}
         className="w-full relative rounded-lg flex bg-cover bg-center bg-fixed justify-center items-center min-h-[80vh] lg:min-h-screen"
       >
-
         {/* bg black */}
-        <div className="absolute top-0 bg-[#000000]/80 left-0 w-full h-full">
-
-        </div>
+        <div className="absolute top-0 bg-[#000000]/80 left-0 w-full h-full"></div>
 
         <div className="w-11/12  h-full flex translate-y-1/2  lg:translate-y-0 text-center flex-col justify-center items-center">
           <div className="w-full lg:min-h-[45vh] lg:max-h-[45vh] min-h-[5vh] max-h-[5vh] text-center flex flex-col justify-end items-center gap-4">
             <h1 className="lg:text-5xl text-3xl font-serif font-medium text-blue-100">SELAMAT DATANG DI JURUSAN</h1>
             <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">{jurusan ? jurusan.name : null}</span>
-            <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">
-              {jurusan ? jurusan.deskripsi : null}
-            </p>
-
+            <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">{jurusan ? jurusan.deskripsi : null}</p>
           </div>
         </div>
       </section>
@@ -137,7 +127,9 @@ const DetailJurusan = () => {
               {/* Bagian Kiri: Deskripsi Jurusan */}
 
               <div className="lg:w-2/3 w-full flex flex-col">
-                <Link to={"/"} className="font-semibold text-blue-600 cursor-pointer">{"<- Kembali"}</Link>
+                <Link to={"/"} className="font-semibold text-blue-600 cursor-pointer">
+                  {"<- Kembali"}
+                </Link>
                 <h1 className="lg:text-3xl text-xl font-serif">
                   Jurusan <span className="text-orange-400">{jurusan.name}</span>
                 </h1>
@@ -157,9 +149,6 @@ const DetailJurusan = () => {
                     </div>
                   ))}
                 </div>
-
-
-
               </div>
 
               {/* Bagian Kanan: Gambar Jurusan */}
@@ -173,28 +162,33 @@ const DetailJurusan = () => {
                   ))}
                 </div>
               </div>
-
-
-
-
-
             </div>
 
             {/* table curiculum */}
-            <div className="text-2xl font-semibold mb-2 mt-8">Informasi Pembelajaran & <span className="text-orange-400">Kurikulum</span> </div>
-            <div className="flex gap-2 py-3">
-              {curiculum.length > 0 ? curiculum.map((val, _i) => {
-                return (
-                  <span
-                    onClick={() => fetchMapels(val._id)}
-                    class={indexCuriculum == _i + 1 ? `bg-blue-300 text-blue-800 cursor-pointer font-semibold text-sm me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300` : `bg-blue-100 text-blue-800 cursor-pointer font-semibold text-sm me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300`}>Semester {val.semester}</span>
-                )
-              }) : null}
+            <div className="text-2xl font-semibold mb-2 mt-8">
+              Informasi Pembelajaran & <span className="text-orange-400">Kurikulum</span>{" "}
+            </div>
+            <div className="flex gap-2 py-3 w-full overflow-y-auto">
+              {curiculum.length > 0
+                ? curiculum.map((val, _i) => {
+                    return (
+                      <span
+                        onClick={() => fetchMapels(val._id)}
+                        class={
+                          indexCuriculum == _i + 1
+                            ? `bg-blue-300 text-blue-800 cursor-pointer font-semibold text-sm me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300`
+                            : `bg-blue-100 text-blue-800 cursor-pointer font-semibold text-sm me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300`
+                        }
+                      >
+                        Semester {val.semester}
+                      </span>
+                    );
+                  })
+                : null}
             </div>
             <div class="relative overflow-x-auto shadow-2xl">
               <table class="w-full text-sm text-left rtl:text-right text-blue-100 dark:text-blue-100">
                 <thead class="text-xs uppercase bg-gray-900 text-white">
-
                   <tr>
                     <th scope="col" class="px-6 py-3 text-white">
                       Nama Mapel
@@ -214,49 +208,31 @@ const DetailJurusan = () => {
                     <th scope="col" class="px-6 py-3 text-white">
                       Tahun
                     </th>
-
                   </tr>
                 </thead>
                 <tbody>
-
-                  {mapels.length > 0 ? mapels.map((val, _id) => {
-                    return (
-                      <tr class="bg-white border-b border-gray-500 hover:bg-gray-400/40 text-gray-800">
-                        <td class="px-6 py-4">
-                          {val.nama_mapel}
-
-                        </td>
-                        <td class="px-6 py-4">
-                          {val.jam_per_minggu} Jam / Minggu
-
-                        </td>
-                        <th scope="row" class="px-6 py-4  ">
-                          {curiculumDetail.nama_jurusan}
-                        </th>
-                        <td class="px-6 py-4">
-                          {curiculumDetail.kelas}
-                        </td>
-                        <td class="px-6 py-4">
-                          {curiculumDetail.semester}
-
-                        </td>
-                        <td class="px-6 py-4">
-                          {curiculumDetail.year}
-
-                        </td>
-
-                      </tr>
-                    )
-                  }) : null}
-
+                  {mapels.length > 0
+                    ? mapels.map((val, _id) => {
+                        return (
+                          <tr class="bg-white border-b border-gray-500 hover:bg-gray-400/40 text-gray-800">
+                            <td class="px-6 py-4">{val.nama_mapel}</td>
+                            <td class="px-6 py-4">{val.jam_per_minggu} Jam / Minggu</td>
+                            <th scope="row" class="px-6 py-4  ">
+                              {curiculumDetail.nama_jurusan}
+                            </th>
+                            <td class="px-6 py-4">{curiculumDetail.kelas}</td>
+                            <td class="px-6 py-4">{curiculumDetail.semester}</td>
+                            <td class="px-6 py-4">{curiculumDetail.year}</td>
+                          </tr>
+                        );
+                      })
+                    : null}
                 </tbody>
               </table>
             </div>
-
           </div>
         ) : null}
       </section>
-
     </>
   );
 };

@@ -28,8 +28,7 @@ const Jurusan = () => {
       startRandomImage();
     }, 1000 * 10);
 
-   
-
+  
   }, []);
 
   useEffect(() => {
@@ -53,7 +52,7 @@ const Jurusan = () => {
         console.log("Fetched Data:", data);
 
         if (Array.isArray(data.data)) {
-          setJurusanList(data.data);
+          setJurusanList(shuffleArray(data.data));
         } else {
           throw new Error("Invalid data format");
         }
@@ -64,7 +63,17 @@ const Jurusan = () => {
     };
 
     fetchJurusan();
+    const interval = setInterval(() => {
+      setJurusanList((prev) => shuffleArray([...prev]));
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
+
+  const shuffleArray = (array) => {
+    return array.sort(() => Math.random() - 0.5);
+  };
+
 
   if (error) {
     return <p className="text-red-500 text-center">{error}</p>;
@@ -114,7 +123,7 @@ const Jurusan = () => {
 
       <section className="w-full flex flex-col items-center justify-center">
         {jurusanList.map((jurusan) => (
-          <div data-aos="fade-up" key={jurusan._id} className="w-10/12 flex flex-col lg:flex-row lg:min-h-screen gap-6 mb-12">
+          <div data-aos="fade-up" key={jurusan._id} className="w-10/12 flex flex-col lg:flex-row lg:h-[100vh] h-[100vh]  gap-6 mb-12">
             {/* Bagian Kiri: Deskripsi Jurusan & List Guru */}
             <div className="lg:w-1/2 w-full lg:min-h-screen pt-16 flex flex-col">
               <h1 className="lg:text-3xl text-xl font-serif">
@@ -128,10 +137,10 @@ const Jurusan = () => {
                 </span>
               </button>
               {/* List Guru */}
-              <div className="flex overflow-x-auto lg:min-h-[19rem] gap-4 min-h-[13rem] max-h-[19rem] mt-8 pb-4">
+              <div className="flex overflow-x-auto lg:min-h-[18rem] gap-4 min-h-[13rem] max-h-[20rem] mt-8 pb-4">
                 {jurusan.teachers?.map((teacher) => (
                   <div key={teacher._id} className="lg:max-w-[13rem] lg:min-w-[13rem] items-start bg-gray-100 rounded-lg shadow-md">
-                    <div className="w-full h-[65%]">
+                    <div className="w-full min-h-[8rem] max-h-[8rem] min-w-[8rem] max-w-[8rem] lg:min-h-[11rem] lg:max-h-[11rem] lg:min-w-[13rem] lg:max-w-[13rem] h-[65%]">
                       <img className="w-full h-full object-cover rounded-t-lg" src={teacher.photo} alt={teacher.name} />
                     </div>
                     <div className="mt-3 ml-2">
@@ -156,6 +165,8 @@ const Jurusan = () => {
           </div>
         ))}
       </section>
+
+      <Footer />
     </>
   );
 };

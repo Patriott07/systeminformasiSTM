@@ -229,19 +229,19 @@ const BlogDetail = () => {
                   <div className="mb-2 flex gap-4">
                     <div className="flex gap-2 items-center  text-sm text-gray-500">
                       <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><rect width="18" height="15" x="3" y="6" stroke="currentColor" stroke-width="2" rx="2" /><path fill="currentColor" d="M3 10c0-1.886 0-2.828.586-3.414S5.114 6 7 6h10c1.886 0 2.828 0 3.414.586S21 8.114 21 10z" /><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7 3v3m10-3v3" /><rect width="4" height="2" x="7" y="12" fill="currentColor" rx=".5" /><rect width="4" height="2" x="7" y="16" fill="currentColor" rx=".5" /><rect width="4" height="2" x="13" y="12" fill="currentColor" rx=".5" /><rect width="4" height="2" x="13" y="16" fill="currentColor" rx=".5" /></g></svg></p>
-                      <p>
+                      <p className="lg:text-base text-xs">
                         Created on, {blog.date.split('T')[0]}
                       </p>
                     </div>
                     <div className="flex gap-2 items-center  text-sm text-gray-500">
                       <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7 14h10q.425 0 .713-.288T18 13t-.288-.712T17 12H7q-.425 0-.712.288T6 13t.288.713T7 14m0-3h10q.425 0 .713-.288T18 10t-.288-.712T17 9H7q-.425 0-.712.288T6 10t.288.713T7 11m0-3h10q.425 0 .713-.288T18 7t-.288-.712T17 6H7q-.425 0-.712.288T6 7t.288.713T7 8M4 18q-.825 0-1.412-.587T2 16V4q0-.825.588-1.412T4 2h16q.825 0 1.413.588T22 4v15.575q0 .675-.612.938T20.3 20.3L18 18z" /></svg></p>
-                      <p>
+                      <p className="lg:text-base text-xs">
                         {comments.length} people comment
                       </p>
                     </div>
                     <div className="flex gap-2 items-center  text-sm text-gray-500">
                       <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m20.27 16.265l.705-4.08a1.666 1.666 0 0 0-1.64-1.95h-5.182a.833.833 0 0 1-.821-.969l.663-4.045a4.8 4.8 0 0 0-.09-1.973a1.64 1.64 0 0 0-1.093-1.137l-.145-.047a1.35 1.35 0 0 0-.993.068c-.34.164-.588.463-.68.818l-.476 1.834a7.6 7.6 0 0 1-.656 1.679c-.416.777-1.058 1.4-1.725 1.975l-1.44 1.24a1.67 1.67 0 0 0-.572 1.406l.813 9.393A1.666 1.666 0 0 0 8.596 22h4.649c3.481 0 6.452-2.426 7.024-5.735" /><path fill="currentColor" fill-rule="evenodd" d="M2.968 9.485a.75.75 0 0 1 .78.685l.97 11.236a1.237 1.237 0 1 1-2.468.107V10.234a.75.75 0 0 1 .718-.749" clip-rule="evenodd" opacity="0.5" /></svg></p>
-                      <p>
+                      <p className="lg:text-base text-xs">
                         {likeCount} People Like it
                       </p>
                     </div>
@@ -293,20 +293,22 @@ const BlogDetail = () => {
                   <label for="message" class="block mb-2 text-xs  text-gray-500 dark:text-white font-semibold">Tulis Pesan</label>
                   <textarea id="message" rows="4" class="block p-2.5 w-full text-sm  bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Sampaikan Pesan disini.."></textarea>
 
-                  <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-                    <div>
-                      <label for="first_name" class="block mb-2 text-xs font-semibold text-gray-500 dark:text-white">Tulis Nama Anda</label>
-                      <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:w-[350px]" placeholder="Tulis namamu disini.." required />
-                    </div>
+                <div className="flex lg:flex-row flex-col gap-2 lg:items-center items-start">
+                  <div>
+                    <label for="first_name" class="block mb-2 text-xs font-semibold text-gray-500 dark:text-white">Tulis Nama Anda</label>
+                    <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:w-[350px]" placeholder="Tulis namamu disini.." required />
+                  </div>
 
+                
+                <div className=" flex gap-2">
+                  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex gap-2 items-center">
 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16"><path fill="currentColor" d="M12.49 7.14L3.44 2.27c-.76-.41-1.64.3-1.4 1.13l1.24 4.34q.075.27 0 .54l-1.24 4.34c-.24.83.64 1.54 1.4 1.13l9.05-4.87a.98.98 0 0 0 0-1.72Z" /></svg>
 
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex gap-2 items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16"><path fill="currentColor" d="M12.49 7.14L3.44 2.27c-.76-.41-1.64.3-1.4 1.13l1.24 4.34q.075.27 0 .54l-1.24 4.34c-.24.83.64 1.54 1.4 1.13l9.05-4.87a.98.98 0 0 0 0-1.72Z" /></svg>
-                      <p>
-                        Submit
-                      </p>
-                    </button>
+                    <p>
+                      Submit
+                    </p>
+                  </button>
 
 
                     <button id="reset-button" type="reset" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 flex gap-2 items-center">
@@ -316,8 +318,10 @@ const BlogDetail = () => {
                       </p>
                     </button>
 
-                  </div>
-                </form>
+                </div>
+
+                </div>
+              </form>
 
                 <div className="text-2xl">Comments</div>
                 <div className="flex flex-col gap-4">
