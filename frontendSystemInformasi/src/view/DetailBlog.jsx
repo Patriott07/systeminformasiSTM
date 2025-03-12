@@ -112,6 +112,41 @@ const BlogDetail = () => {
   const handleSubmitComment = async (e) => {
     try {
       e.preventDefault();
+      const comment = e.target[0].value;
+
+      const badWords = ["jelek", "anjir", "huek", "anjing", "babi", "puki", "jir", "asu", "anjing", "bajingan", "kontol", "memek", "bangsat",
+        "goblok", "kampret", "tolol", "peler", "pepek", "jancok",
+        "keparat", "brengsek", "monyet", "laknat", "sinting",
+        "setan", "iblis", "biadab", "brengsek", "tai", "babi",
+        "dungu", "bencong", "lesbi", "lonte", "sarap", "kemproh",
+        "puki", "ngentot", "ngewe", "bego", "idiot", "bahlul",
+
+        // Variasi menggunakan angka & simbol
+        "4su", "b4jingan", "k0ntol", "m3mek", "b4ngsat",
+        "g0blok", "t0lol", "p3ler", "p3pek", "j4ncok",
+        "n4jing", "l4knat", "t4i", "b4bi", "b3ncong",
+
+        // Pelesetan gaya chatting
+        "anjay", "ngehek", "fuck", "shit", "kampang",
+        "tai anjing", "matamu", "bapak kau", "mak kau",
+        "coeg", "cuk", "cok", "pukimak", "gembel",
+        "bacot", "nyolot", "songong", "brengsek lu",
+        "banci", "sundala", "tuyul", "brengsek kau",
+
+        // Gabungan kata kasar
+        "tai kucing", "tai lalat", "muka asu", "bapakmu",
+        "bapak lo", "anak haram", "mampus lo", "mampus lu",
+        "jembut", "muka jamet", "pecun", "lonte murah",
+        "pelacur", "hina lo", "hina lu", "hina banget"]; // List kata terlarang
+
+      // 🔥 Cek apakah komentar mengandung kata kasar
+      for (const word of badWords) {
+        if (comment.toLowerCase().includes(word)) {
+          Swal.fire("Error", "Komentar tidak boleh mengandung kata kasar!", "error");
+          return; // ❌ Hentikan proses submit jika ada kata kasar
+        }
+      }
+
       const response = await fetch(`${serverPort}/blog/get/${id}/create/comment`, {
         method: "POST",
         headers,
@@ -121,8 +156,13 @@ const BlogDetail = () => {
         })
       });
 
+
       const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
       console.log("Comment Submited:", { data }); // Debugging
+
 
       setComments([...comments, { name: e.target[1].value, comment: e.target[0].value, date: "Baru saja.." }])
 
@@ -132,6 +172,7 @@ const BlogDetail = () => {
       buttonReset.click();
 
     } catch (error) {
+      Swal.fire('Whoopss!', error.message, 'error');
       console.log({ error })
     }
   }

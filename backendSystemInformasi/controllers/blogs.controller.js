@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import { Blogs } from "../models/blogs.model.js";
 import { History } from "../models/history.model.js";
+import { Filter } from 'bad-words';
+
+const filter = new Filter();
 
 export const Get = async (req, res) => {
 
@@ -142,13 +145,21 @@ export const CreateComment = async (req, res) => {
         return res.status(404).json({ message: "Blog tidak ditemukan" });
     }
 
-    blog.comments.push({
-        comment,
-        name
-    });
+    const filteredComment = filter.clean(comment);
 
-    await blog.save();
-    res.json({ message: "Komentar berhasil ditambahkan" });
+    if (filteredComment != comment) {
+        res.status(403).json({ message: "Kata katamu mengandung kata yang dilarang, comment di gagalkan" });
+        return;
+    } else {
+        blog.comments.push({
+            comment: filteredComment,
+            name
+        });
+
+        await blog.save();
+        res.json({ message: "Komentar berhasil ditambahkan" });
+    }
+
 }
 
 export const GiveLike = async (req, res) => {

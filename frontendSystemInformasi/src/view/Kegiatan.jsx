@@ -1,21 +1,7 @@
 import React from "react";
-import Kegi1 from "../assets/Kegi1.jpg"
-import Kegi2 from "../assets/Kegi2.jpg"
-import Kegi3 from "../assets/Kegi3.jpg"
-import Kegi4 from "../assets/Kegi4.jpg"
-import Kegi5 from "../assets/Kegi5.jpg"
-import Kegi6 from "../assets/Kegi6.jpg"
-import Kegi7 from "../assets/Kegi7.jpg"
-import Kegi8 from "../assets/Kegi8.jpg"
-import Kegi9 from "../assets/Kegi9.jpg"
-import Kegi10 from "../assets/Kegi10.jpg"
-import Kegi11 from "../assets/Kegi11.jpg"
-import Kegi12 from "../assets/Kegi12.jpg"
 import { useState } from "react";
 import { useEffect } from "react";
 import Navbar from "../components/Navbar";
-
-import SMK from "../assets/smkn1.jpg";
 
 const Kegiatan = () => {
   const [selectedImage, setSelectedImage] = useState(null);

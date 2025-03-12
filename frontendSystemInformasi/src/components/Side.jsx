@@ -28,6 +28,7 @@ export default function Sidebar() {
   }
   useEffect(() => {
     checkRole();
+
   }, []);
 
   return (

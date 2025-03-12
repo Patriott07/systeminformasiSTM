@@ -1,14 +1,8 @@
-import Kegi9 from "../assets/Kegi9.jpg";
-import Kegi10 from "../assets/Kegi10.jpg";
-import Kegi11 from "../assets/Kegi11.jpg";
-import Kegi12 from "../assets/Kegi12.jpg";
 import { useNavigate } from "react-router-dom";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import SMK from "../assets/smkn1.jpg";
-
 
 const Jurusan = () => {
   const [jurusan, setJurusan] = useState(null);
