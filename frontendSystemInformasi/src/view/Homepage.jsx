@@ -62,7 +62,7 @@ const Homepage = () => {
     <>
 
 
-      <Navbar />
+      <Navbar size={'w-screen'}/>
 
       <section
         style={{
@@ -138,7 +138,7 @@ const Homepage = () => {
             <div className="flex sm:flex-row flex-col gap-8">
               <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={SMKK3} alt="" />
               <div className="">
-                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-mono font-medium">Kepala sekolah SMKN I KOTA CIREBON KOTA CIREBON </h1>
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-mono font-medium">Kepala sekolah SMKN I KOTA CIREBON </h1>
                 <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
                   Kepala Sekolah SMK Negeri 1 Kota Cirebon saat ini adalah Arifuddin, S.Pd., M.T. Beliau bertanggung jawab dalam memimpin sekolah, mengembangkan kurikulum, serta memastikan bahwa seluruh program keahlian yang ditawarkan
                   dapat memberikan pendidikan terbaik bagi para siswa. Di bawah kepemimpinannya

@@ -3,6 +3,9 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import SMK from '../assets/smkn1.jpg';
+import Footer from '../components/Footer';
+
 
 const Jurusan = () => {
   const [jurusan, setJurusan] = useState(null);
@@ -85,7 +88,7 @@ const Jurusan = () => {
 
   return (
     <>
-      <Navbar />
+       <Navbar size={'w-screen'}/>
       {jurusanList.length > 0 ? (
 
         <section

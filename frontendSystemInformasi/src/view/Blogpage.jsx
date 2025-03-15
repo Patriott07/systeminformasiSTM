@@ -94,7 +94,7 @@ const Blogpage = () => {
 
   return (
     <>
-      <Navbar />
+    <Navbar size={'w-screen'}/>
 
       {blogs.length > 0 ? (
         <section style={{
