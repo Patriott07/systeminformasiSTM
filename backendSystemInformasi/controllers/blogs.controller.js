@@ -24,7 +24,8 @@ export const Get = async (req, res) => {
         const blogs = await Blogs.find(searchQuery)
             .sort({ createdAt: -1 }) // Sortir berdasarkan tanggal terbaru
             .skip(p * maxItems) // Lewati data berdasarkan halaman
-            .limit(maxItems); // Batasi jumlah data per halaman
+            .limit(maxItems)
+            .populate('created_by'); // Batasi jumlah data per halaman
 
         // Kirimkan hasil ke client
         res.status(200).json({
@@ -181,3 +182,27 @@ export const GiveLike = async (req, res) => {
     }
 }
 
+
+export const DeleteComment = async (req, res) => {
+    // console.log(req.params.blog_id.split)
+    const blog = await Blogs.findById(req.params.blog_id);
+    const id = req.params.id;
+    const arrayOfComment = blog.comments;
+    let comments = [];
+    arrayOfComment.map((val, i) => {
+        // console.log({id}, val._id)
+        if (id === val._id.toString()) {
+
+        } else {
+            comments.push(val);
+        }
+    });
+
+    blog.comments = comments;
+    await blog.save();
+
+    await History.create({created_by : req.user._id.toString(), name : req.user.name, 
+        aktivitas : `Menghapus comment di pada blog : ${blog.title}. dengan id : ${id}`});
+
+    res.json({ message: "Succesfully Delete comment", comments: comments });
+}

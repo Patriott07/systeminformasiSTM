@@ -150,7 +150,7 @@ const DashboardHome = () => {
           </button>
         </div>
         <div className="relative pb-12 overflow-x-auto shadow-md sm:rounded-lg lg:w-9/12 m-0 md:m-10">
-          <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
+          <div className="absolute h-[30vh] bg-orange-500 w-full z-[-2] p-12">
             <div className=" lg:text-3xl text-xl text-white font-semibold">
               Ringkasan Histories
             </div>

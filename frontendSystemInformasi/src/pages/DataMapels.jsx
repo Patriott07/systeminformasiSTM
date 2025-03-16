@@ -230,7 +230,7 @@ const DataMapels = () => {
                 </div>
 
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full lg:w-11/12 md:m-10 pb-8">
-                    <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
+                    <div className="absolute h-[30vh] bg-orange-500 w-full z-[-2] p-12">
                         <div className="font-semibold lg:text-3xl text-xl text-white">
                             Data Mapel {name}
                         </div>
@@ -255,7 +255,7 @@ const DataMapels = () => {
 
                         <Link
                             to={`/add_mapel`}
-                            className="w-fit mt-3 mb-4 text-white bg-purple-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 "
+                            className="w-fit mt-3 mb-4 text-white bg-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 "
                         >
                             Tambah Data
                         </Link>

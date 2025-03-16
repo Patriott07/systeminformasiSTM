@@ -87,8 +87,11 @@ const DetailJurusan = () => {
         console.log({ data });
         console.log("Fetched Detail Data:", data); // Debug hasil fetch
 
-        fetchMapels(data.curiculum[0]._id);
-        setCuriculum(data.curiculum);
+        let sorterData = data.curiculum.sort(function(a, b) { return a.semester - b.semester });
+
+        console.log({sorterData})
+        fetchMapels(sorterData[0]._id);
+        setCuriculum(sorterData);
       } catch (err) {
         console.error("Fetch error:", err.message);
         setError("An error occurred. Please try again.");
@@ -168,7 +171,7 @@ const DetailJurusan = () => {
             <div className="text-2xl font-semibold mb-2 mt-8">
               Informasi Pembelajaran & <span className="text-orange-400">Kurikulum</span>{" "}
             </div>
-            <div className="flex gap-2 py-3 w-full overflow-y-auto">
+            <div className="flex py-3 w-full overflow-y-auto">
               {curiculum.length > 0
                 ? curiculum.map((val, _i) => {
                     return (

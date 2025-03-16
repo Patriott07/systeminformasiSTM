@@ -190,7 +190,7 @@ const DataKegiatan = () => {
         </div>
 
         <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-full lg:w-9/12 md:m-10">
-          <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
+          <div className="absolute h-[30vh] bg-orange-500 w-full z-[-2] p-12">
             <div className="font-semibold text-xl lg:text-3xl text-white">
               Data Kegiatan
             </div>
@@ -242,7 +242,7 @@ const DataKegiatan = () => {
             </div>
             <Link
               to="/add_kegiatan"
-              className="ms-2 md:w-fit w-52 flex flex-col text-white bg-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              className="ms-2 md:w-fit w-52 flex flex-col text-white bg-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
               Tambah Data
             </Link>

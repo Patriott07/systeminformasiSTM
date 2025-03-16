@@ -40,6 +40,7 @@ import AddTeachers from './pages/AddTeachers.jsx';
 import AddTag from './pages/AddTag.jsx';
 import ModifyBlog from './pages/ModifyBlog.jsx';
 import BlogDetail  from "./view/DetailBlog.jsx";
+import CMS_web from './pages/CMS_web.jsx';
 
 function App() {
 
@@ -95,6 +96,7 @@ function App() {
 
         <Route path='/data_jurusan/teachers/:id/:name' element={<DataTeachers />} />
         <Route path='/add_teacher/:id' element={<AddTeachers />} />
+        <Route path='/dashboard/cms' element={<CMS_web />} />
 
       </Routes>
     </BrowserRouter>

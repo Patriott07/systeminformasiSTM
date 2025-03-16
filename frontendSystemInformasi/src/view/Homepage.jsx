@@ -9,6 +9,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { serverPort, headers } from "../utls/global_variable.js";
 
 import Footer from "./Footer";
 const Homepage = () => {
@@ -16,7 +17,55 @@ const Homepage = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [blogs, setBlogs] = useState([]);
+
+  const [props, setProps] = useState({
+    _id: "",
+    name_website: "",
+    logo: "",
+    header_text: "",
+    slogan: "",
+    cover_background: "",
+
+    info1: "",
+    info2: "",
+    info3: "",
+
+
+    section1_title: "",
+    section1_description: "",
+    section1_image: "",
+
+
+    section2_title: "",
+    section2_description: "",
+    section2_image: "",
+
+
+    section3_title: "",
+    section3_description: "",
+    section3_image: "",
+
+
+    alamat_telp: "",
+    email: "",
+    alamat_sekolah: "",
+    gps_map_link: ""
+
+  })
+
+  const handleGetContentCMS = async () => {
+    try {
+      const res = await fetch(`${serverPort}/cms/get`, headers);
+      const data = await res.json();
+      console.log({ data })
+      setProps(data.cms);
+
+    } catch (error) {
+      console.log({ error })
+    }
+  }
   useEffect(() => {
+
     AOS.init({ duration: 1000, once: false });
   }, []);
   useEffect(() => {
@@ -57,17 +106,17 @@ const Homepage = () => {
     };
 
     fetchBlogs();
+    handleGetContentCMS();
   }, []);
   return (
     <>
 
-
-      <Navbar />
+      <Navbar size={'w-screen'} />
 
       <section
         style={{
           // backgroundImage: `url('https://images.unsplash.com/photo-1611941671018-6c3907cb7a76?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHNjaG9vbCUyMGJ1aWxkaW5nfGVufDB8fDB8fHww')`,
-          backgroundImage: `url('${SMK}')`,
+          backgroundImage: `url('${props.cover_background}')`,
 
         }}
         className="w-full relative rounded-lg flex bg-cover bg-center bg-fixed justify-center items-center min-h-[80vh] lg:min-h-screen"
@@ -80,10 +129,15 @@ const Homepage = () => {
 
         <div className="w-11/12  h-full flex translate-y-1/2  lg:translate-y-0 text-center flex-col justify-center items-center">
           <div className="w-full lg:min-h-[45vh] lg:max-h-[45vh] min-h-[5vh] max-h-[5vh] text-center flex flex-col justify-end items-center gap-4">
-            <h1 className="lg:text-5xl text-3xl font-serif font-medium text-blue-100">SELAMAT DATANG DI </h1>
-            <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">SMKN 1 KOTA CIREBON</span>
-            <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">
+            {/* <h1 className="lg:text-5xl text-3xl font-serif font-medium text-blue-100">SELAMAT DATANG DI </h1>
+            <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">SMKN 1 KOTA CIREBON</span> */}
+            <h1 className="lg:text-5xl lg:w-8/12 text-3xl font-serif font-medium text-blue-400">{props.header_text} </h1>
+            {/* <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">SMKN 1 KOTA CIREBON</span> */}
+            {/* <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">
               mencetak lulusan yang siap kerja, memiliki keterampilan di bidangnya, serta mampu bersaing <span className="text-blue-400"> di dunia industri</span>
+            </p> */}
+            <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">
+              {props.slogan} <span className="text-blue-400"></span>
             </p>
             {/* <div className="flex gap-4 pb-8">
               <button className="lg:px-4 px-2 py-2 text-sm lg:text-base lg:py-3 mt-2 bg-blue-400 rounded-lg">Example Button </button>
@@ -92,16 +146,19 @@ const Homepage = () => {
           </div>
           <div className="w-full flex items-start gap-8 text-white justify-center h-[12vh] lg:h-[15vh] lg:mt-2 mt-auto">
             <div className="flex flex-col">
-              <span className="lg:text-xl text-sm">Jurusan Pilihan</span>
-              <span className="lg:text-base text-xs w-[200px]">Tersedia 10+ Jurusan berbeda dengan keahlian khusus masing-,asing</span>
+              {/* <span className="lg:text-xl text-sm">Jurusan Pilihan</span> */}
+              {/* <span className="lg:text-base text-xs w-[200px]">Tersedia 10+ Jurusan berbeda dengan keahlian khusus masing-,asing</span> */}
+              <span className="lg:text-base text-xs w-[200px]">{props.info1}</span>
             </div>
             <div className="flex flex-col">
-              <span className="lg:text-xl text-sm">Lab Dan Tempat Praktik</span>
-              <span className="lg:text-base text-xs w-[200px]">Kami Menyediakan ruang lab dan praktik untuk kebutuhan siswa. 10+ lab serta r.praktik</span>
+              {/* <span className="lg:text-xl text-sm">Lab Dan Tempat Praktik</span> */}
+              {/* <span className="lg:text-base text-xs w-[200px]">Kami Menyediakan ruang lab dan praktik untuk kebutuhan siswa. 10+ lab serta r.praktik</span> */}
+              <span className="lg:text-base text-xs w-[200px]">{props.info2}</span>
             </div>
             <div className="flex flex-col">
-              <span className="lg:text-xl text-sm">Ekstrakulikuler Siswa</span>
-              <span className="lg:text-base text-xs w-[200px]">Kami menyediakan lebih dari 10+ Ekskul aktif yang bisa dimanfaatkan siswa</span>
+              {/* <span className="lg:text-xl text-sm">Ekstrakulikuler Siswa</span> */}
+              {/* <span className="lg:text-base text-xs w-[200px]">Kami menyediakan lebih dari 10+ Ekskul aktif yang bisa dimanfaatkan siswa</span> */}
+              <span className="lg:text-base text-xs w-[200px]">{props.info3}</span>
             </div>
           </div>
         </div>
@@ -111,12 +168,17 @@ const Homepage = () => {
         <div className="w-10/12 justify-center flex flex-col items-center">
           <div data-aos="fade-up" className="w-full flex items-start">
             <div className="flex sm:flex-row flex-col gap-8">
-              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={SMKK1} alt="" />
+              {/* <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={SMKK1} alt="" /> */}
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={props.section1_image} alt="" />
               <div className="">
-                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-mono font-medium">Apa Itu SMKN I KOTA CIREBON </h1>
-                <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
+                {/* <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-mono font-medium">Apa Itu SMKN I KOTA CIREBON </h1> */}
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-mono font-medium">{props.section1_title}</h1>
+                {/* <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
                   SMK Negeri 1 Kota Cirebon adalah salah satu Sekolah Menengah Kejuruan (SMK) unggulan di Kota Cirebon yang berlokasi di Jalan Perjuangan By Pass Sunyaragi, Cirebon, Jawa Barat. Sekolah ini berfokus pada pendidikan kejuruan
                   yang membekali siswa dengan keterampilan teknis dan profesional agar siap memasuki dunia kerja atau melanjutkan pendidikan ke jenjang yang lebih tinggi.
+                </p> */}
+                <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
+                {props.section1_description}
                 </p>
               </div>
             </div>
@@ -125,23 +187,33 @@ const Homepage = () => {
           <div data-aos="fade-up" className="w-full flex items-end justify-end mt-8">
             <div className="flex sm:flex-row flex-col gap-8">
               <div className="flex flex-col items-end">
-                <h1 className="text-blue-500 uppercase text-base lg:text-2xl text-justify font-mono font-medium">Kenapa harus SMKN I KOTA CIREBON </h1>
-                <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
+                {/* <h1 className="text-blue-500 uppercase text-base lg:text-2xl text-justify font-mono font-medium">Kenapa harus SMKN I KOTA CIREBON </h1> */}
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl text-justify font-mono font-medium">{props.section2_title} </h1>
+                {/* <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
                   SMKN 1 Cirebon bertujuan untuk mencetak lulusan yang siap kerja, memiliki keterampilan di bidangnya, serta mampu bersaing di dunia industri maupun melanjutkan pendidikan ke jenjang yang lebih tinggi. Sekolah ini juga
                   memiliki fasilitas laboratorium, bengkel praktik, serta kerja sama dengan berbagai industri untuk mendukung pembelajaran siswa.
+                </p> */}
+                <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
+                  {props.section2_description}
                 </p>
               </div>
-              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={SMKK2} alt="" />
+              {/* <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={SMKK2} alt="" /> */}
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={props.section2_image} alt="" />
             </div>
           </div>
           <div data-aos="fade-up" className="w-full flex items-start mt-8">
             <div className="flex sm:flex-row flex-col gap-8">
-              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={SMKK3} alt="" />
+              {/* <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={SMKK3} alt="" /> */}
+              <img className="lg:min-w-[45vh] lg:max-w-[45vh]  lg:max-h-[45vh] lg:min-h-[45vh] min-w-[15vh] max-h-[60vh] bg-cover bg-center" src={props.section3_image} alt="" />
               <div className="">
-                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-mono font-medium">Kepala sekolah SMKN I KOTA CIREBON KOTA CIREBON </h1>
-                <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
+                {/* <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-mono font-medium">Kepala sekolah SMKN I KOTA CIREBON </h1> */}
+                <h1 className="text-blue-500 uppercase text-base lg:text-2xl font-mono font-medium">{props.section3_title} </h1>
+                {/* <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
                   Kepala Sekolah SMK Negeri 1 Kota Cirebon saat ini adalah Arifuddin, S.Pd., M.T. Beliau bertanggung jawab dalam memimpin sekolah, mengembangkan kurikulum, serta memastikan bahwa seluruh program keahlian yang ditawarkan
                   dapat memberikan pendidikan terbaik bagi para siswa. Di bawah kepemimpinannya
+                </p> */}
+                <p className="max-w-lg lg:text-base text-xs lg:font-normal font-thin text-justify">
+                  {props.section3_description}
                 </p>
               </div>
             </div>
@@ -154,20 +226,23 @@ const Homepage = () => {
           <div className="lg:max-w-[50%] lg:min-w-[50%] w-full flex flex-col justify-center   min-h-full text-lg font-serif">
             <div className="gap-2 flex mb-2">
               <span className="min-w-[5rem]">Telp : </span>
-              <h1> +62-0231-480202,</h1>
+              {/* <h1> +62-0231-480202,</h1> */}
+              <h1>{props.alamat_telp},</h1>
             </div>
             <div className="flex gap-2 mb-2">
               <span className="min-w-[5rem]">Email : </span>
-              <h1>info@smkn1-cirebon.sch.id</h1>
+              {/* <h1>info@smkn1-cirebon.sch.id</h1> */}
+              <h1>{props.email}</h1>
             </div>
             <div className="flex gap-2 mb-2">
               <span className="min-w-[5rem]">Alamat :</span>
-              <h1>Jalan Perjuangan, Kelurahan Sunyaragi, Kecamatan Kesambi, Kota Cirebon, Jawa Barat, </h1>
+              {/* <h1>Jalan Perjuangan, Kelurahan Sunyaragi, Kecamatan Kesambi, Kota Cirebon, Jawa Barat, </h1> */}
+              <h1>{props.alamat_sekolah}, </h1>
             </div>
           </div>
           <div className="lg:max-w-[50%] lg:min-w-[50%] w-full justify-center flex min-h-full">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3064.578242155735!2d108.53415787362854!3d-6.735291293260876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f1df0e55b2ed3%3A0x51cf481547b4b319!2sSMK%20Negeri%201%20Cirebon!5e1!3m2!1sid!2sid!4v1738761226845!5m2!1sid!2sid"
+              src={props.gps_map_link}
               width="80%"
               height="90%"
               style={{ border: "0" }}
@@ -214,7 +289,7 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-      
+
       <Footer />
 
     </>
