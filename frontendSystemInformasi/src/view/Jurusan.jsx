@@ -3,6 +3,8 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import SMK from '../assets/smkn1.jpg';
 
 const Jurusan = () => {
   const [jurusan, setJurusan] = useState(null);

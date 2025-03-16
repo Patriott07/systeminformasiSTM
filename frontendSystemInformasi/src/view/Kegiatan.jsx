@@ -2,6 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import AOS from 'aos';
+import SMK from '../assets/smkn1.jpg';
 
 const Kegiatan = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -101,7 +104,7 @@ const Kegiatan = () => {
                 <div className="w-full lg:min-h-[45vh] lg:max-h-[45vh] min-h-[5vh] max-h-[5vh] text-center flex flex-col justify-end items-center gap-4">
                   <h1 className="lg:text-5xl text-3xl font-serif font-medium text-blue-100">SELAMAT DATANG DI KEGIATAN </h1>
                   <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400"> SMKN 1 KOTA CIREBON</span>
-                  <span className="lg:text-5xl text-3xl font-serif font-medium text-blue-400">CIREBON</span>
+                  
                   <p className="lg:max-w-xl max-w-sm my-4 text-base lg:text-xl font-serif text-white">
                    Pantau Kegiatan Yang telah Berlangsung Di SMKN I Cirebon 
                   </p>
