@@ -1,7 +1,7 @@
 import express from 'express';
 import { verifyToken } from './utls/verifyToken.js';
 import { verifyAdmin } from './utls/AdminOnly.js';
-import {Create, Delete, Get, Update, Detail, CreateComment, GiveLike} from '../controllers/blogs.controller.js';
+import {Create, Delete, Get, DeleteComment, Update, Detail, CreateComment, GiveLike} from '../controllers/blogs.controller.js';
 
 const router = express.Router();
 
@@ -16,5 +16,6 @@ router.delete('/delete/:id', verifyToken,verifyAdmin, Delete);
 // router.get('/get/:id/get/comments', GetComment);
 router.post('/get/:id/create/comment', CreateComment);
 router.post('/post/:id/like', GiveLike);
+router.delete('/delete/:blog_id/:id', verifyToken,verifyAdmin, DeleteComment);
 
 export default router;

@@ -199,7 +199,7 @@ const DataJurusan = () => {
         </div>
 
         <div className="relative overflow-x-auto pb-8 shadow-md sm:rounded-lg w-full lg:w-9/12  md:m-10">
-          <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
+          <div className="absolute h-[30vh] bg-orange-500 w-full z-[-2] p-12">
             <div className="font-semibold text-xl lg:text-3xl text-white">
               Data Jurusan
             </div>
@@ -237,7 +237,7 @@ const DataJurusan = () => {
             </div>
             <Link
               to="/add_jurusan"
-              className="ms-2 md:w-fit w-52 flex flex-col text-white bg-purple-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              className="ms-2 md:w-fit w-52 flex flex-col text-white bg-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
               Tambah Data
             </Link>
@@ -331,7 +331,7 @@ const DataJurusan = () => {
                           </svg>
                           <span>Delete</span>
                         </button>
-                        <button onClick={() => navigate(`/data_jurusan/teachers/${val._id}/${val.name}`)} type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 flex items-center">
+                        <button onClick={() => navigate(`/data_jurusan/teachers/${val._id}/${val.name}`)} type="button" class="focus:outline-none text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1.5 mb-2 dark:bg-orange-500 dark:hover:bg-orange-500 dark:focus:ring-purple-900 flex items-center">
 
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59 16.58L13.17 12L8.59 7.41L10 6l6 6l-6 6z" /></svg>
                           Teachers</button>

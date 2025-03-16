@@ -233,7 +233,7 @@ const DataKurikulum = () => {
         </div>
 
         <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-full lg:w-9/12 md:m-10">
-          <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
+          <div className="absolute h-[30vh] bg-orange-500 w-full z-[-2] p-12">
             <div className="font-semibold lg:text-3xl text-xl text-white">
               Data Kurikulum
             </div>
@@ -285,7 +285,7 @@ const DataKurikulum = () => {
             </div>
             <Link
               to="/add_kurikulum"
-              className="ms-2 md:w-fit w-52 flex flex-col text-white bg-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              className="ms-2 md:w-fit w-52 flex flex-col text-white bg-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
               Tambah Data
             </Link>
@@ -361,7 +361,7 @@ const DataKurikulum = () => {
                           </button>
                           <button
                             onClick={() => handleDelete(val._id)}
-                            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-purple-500 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
+                            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-orange-500 transition active:scale-95 shadow-md flex items-center justify-center space-x-2"
                           >
                             <svg
                               className="w-5 h-5 text-white"

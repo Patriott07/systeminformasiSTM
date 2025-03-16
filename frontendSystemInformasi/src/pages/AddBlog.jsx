@@ -421,15 +421,15 @@ const AddBlog = () => {
 
 
             <div className="flex flex-col md:flex-row gap-2 my-5 ">
-              <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('text')}>Add new Text</button>
-              <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('img')}>Add new Image</button>
-              <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleAddComponent('video')}>Add new Vidio</button>
-              <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
+              <button type="button" class="focus:outline-none text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-500 dark:hover:bg-orange-600 dark:focus:ring-purple-900" onClick={() => handleAddComponent('text')}>Add new Text</button>
+              <button type="button" class="focus:outline-none text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-500 dark:hover:bg-orange-600 dark:focus:ring-purple-900" onClick={() => handleAddComponent('img')}>Add new Image</button>
+              <button type="button" class="focus:outline-none text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-500 dark:hover:bg-orange-600 dark:focus:ring-purple-900" onClick={() => handleAddComponent('video')}>Add new Vidio</button>
+              <button type="submit" class="focus:outline-none text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-500 dark:hover:bg-orange-600 dark:focus:ring-purple-900">Submit Blog</button>
 
             </div>
           </div>
           <div className="sm:w-4/12 lg:h-[100vh] bg-white border-l">
-            <div className="bg-purple-600 px-4 py-8 text-white font-semibold">
+            <div className="bg-orange-500 px-4 py-8 text-white font-semibold">
               Create Information Blog
             </div>
 

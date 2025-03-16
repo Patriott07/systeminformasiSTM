@@ -184,7 +184,7 @@ const DataUsers = () => {
         </div>
 
         <div className="relative pb-8 overflow-x-auto shadow-md sm:rounded-lg w-full lg:w-9/12 md:m-10">
-          <div className="absolute h-[30vh] bg-purple-500 w-full z-[-2] p-12">
+          <div className="absolute h-[30vh] bg-orange-500 w-full z-[-2] p-12">
             <div className="font-semibold text-3xl text-white">Data Users</div>
             <p className=" text-white uppercase mt-2 pb-4 font-semibold">
               Mulai Kelola Users ({countData} items)
